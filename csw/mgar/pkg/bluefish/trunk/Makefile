@@ -29,14 +29,8 @@ RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpango1-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibenchant1
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpangocairo1-0-0
-RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpangoft2-1-0-0
-RUNTIME_DEP_PKGS_CSWbluefish += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWbluefish += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibfreetype6
 
-CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWlibpangoft2-1-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWlibatk1-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWlibfontconfig1
 CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWlibfreetype6
 
 EXTRA_MERGE_EXCLUDE_FILES = .*treemagic.*
