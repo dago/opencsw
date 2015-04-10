@@ -1,5 +1,5 @@
 NAME = bluefish
-VERSION = 2.2.6
+VERSION = 2.2.7
 
 DESCRIPTION = Advanced Gtk+ HTML editor
 define BLURB
@@ -22,7 +22,7 @@ RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgio2-0-0
