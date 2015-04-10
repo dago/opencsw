@@ -27,6 +27,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 RUNTIME_DEP_PKGS_CSWtorsocks += CSWbash
 CHECKPKG_OVERRIDES_CSWtorsocks += surplus-dependency|CSWbash
 
+BUILD64 = 1
+ISAEXEC = 1
+
 include gar/category.mk
 
 pre-configure:
