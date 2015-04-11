@@ -1,7 +1,7 @@
 # $Id$
 
 NAME		=	emacs
-VERSION		=	24.3
+VERSION		=	24.5
 GARTYPE		=	v2
 
 DESCRIPTION = The GNU Emacs editor
@@ -39,6 +39,7 @@ BUILD_DEP_PKGS		+=	CSWlibgif-dev
 BUILD_DEP_PKGS		+=	CSWlibglib2-dev
 BUILD_DEP_PKGS		+=	CSWlibgnutls-dev
 BUILD_DEP_PKGS		+=	CSWlibgtk2-dev
+BUILD_DEP_PKGS		+=	CSWlibharfbuzz-dev
 BUILD_DEP_PKGS		+=	CSWlibiconv-dev
 BUILD_DEP_PKGS		+=	CSWlibjbig-dev
 BUILD_DEP_PKGS		+=	CSWlibjpeg-dev
@@ -48,20 +49,13 @@ BUILD_DEP_PKGS		+=	CSWlibotf-dev
 BUILD_DEP_PKGS		+=	CSWlibpixman-dev
 BUILD_DEP_PKGS		+=	CSWlibpcre-dev
 BUILD_DEP_PKGS		+=	CSWlibpng-dev
-BUILD_DEP_PKGS		+=	CSWlibpthreadstubs
 BUILD_DEP_PKGS		+=	CSWlibrsvg-dev
 BUILD_DEP_PKGS		+=	CSWlibthai-dev
 BUILD_DEP_PKGS		+=	CSWlibtiff-dev
-BUILD_DEP_PKGS		+=	CSWlibx11devel
-BUILD_DEP_PKGS		+=	CSWlibxaudevel
-BUILD_DEP_PKGS		+=	CSWlibxcbdevel
-BUILD_DEP_PKGS		+=	CSWlibxdmcpdevel
-BUILD_DEP_PKGS		+=	CSWlibxft2devel
 BUILD_DEP_PKGS		+=	CSWlibxml2-dev
 BUILD_DEP_PKGS		+=	CSWlibxpm-dev
-BUILD_DEP_PKGS		+=	CSWlibxpmdevel
 BUILD_DEP_PKGS		+=	CSWlibz-dev
-BUILD_DEP_PKGS		+=	CSWpangodevel
+BUILD_DEP_PKGS		+=	CSWlibpango-dev
 BUILD_DEP_PKGS		+=	CSWpkgconfig
 BUILD_DEP_PKGS		+=	CSWsunx11devel
 
@@ -73,7 +67,6 @@ PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
 
 PATCHFILES			+=	0001-activate-Xft-for-configure.patch
-PATCHFILES			+=	0002-Filter-ImageMagik-OpenMP-compiler-flag.patch
 
 EXTRA_MODULATORS			=	FEATURES
 MODULATIONS_FEATURES		=	athena
@@ -103,7 +96,7 @@ EXTRA_CONFIGURE_ARGS_nox	+=	--without-dbus
 EXTRA_CONFIGURE_ARGS_nox	+=	--without-x
 
 CONFIGURE_ARGS	= $(DIRPATHS)
-CONFIGURE_ARGS	+= --without-compress-info
+CONFIGURE_ARGS	+= --without-compress-install
 CONFIGURE_ARGS	+= $(EXTRA_CONFIGURE_ARGS_$(FEATURES))
 
 # this is part of texinfo package:
@@ -143,7 +136,6 @@ CATALOGNAME_CSWemacs-common			=	emacs_common
 # as we use alternatives, we need to obsolete emacs_chooser;
 # emacs_common, being the root dependence of all emacs related
 # packages, seems the best place to do it.
-OBSOLETED_BY_CSWemacs-common		=	CSWemacschooser
 OBSOLETED_BY_CSWemacs-common		+=	CSWemacscommon
 CATALOGNAME_CSWemacscommon			=	emacscommon_stub
 # this is to be done only for this sub-package but I don't know how to
@@ -217,8 +209,6 @@ CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/
 PACKAGES						+=	CSWemacs-el
 SPKG_DESC_CSWemacs-el			=	$(DESCRIPTION) - elisp sources
 CATALOGNAME_CSWemacs-el			=	emacs_el
-OBSOLETED_BY_CSWemacs-el		=	CSWemacsel
-CATALOGNAME_CSWemacsel			=	emacsel_stub
 RUNTIME_DEP_PKGS_CSWemacs-el	=	CSWemacs-common
 CHECKPKG_OVERRIDES_CSWemacs-el	+=	surplus-dependency|CSWemacs-common
 PKGFILES_CSWemacs-el			=	/opt/csw/share/emacs/$(VERSION)/.*[.]el[.]gz
@@ -227,8 +217,6 @@ ARCHALL_CSWemacs-el				=	1
 PACKAGES								+=	CSWemacs-bin-common
 SPKG_DESC_CSWemacs-bin-common			=	$(DESCRIPTION) - common binaries
 CATALOGNAME_CSWemacs-bin-common			=	emacs_bin_common
-OBSOLETED_BY_CSWemacs-bin-common		=	CSWemacsbincommon
-CATALOGNAME_CSWemacsbincommon			=	emacsbincommon_stub
 RUNTIME_DEP_PKGS_CSWemacs-bin-common	=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWemacs-common		+=	CSWperl
 PKGFILES_CSWemacs-bin-common			=	/opt/csw/bin/b2m
@@ -285,8 +273,6 @@ CHECKPKG_OVERRIDES_CSWemacs-athena += surplus-dependency|CSWfconfig
 PACKAGES						+=	CSWemacs-gtk
 SPKG_DESC_CSWemacs-gtk			=	$(DESCRIPTION) - based on the GTK toolkit
 CATALOGNAME_CSWemacs-gtk		=	emacs_gtk
-OBSOLETED_BY_CSWemacs-gtk		=	CSWemacsgtk
-CATALOGNAME_CSWemacsgtk			=	emacs_gtk_stub
 RUNTIME_DEP_PKGS_CSWemacs-gtk	=	CSWemacs-bin-common
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWfconfig
@@ -326,8 +312,6 @@ CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWfconfig
 PACKAGES						+=	CSWemacs-nox
 SPKG_DESC_CSWemacs-nox			=	$(DESCRIPTION) - without any XWindows dependencies
 CATALOGNAME_CSWemacsnox			=	emacs_nox
-OBSOLETED_BY_CSWemacs-nox		=	CSWemacsnox
-CATALOGNAME_CSWemacsnox			=	emacs_nox_stub
 RUNTIME_DEP_PKGS_CSWemacs-nox	=	CSWemacs-bin-common
 RUNTIME_DEP_PKGS_CSWemacs-nox	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWemacs-nox	+=	CSWlibgnutls28
