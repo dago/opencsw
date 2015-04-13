@@ -19,12 +19,10 @@ BUILD_DEP_PKGS += CSWgcc4objc
 
 RUNTIME_DEP_PKGS_CSWgorm += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgorm += CSWlibobjc4
-
-
-CHECKPKG_OVERRIDES_CSWgorm += CSWgnustep-make
-CHECKPKG_OVERRIDES_CSWgorm += CSWgnustep-base
-CHECKPKG_OVERRIDES_CSWgorm += CSWgnustep-gui
-CHECKPKG_OVERRIDES_CSWgorm += CSWgnustep-back
+RUNTIME_DEP_PKGS_CSWgorm += CSWgnustep-make
+RUNTIME_DEP_PKGS_CSWgorm += CSWgnustep-base
+RUNTIME_DEP_PKGS_CSWgorm += CSWgnustep-gui
+RUNTIME_DEP_PKGS_CSWgorm += CSWgnustep-back
 
 
 #overrides
@@ -45,6 +43,23 @@ CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=
 CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libGorm.so.1.1.0|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libGormCore.so.1.2.20|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libGormObjCHeaderParser.so.1.1.0|arch_id=18|arch_name=sparcv8+
+
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Gorm|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/Xib.plugin/Xib|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/3Containers.palette/3Containers|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/Nib.plugin/Nib|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/0Menus.palette/0Menus|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/GModel.plugin/GModel|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/4Data.palette/4Data|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/Gorm.plugin/Gorm|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/1Windows.palette/1Windows|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Applications/Gorm.app/Resources/2Controls.palette/2Controls|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libGorm.so.1.1.0|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libGormObjCHeaderParser.so.1.1.0|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libGormCore.so.1.2.20|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgorm += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libGormPrefs.so.1.2.20|arch_id=3|arch_name=i386
+
+
 
 
 #we know bundles miss soname
