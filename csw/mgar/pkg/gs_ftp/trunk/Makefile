@@ -5,6 +5,8 @@ NAME = FTP
 VERSION = 0.5
 GARTYPE = v2
 
+PACKAGES += CSWgs-ftp
+
 DESCRIPTION = GNUstep FTP client
 define BLURB
   Graphical, compact FTP client for GNUstep. 
