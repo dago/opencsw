@@ -18,29 +18,35 @@ DISTFILES  = $(DISTNAME).tar.gz
 BUILD_DEP_PKGS += CSWgmake 
 BUILD_DEP_PKGS += CSWgcc4objc
 
-RUNTIME_DEP_PKGS_CSWFTP += CSWgnustep-make
-RUNTIME_DEP_PKGS_CSWFTP += CSWgnustep-base
-RUNTIME_DEP_PKGS_CSWFTP += CSWgnustep-gui 
-RUNTIME_DEP_PKGS_CSWFTP += CSWgnustep-back
-RUNTIME_DEP_PKGS_CSWFTP += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWFTP += CSWlibobjc4
+RUNTIME_DEP_PKGS_CSWgs-ftp += CSWgnustep-make
+RUNTIME_DEP_PKGS_CSWgs-ftp += CSWgnustep-base
+RUNTIME_DEP_PKGS_CSWgs-ftp += CSWgnustep-gui 
+RUNTIME_DEP_PKGS_CSWgs-ftp += CSWgnustep-back
+RUNTIME_DEP_PKGS_CSWgs-ftp += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgs-ftp += CSWlibobjc4
 
 #we know about these, but they are needed at runtime
-CHECKPKG_OVERRIDES_CSWFTP += surplus-dependency|CSWgnustep-gui
-CHECKPKG_OVERRIDES_CSWFTP += surplus-dependency|CSWgnustep-base
-CHECKPKG_OVERRIDES_CSWFTP += surplus-dependency|CSWgnustep-back
-CHECKPKG_OVERRIDES_CSWFTP += surplus-dependency|CSWgnustep-make
+CHECKPKG_OVERRIDES_CSWgs-ftp += surplus-dependency|CSWgnustep-gui
+CHECKPKG_OVERRIDES_CSWgs-ftp += surplus-dependency|CSWgnustep-base
+CHECKPKG_OVERRIDES_CSWgs-ftp += surplus-dependency|CSWgnustep-back
+CHECKPKG_OVERRIDES_CSWgs-ftp += surplus-dependency|CSWgnustep-make
 
 #these are due to our bundles
-CHECKPKG_OVERRIDES_CSWFTP += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/FTP.app/FTP|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgs-ftp += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/FTP.app/FTP|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
+CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libobjc.so.4
+CHECKPKG_OVERRIDES_CSWgs-ftp += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/FTP.app/FTP
+CHECKPKG_OVERRIDES_CSWgs-ftp += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/Local/Applications/FTP.app/FTP
 
 #we do not directly bind
-CHECKPKG_OVERRIDES_CSWFTP += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWFTP += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
-CHECKPKG_OVERRIDES_CSWFTP += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
-CHECKPKG_OVERRIDES_CSWFTP += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libobjc.so.4
-CHECKPKG_OVERRIDES_CSWFTP += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/FTP.app/FTP
-CHECKPKG_OVERRIDES_CSWFTP += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/Local/Applications/FTP.app/FTP
+CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
+CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libobjc.so.4
+CHECKPKG_OVERRIDES_CSWgs-ftp += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/FTP.app/FTP
+CHECKPKG_OVERRIDES_CSWgs-ftp += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/Local/Applications/FTP.app/FTP
 
 
 #where can we build?
