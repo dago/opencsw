@@ -33,6 +33,8 @@ CHECKPKG_OVERRIDES_CSWgs-ftp += surplus-dependency|CSWgnustep-make
 
 #these are due to our bundles
 CHECKPKG_OVERRIDES_CSWgs-ftp += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/FTP.app/FTP|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgs-ftp += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/FTP.app/FTP|arch_id=3|arch_name=i386
+
 CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgcc_s.so.1
 CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
 CHECKPKG_OVERRIDES_CSWgs-ftp += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
