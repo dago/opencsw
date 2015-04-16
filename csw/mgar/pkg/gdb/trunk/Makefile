@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gdb
-VERSION = 7.7
+VERSION = 7.9
 GARTYPE = v2
 CATEGORIES = devel
 
@@ -25,14 +25,13 @@ define BLURB
    machine as GDB (native) or on another machine (remote). GDB can run on most
   popular UNIX and Microsoft Windows variants.
 	=	$(GNU_MIRROR)
-DISTFILES		= $(DISTNAME).tar.bz2
+DISTFILES		= $(DISTNAME).tar.xz
 # from private patch 2:
 PATCHFILES		+=	0001-OpenSolaris-gdb-solib-svr4.patch
 # from private patch 3:
 PATCHFILES		+=	0002-OpenSolaris-gdb-fork-child.patch
 # from private patch 4:
 PATCHFILES		+=	0003-Extend-to-OpenCSW-the-OpenSolaris-gdb-fork-child.patch
-bPATCHFILES		+=	0004-cast-rlimit-infinity.patch
 b-fork-child.patch
 
 GARCOMPILER		=	GNU
@@ -46,14 +45,14 @@ ISAEXEC	=	1
 BUILD_DEP_PKGS	+=	CSWgcc4ada
 BUILD_PKGS	+=	CSWflex-new
 BUILD_DEP_PKGS	+=	CSWexpect
-BUILD_DEP_PKGS	+=	CSWdejagnu
 BUILD_DEP_PKGS	+=	CSWlibiconv-dev
 BUILD_DEP_PKGS	+=	CSWlibncurses-dev
 BUILD_DEP_PKGS	+=	CSWlibz-dev
 BUILDlzmaDEP_PKGS	+=	CSWlibz-dev
 BUILD_DEP_PKGS	+=	CSWlibreadline-dev
 
-CONFIGURE_ARGS-32	+=	--with-python
+CONFIGURE_ARGS-32	+=	--with-pyt32	+=	--disable-largefile
+32	+=	--with-python
 CONFIGURE_ARGS-64	+=	
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
@@ -68,11 +67,12 @@ CONFIGURE_ARGS	+=	--with-expat
 #CONFIGURE_ARGS	+=	--with-tcl=/opt/csw/lib
 #CONFIGURE_ARGS	+=	--with-tk=/opt/csw/lib
 CONFIGURE_ARGS	+=	--with-x
-CONFIGURE_ARGS	+=	$(CONFIGURE_ARGS-skip the lengthy test until the linker on the build platforms are
-# of the same and latest version...
-.
-SKIPTEST			=	1
-# TEST_SCRIPTS		=	parallel
+CONFIGURE_ARGS	+=	$(CONFIGURE_ARGS-- skip the lengthy test until the linker on the build platforms are
+#   of the same and latest version...
+# - the tests depend on the presence of dejagnu which was removed from
+#   the cataslog !
+#TEST_SCRIPTS		=	parallel
+TEST_SCRIPTS		=SCRIPTS		=	parallel
 
 RUNTIME_DEP_PKGS	+=	CSWlibexpat1
 RUNTIME_DEP_PKGS	+=	CSWlibiconv2
