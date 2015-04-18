@@ -27,7 +27,8 @@ PATCHFILES += 0001-solaris-fix.patch
 CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
 
 #where can we build?
-PACKAGING_PLATFORMS += solaris9-sparc
+#PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386
 PACKAGING_PLATFORMS += solaris10-sparc
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
