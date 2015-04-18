@@ -19,7 +19,7 @@ DISTFILES = $(DISTNAME).tar.bz2
 
 # EXTRA_CPPFLAGS += -features=extensions -D__FUNCTION__=__func__
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = $(DIRPATHS) GREP=/opt/csw/bin/ggrep
 CONFIGURE_ARGS += --program-prefix=g
 # http://sourceware.org/bugzilla/show_bug.cgi?id=12265
 CONFIGURE_ARGS += --disable-werror
