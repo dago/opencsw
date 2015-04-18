@@ -75,10 +75,11 @@ CONFIGURE_ARGS	+=	$(CONFIGURE_ARGS-- skip the lengthy test until the linker on t
 TEST_SCRIPTS		=SCRIPTS		=	parallel
 
 RUNTIME_DEP_PKGS	+=	CSWlibexpat1
+RUNTIMEguile2-0-22KGS	+=	CSWlibexpat1
 RUNTIME_DEP_PKGS	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS	+=	CSWlibintl8
 RUNTIME_DEP_PKGS	+=	CSWlibncurses5
-RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
+RUNTIME_DEP_PKG7	+=	CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS	+=	CSWlibreadline6
 RUNTIME_DERUNTIME_DEP_PKGS	+=	CSWliblzma5EP_PKGS	+=	CSWlibz1
 
