@@ -1,0 +1,29 @@
+From 4394d430bc1117f6c8bd1170905fb881abc39f3b Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 19 Apr 2015 16:19:57 +0200
+Subject: [PATCH] Use ginstall
+
+---
+ Makefile |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 505bff7..ab9fe0c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -133,8 +133,8 @@ dist: clean
+ 	rm -rf .dist
+ 
+ install: all
+-	install -s -m 0755 -D arc $(DESTDIR)$(PREFIX)/bin/arc
+-	install -s -m 0755 -D marc $(DESTDIR)$(PREFIX)/bin/marc
+-	install -m 0644 -D arc.1 $(DESTDIR)$(PREFIX)/share/man/man1/arc.1
+-	install -m 0644 -D marc.1 $(DESTDIR)$(PREFIX)/share/man/man1/marc.1
++	ginstall -s -m 0755 -D arc $(DESTDIR)$(PREFIX)/bin/arc
++	ginstall -s -m 0755 -D marc $(DESTDIR)$(PREFIX)/bin/marc
++	ginstall -m 0644 -D arc.1 $(DESTDIR)$(PREFIX)/share/man/man1/arc.1
++	ginstall -m 0644 -D marc.1 $(DESTDIR)$(PREFIX)/share/man/man1/marc.1
+ 	 	
+-- 
+1.7.10.3
+
