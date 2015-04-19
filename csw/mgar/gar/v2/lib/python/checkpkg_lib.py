@@ -308,7 +308,7 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
       logging.debug("Saving errors of %s to the database.", pkgname)
       for e in es:
         if e.pkgname not in db_stat_objs_by_pkgname:
-          logging.warning("Not saving an error for %s.", e.pkgname)
+          logging.debug("Not saving an error for %s.", e.pkgname)
           continue
         tag_info=e.tag_info
         if tag_info is not None:
