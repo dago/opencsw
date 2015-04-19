@@ -17,6 +17,10 @@ DISTFILES = $(DISTNAME).tar.bz2
 # PATCHFILES  = 0001-Remove-gcc-specific-warning-no-error.patch
 # PATCHFILES += 0002-Use-func-instead-of-FUNCTION.patch
 
+#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 # EXTRA_CPPFLAGS += -features=extensions -D__FUNCTION__=__func__
 
 CONFIGURE_ARGS = $(DIRPATHS) GREP=/opt/csw/bin/ggrep
