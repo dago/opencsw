@@ -5,6 +5,8 @@ NAME = ProjectCenter
 VERSION = 0.6.1
 GARTYPE = v2
 
+PACKAGES += CSWprojectcenter
+
 DESCRIPTION = GNUstep IDE
 define BLURB
   GNUstep IDE for creating Tools and Applications with Makefile generation.
@@ -16,15 +18,26 @@ DISTFILES  = $(DISTNAME).tar.gz
 BUILD_DEP_PKGS += CSWgmake
 BUILD_DEP_PKGS += CSWgcc4objc
 
-CHECKPKG_OVERRIDES_CSWProjectCenter += CSWgnustep-make
-CHECKPKG_OVERRIDES_CSWProjectCenter += CSWgnustep-base
-CHECKPKG_OVERRIDES_CSWProjectCenter += CSWgnustep-gui
-CHECKPKG_OVERRIDES_CSWProjectCenter += CSWgnustep-back
+RUNTIME_DEP_PKGS_CSWprojectcenter += CSWgnustep-make
+RUNTIME_DEP_PKGS_CSWprojectcenter += CSWgnustep-base
+RUNTIME_DEP_PKGS_CSWprojectcenter += CSWgnustep-gui
+RUNTIME_DEP_PKGS_CSWprojectcenter += CSWgnustep-back
+RUNTIME_DEP_PKGS_CSWprojectcenter += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWprojectcenter += CSWlibobjc4
 
 PATCHFILES += 0001-solaris-fix.patch
 
 #overrides
 CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
+
+#we discard placements
+
+
+#we do not link directly due to bundles
+
+
+#we know we have a different name in our bundles
+
 
 #where can we build?
 #PACKAGING_PLATFORMS += solaris9-sparc
