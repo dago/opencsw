@@ -69,6 +69,14 @@ ifeq ($(HOSTNAME),$(CATALOG_RELEASE))
 CATALOG_RELEASE=unstable
 endif
 
+# Handle uncompressed packages. We can't assume all packages have the .gz
+# suffix.
+ifeq "$(filter --nocompress,$(MKPACKAGE_ARGS))" ""
+COMPRESSION_SUFFIX = .gz
+else
+COMPRESSION_SUFFIX =
+endif
+
 define obsoleted_pkg
 # function 'catalogname' must not be used due to recursive calls to CATALOGNAME_*
 CATALOGNAME_$(1) ?= $(subst -,_,$(patsubst CSW%,%,$(1)))_stub
@@ -992,7 +1000,7 @@ _dirpkgshow:
 	@$(foreach SPEC,$(_PKG_SPECS),echo "  $(SPKG_SPOOLDIR)/$(SPEC)";)
 
 _pkgshow:
-	@$(foreach SPEC,$(_PKG_SPECS),printf "  %-20s %s\n"  $(SPEC) $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz;)
+	@$(foreach SPEC,$(_PKG_SPECS),printf "  %-20s %s\n"  $(SPEC) $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile)$(COMPRESSION_SUFFIX) ;)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
 package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo)
@@ -1022,7 +1030,7 @@ pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
 		--catalog-architecture "$(GARCH)" \
 		--os-releases "$(SPKG_OSNAME)" \
 		--catalog-release "$(CATALOG_RELEASE)" \
-		$(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
+		$(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`$(COMPRESSION_SUFFIX) ) || exit 2;)
 	@$(MAKECOOKIE)
 
 pkgcheck-p:
