@@ -20,7 +20,10 @@ PACKAGES += CSWgnulinks
 CATALOGNAME_CSWgnulinks = gnulinks_stub
 SPKG_DESC_CSWgnulinks = Transitional package. Content moved to individual packages.
 # Thats the purpose
-CHECKPKG_OVERRIDES_CSWgnulinks += catalogname-does-not-match-pkgnameSTFILES += COPYING
+CHECKPKG_OVERRIDES_CSWgnulinks += catalogname-does-not-match-pkgnameST#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+             STFILES += COPYING
 
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = 
