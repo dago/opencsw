@@ -9,7 +9,7 @@
 #   I added this link manually for now, investigate later!
 #
 NAME = haproxy
-VERSION = 1.4.18
+VERSION = 1.4.26
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -28,27 +28,20 @@ endef
 MASTER_SITES = http://haproxy.1wt.eu/download/1.4/src/
 DISTFILES += $(DISTNAME).tar.gz
 
-VENDOR_URL = http://haproxy.1wt.eu/
+VEwww.haproxy.org
 
 LICENSE = LICENSE
-
-# Don't care for now, investigate later!
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/haproxy.1
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/haproxy.1
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/build.cfg
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy.cfg
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy-1.1.21-flx.1.pkg
-
-# This is cross-linked, but not correctly added to the package database
-#   /usr/lib/abi/abi_libcrypt_d.so.1 f none 0755 root bin 37708 45322 1036400527 SUNWcstl
-CHECKPKG_OVERRIDES_CSWhaproxy += soname-not-found|libcrypt_d.so.1|is|needed|by|opt/csw/sbin/amd64/haproxy
 
 # Heavily optimized, supported for gcc, didn't dare to touch
 GARCOMPILER = GCC4
 
 BUILD64 = 1
 ISAEXEC = 1
+
+# There is no configure script, configuration is passed directly to the Makefile
 CONFIGURE_SCRIPTS =
+
+# There is no testsuiteONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
 BUILD_ARGS = \
@@ -60,16 +53,13 @@ BUILD_ARGS = \
 INSTALL_ARGS = \
 	PREFIX=$(prefix) \
 	SBINDIR=$(sbindir) \
-	DOCDIR=$(docdir)/$(NAME)
+	DOCDIR=$# We need GNU install as 'install'
+INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
 
 include gar/category.mk
 
-# Makefile contains references to install
-PATH := /opt/csw/gnu:$(PATH)
-
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
-post-install-modulated:
+post-install: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
+post-install-install-modulated:
 	mkdir -p $(DOCDEST)
 	cp -r $(WORKSRC)/examples $(DOCDEST)
-	cp -r $(WORKSRC)/doc/* $(DOCDEST)
-	@$(MAKECOOKIE)
+	cp -r $(WORKSRC)/doc/* $(DOCDEST
