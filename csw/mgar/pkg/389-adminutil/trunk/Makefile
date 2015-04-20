@@ -22,6 +22,9 @@ PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 GARCOMPILER = SOS12U4
 
+BUILD_DEPS += CSWnspr-dev
+BUILD_DEPS += CSWlibnss3-dev
+
 PACKAGES += CSWlibadminutil0
 CATALOGNAME_CSWlibadminutil0 = libadminutil0
 SPKG_DESC_CSWlibadminutil0 += $(DESCRIPTION), libadminutil
@@ -29,7 +32,8 @@ PKGFILES_CSWlibadminutil0 +=  $(call baseisadirs,$(libdir),libadminutil\.so(\.\d
 PKGFILES_CSWlibadminutil0 +=  $(call baseisadirs,$(sharedstatedir),.*\.res)
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibplc4
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicuuc52
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicuuc54
 RUNTIME_DEP_PKGS_CSWlibadminutil0_sparc += CSWlibicui18n52
 RUNTIME_DEP_PKGS_CSWlibadminutil0_sparc += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibldap2-4-2
