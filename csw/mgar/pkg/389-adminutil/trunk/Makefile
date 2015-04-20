@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = 389-adminutil
-VERSION = 1.1.20
+VERSION = 1.1.21
 GARTYPE = v2
 
 DESCRIPTION = The enterprise-class Open Source LDAP server, libadminutil, libadmsslutil
@@ -13,13 +13,14 @@ BUNDLE = 389-ds
 
 LICENSE = LICENSE
 
-MASTER_SITES = http://port389.org/sources/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = https://git.fedorahosted.org/cgit/389/adminutil.git/snapshot/
+DISTNAME  = adminutil-$(NAME)-$(VERSION)
+DISTFILES  = $(DISTNAME).tar.gz
 
 BUILD64 = 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
-GARCOMPILER = SOS12U2
+GARCOMPILER = SOS12U4
 
 PACKAGES += CSWlibadminutil0
 CATALOGNAME_CSWlibadminutil0 = libadminutil0
@@ -63,11 +64,14 @@ CHECKPKG_OVERRIDES_CSW389-adminutil-dev += file-with-bad-content|/usr/share|root
 TEST_SCRIPTS = 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
 
+# LDAPAPI=mozldap
+LDAPAPI=openldap
+
 CONFIGURE_ARGS = $(DIRPATHS)
-# CONFIGURE_ARGS += --with-ldapsdk-inc=$(includedir)/dirsrv 
-# CONFIGURE_ARGS += --with-ldapsdk-lib=$(libdir)
-CONFIGURE_ARGS += --with-openldap=$(prefix)
-CONFIGURE_ARGS += --with-openldap-inc=$(includedir)
+CONFIGURE_ARGS_mozldap += --with-ldapsdk-inc=$(includedir)/dirsrv 
+CONFIGURE_ARGS_mozldap += --with-ldapsdk-lib=$(libdir)
+CONFIGURE_ARGS_openldap += --with-openldap=$(prefix)
+CONFIGURE_ARGS_openldap += --with-openldap-inc=$(includedir)
 CONFIGURE_ARGS += --with-icu-inc=$(includedir)
 CONFIGURE_ARGS += --with-icu-lib=$(libdir)
 CONFIGURE_ARGS += --with-icu-bin=$(bindir)
@@ -77,13 +81,14 @@ CONFIGURE_ARGS += --with-nss-lib=$(libdir)
 CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss 
 CONFIGURE_ARGS += --with-nspr-lib=$(libdir)
 CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(LDAPAPI))
 
 include gar/category.mk
 
-pre-configure-modulated:
-	cd $(WORKSRC) && rm ltmain.sh && libtoolize --copy --force
-	cd $(WORKSRC) && aclocal
-	cd $(WORKSRC) && autoconf --force
-	cd $(WORKSRC) && automake -a -c -f
-	@$(MAKECOOKIE)
+# pre-configure-modulated:
+# 	cd $(WORKSRC) && rm ltmain.sh && libtoolize --copy --force
+# 	cd $(WORKSRC) && aclocal
+# 	cd $(WORKSRC) && autoconf --force
+# 	cd $(WORKSRC) && automake -a -c -f
+# 	@$(MAKECOOKIE)
 
