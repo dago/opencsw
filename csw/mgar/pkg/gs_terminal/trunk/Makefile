@@ -44,6 +44,7 @@ CHECKPKG_OVERRIDES_CSWgs-terminal += no-direct-binding|/opt/csw/GNUstep/Local/Ap
 
 #known placement overrides since we use bundles
 CHECKPKG_OVERRIDES_CSWgs-terminal += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgs-terminal += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|arch_id=3|arch_name=i386
 
 #others
 CHECKPKG_OVERRIDES_CSWgs-terminal += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal
