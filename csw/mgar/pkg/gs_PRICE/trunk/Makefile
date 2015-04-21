@@ -5,6 +5,8 @@ NAME = PRICE
 VERSION = 1.2.0
 GARTYPE = v2
 
+PACKAGES += CSWgs-price
+
 DESCRIPTION = Image viewing and filtering program
 define BLURB
   Raster image viewing, manipulation, filtering and enhancement program based on GNUstep. Capable of opening several documents at once and running high quality filters on them.
@@ -16,17 +18,25 @@ DISTFILES  = $(DISTNAME).tar.gz
 BUILD_DEP_PKGS += CSWgmake
 BUILD_DEP_PKGS += CSWgcc4objc
 
-RUNTIME_DEP_PKGS_CSWPRICE += CSWgnustep-make
-RUNTIME_DEP_PKGS_CSWPRICE += CSWgnustep-base
-RUNTIME_DEP_PKGS_CSWPRICE += CSWgnustep-gui
-RUNTIME_DEP_PKGS_CSWPRICE += CSWgnustep-back
+RUNTIME_DEP_PKGS_CSWgs-price += CSWgnustep-make
+RUNTIME_DEP_PKGS_CSWgs-price += CSWgnustep-base
+RUNTIME_DEP_PKGS_CSWgs-price += CSWgnustep-gui
+RUNTIME_DEP_PKGS_CSWgs-price += CSWgnustep-back
+RUNTIME_DEP_PKGS_CSWgs-price += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgs-price += CSWlibobjc4
 
 #overrides
-CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
+CHECKPKG_OVERRIDES_CSWgs-price += surplus-dependency|CSWgnustep-make
+
+#known GNUstep app bundle overrides
+CHECKPKG_OVERRIDES_CSWgs-price += no-direct-binding|/opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
+CHECKPKG_OVERRIDES_CSWgs-price += no-direct-binding|/opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|is|not|directly|bound|to|soname|libobjc.so.4
+CHECKPKG_OVERRIDES_CSWgs-price += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE
+CHECKPKG_OVERRIDES_CSWgs-price += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE
 
 #where can we build?
-PACKAGING_PLATFORMS += solaris9-sparc
-PACKAGING_PLATFORMS += solaris10-sparc
+#PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
