@@ -31,15 +31,13 @@ PACKAGING_PLATFORMS += solaris9-sparc
 PACKAGING_PLATFORMS += solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
-AS += pentium_pro
-
-PACKAGES = CSWlibpng-dev
-SPKG_DESC_CSWlibpng-dev = $(DESCRIPTION), development files
+AS += penti+= CSWlibpng-dev
+SPKG_DESC_CSWlibpng-dev +SC_CSWlibpng-dev = $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWlibpng-6-16
 BUILD_DEP_PKGS_CSWlibpng-dev += CSWlibz-dev
 
-PACKAGES = CSWlibpng-utils
-SPKG_DESC_CSWlibpng-utils = $(DESCRIPTION), binary utilities
+PACKAGES += CSWlibpng-utils
+SPKG_DESC_CSWlibpng-utils += $(DESCRIPTION), binary utilities
 RUNTIME_DEP_PKGS_CSWlibpng-utils += CSWlibpng16-16
 RUNTIME_DEP_PKGS_CSWlibpng-utils += CSWlibz1 
 PKGFILES_CSWlibpng-utils += $(bindir)/pngfix
@@ -47,7 +45,7 @@ PKGFILES_CSWlibpng-utils += $(bindir)/png-fix-itxt
 
 PACKAGES += CSWlibpng16-16
 CATALOGNAME_CSWlibpng16-16 = libpng16_16
-PKGFILES_CSWlibpng16-16+= $(call baseisadirs,$(libdir),libpng16\.so\.16(\.\d+)*)
+PKGFILES_CSWlibpng16-16 += $(call baseisadirs,$(libdir),libpng16\.so\.16(\.\d+)*)
 SPKG_DESC_CSWlibpng16-16 += $(DESCRIPTION), libpng16.so.16
 RUNTIME_DEP_PKGS_CSWlibpng += CSWlibpng16-16
 RUNTIME_DEP_PKGS_CSWlibpng16-16GS_CSWlibpng15-15 += CSWlibz1
