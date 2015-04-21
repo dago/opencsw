@@ -52,7 +52,8 @@ SPKG_DESC_CSWlibpng16-16 += $(DESCRIPTION), libpng16.so.16
 RUNTIME_DEP_PKGS_CSWlibpng += CSWlibpng16-16
 RUNTIME_DEP_PKGS_CSWlibpng16-16GS_CSWlibpng15-15 += CSWlibz1
 
-# The CSWpng package must also pull in libpng.so.3 and libpng12.so.0
+# The CSWpng package must also pull in libpng.so.3 a# Removed as suggested by Dago 2015-04-20
+#nd libpng12.so.0
 OBSOLE6-16 = CSWpng
 
 BUILD64_LIBS_ONLY = 1
