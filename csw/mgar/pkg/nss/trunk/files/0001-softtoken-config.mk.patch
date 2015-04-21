@@ -1,0 +1,28 @@
+--- a/nss/lib/softoken/config.mk
++++ b/nss/lib/softoken/config.mk
+@@ -22,7 +22,7 @@ RESNAME = $(LIBRARY_NAME).rc
+ 
+ ifdef NS_USE_GCC
+ EXTRA_SHARED_LIBS += \
+-	-L$(DIST)/lib \
++-L$(prefix)/lib \
+ 	-l$(SQLITE_LIB_NAME) \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+@@ -47,14 +47,14 @@ else
+ # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
+ # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
+ EXTRA_SHARED_LIBS += \
+-	-L$(DIST)/lib \
+-	-l$(SQLITE_LIB_NAME) \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+ 	-L$(NSPR_LIB_DIR) \
+ 	-lplc4 \
+ 	-lplds4 \
+ 	-lnspr4 \
++	-L$(prefix)/lib \
++	-l$(SQLITE_LIB_NAME) \
+ 	$(NULL)
+ endif
+ 

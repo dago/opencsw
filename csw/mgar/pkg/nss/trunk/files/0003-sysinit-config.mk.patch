@@ -1,0 +1,14 @@
+--- a/nss/lib/sysinit/config.mk
++++ b/nss/lib/sysinit/config.mk
+@@ -61,9 +61,9 @@ ifeq ($(BUILD_SUN_PKG), 1)
+ # The -R '$ORIGIN' linker option instructs this library to search for its
+ # dependencies in the same directory where it resides.
+ ifeq ($(USE_64), 1)
+-MKSHLIB += -R '$$ORIGIN:/usr/lib/mps/secv1/64:/usr/lib/mps/64'
++MKSHLIB += -R'/opt/csw/lib/64/$$ISALIST' -Wl,-M${HOME}/opencsw/.buildsys/v2/gar/lib/map.solaris10,-B,direct,-z,ignore
+ else
+-MKSHLIB += -R '$$ORIGIN:/usr/lib/mps/secv1:/usr/lib/mps'
++MKSHLIB += -R'/opt/csw/lib/$ISALIST' -Wl,-M${HOME}/opencsw/.buildsys/v2/gar/lib/map.solaris10,-B,direct,-z,ignore
+ endif
+ else
+ MKSHLIB += -R '$$ORIGIN'

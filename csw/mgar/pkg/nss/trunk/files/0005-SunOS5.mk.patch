@@ -1,6 +1,6 @@
---- a/mozilla/security/coreconf/SunOS5.mk
-+++ b/mozilla/security/coreconf/SunOS5.mk
-@@ -129,9 +129,9 @@ ifeq ($(BUILD_SUN_PKG), 1)
+--- a/nss/coreconf/SunOS5.mk
++++ b/nss/coreconf/SunOS5.mk
+@@ -133,9 +133,9 @@ ifeq ($(BUILD_SUN_PKG), 1)
  # The -R '$ORIGIN' linker option instructs this library to search for its
  # dependencies in the same directory where it resides.
  ifeq ($(USE_64), 1)

@@ -24,7 +24,7 @@
 
 NAME = nss
 MAJOR_VERSION = 3
-MINOR_VERSION = 14
+MINOR_VERSION = 17
 PATCHLEVEL    = 4
 VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 # #VERSION = $(MAJOR_VERSION).$(MINOR_VERSION)
@@ -47,8 +47,26 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += mpl
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 # GARCOMPILER = GCC4
-GARFLAVOR = DBG
-GARCOMPILER = SOS12U3rc solaris10-i386
+# GARFLAVOR = DBG
+GARCOMPILER = SOS12U4
+
+# Required patches.
+# PATCHFILES += include.patch
+# PATCHFILES += ld-options.patch
+# PATCHFILES += 0004-fix-xarch-and-add-SQLITE_LIB_DIR-var.patch
+# PATCHFILES += 0006-platlibs.mk-linking-bltest.patch
+# PATCHFILES += 0006-config.mk-linking.patch
+# PATCHFILES += 0005-change-rpath-for-bins-in-platlibs.mk.patch
+PATCHFILES += 0001-softtoken-config.mk.patch
+PATCHFILES += 0002-cmd-platlib.mk.patch
+PATCHFILES += 0003-sysinit-config.mk.patch
+PATCHFILES += 0005-SunOS5.mk.patch
+
+# For DBG builds
+PATCHFILES_DBG  = whoami.patch
+PATCHFILES_DBG += 0007-skip-assertion.patch
+
+PATCHFILES += $(PATCHFILES_$(GARFLAVOR))rc solaris10-i386
 
 PACKAGES += CSWlibnss3
 CATALOGNAME_CSWlibnss3 = libnss3
@@ -247,24 +265,11 @@ NSS_BINARIES += signtool
 NSS_BINARIES += signver
 NSS_BINARIES += ssltap
 
-LICENSE = mpl-tri-license-txt
-
-# For DBG builds
-# PATCHFILES  = whoami.patch
-
-# R# equired patches.
-PATCHFILES # += include.patch
-PATCHFILES += ld-options.patch
-PATCHFILES += 0004-fix-xarch-and-add-SQLITE_LIB_DIR-var.patch
-6-platlibs.mk-linking-bltest.patch
-PATCHFILES += 0006-config.mk-linkingmk-linking-bltest.patch
-PASunOS5.mkmk-linking-bltest.patch
-PATCHFILES += 0005-change-rpath-for-bins-in-pPATCHFILES_DBG += 0007-skip-assertion.patch
-PATCHFILES += $(PATCHFILES_$(GARFLAVOR))platlibs.mk.patch
+LICENSE = mpl-trlibs.mk.patch
 
 # http://lists.opencsw.org/pipermail/pkgsubmissions/2010-February/000167.html
 GARCOMP_FLAGS_GCC4 = NS_USE_GCC=1
-GARCOMP_FLAGS_SOS12U3 = 
+GARCOMP_FLAGS_SOS12U4 = 
 
 # for whoami
 EXTRA_BUILD_ENV = PATH=$(PATH):/usr/ucb
@@ -277,22 +282,22 @@ TEST_SCRIPTS =
 
 
 
-include gar/category.mk
-
-build-nss: build-coreconf build-dbm build-nss-compile
+include # build-nss: build-coreconf build-dbm build-nss-compile
+build-nss: 
+	(cd $(WORKSRC)/nss \
+         CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIONS)' \
+        && env && gmake all prefix=$(prefix) BUILD_SUN_PKG=1 $(GARCOMP_FLAGS_$(GARCOMPILER)) NO_MDUPDATE=1)
 	@$(MAKECOOKIE)
 
 build-coreconf:
-	(cd $(WORKSRC)/mozilla/security$(BUILD_ENV)y/coreconf \
-		&& \
-	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIO $(GARCOMP_FLAGS_$(GARCOMPILER)) NO_MDUPDATE=ONS)' \
+	(cd $(WORKSRC)/nss/coreconf \
+	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIONS)' \
+	&& (LD_OPTIO $(GARCOMP_FLAGS_$(GARCOMPILER)) NO_MDUPDATE=ONS)' \
 	gmake -j1)
-	@$(MAKECOOKIE)
-
 build-dbm:
-	(cd $(WORKSRC)/mozilla/security/dbm \
-		&& \
-	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIO $(GARCOMP_FLAGS_$(GARCOMPILER)) NO_MDUPDATE=ONS)' \
+	(cd $(WORKSRC)/nss/lib/dbm \
+	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIONS)' \
+	&& (LD_OPTIO $(GARCOMP_FLAGS_$(GARCOMPILER)) NO_MDUPDATE=ONS)' \
 	gmake -j1)
 	@$(MAKECOOKIE)
 
@@ -300,32 +305,30 @@ build-dbm:
 # needs to be used instead of $$.
 bui@echo $(LD_OPTIONS)
 	(cd $(WORKSRC)/mozilla/security/nss \
-		&& env \
+	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIONS)' \
 		&& gmake -j1 BUILD_SUN_PKG=1 $(GARCOMP_FLAGS_$(GARCOMPILER)) NO_MDUPDATE=1b/\$$\$$ISALIST\')
 	@$(MAKECOOKIE)
 
 install-nss:
 	ginstall -d -m 755 $(DESTDIR)$(libdir)
-	for f in $(WORKSRC)/mozilla/dist/SunOS5*/lib/*.so; do \
+	forWORKSRC)/mozilla/dist/SunOS5*/lib/*.so; do \
 	  ginstall -m 755 $${f} $(DESTDIR)$(libdir); \
-	  if [ -r $(WORKSRC)/mozilla/dist/SunOS5*/lib/`basename $${f} .so`.chk ]; then \
+	  ifWORKSRC)/mozilla/dist/SunOS5*/lib/`basename $${f} .so`.chk ]; then \
 	    ginstall -m 644 \
-	      $(WORKSRC)/mozilla/dist/SunOS5*/lib/`basename $${f} .so`.chk \
+	WORKSRC)/mozilla/dist/SunOS5*/lib/`basename $${f} .so`.chk \
 	      $(DESTDIR)$(libdir); \
 	  fi \
 	done
 	ginstall -d -m 755 $(DESTDIR)$(bindir)
 	# TODO: nss-config
-	# gcp -a $(WORKSRC)/mozilla/dist/*/bin/nss-config $(DESTDIR)$(bindir)
+	# gWORKSRC)/mozilla/dist/*/bin/nss-config $(DESTDIR)$(bindir)
 	ginstall -d -m 755 $(DESTDIR)$(includedir)
-	for f in \
-			$(WORKSRC)/mozilla/dist/public/nss/*.h; \
+	for f inWORKSRC)/mozilla/dist/public/nss/*.h; \
 		do \
 		ginstall -m 644 $${f} $(DESTDIR)$(includedir); \
 	done
 	for bin in $(NSS_BINARIES); do \
-	  ginstall -m 755 \
-	    $(WORKSRC)/mozilla/dist/*/bin/$${bin} \
+	  ginstall -m 755 \WORKSRC)/mozilla/dist/*/bin/$${bin} \
 	    $(DESTDIR)$(bindir)/`basename $${file}`; \
 	done
 	# Asserting that we have the right version in the .pc file

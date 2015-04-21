@@ -1,0 +1,40 @@
+--- a/nss/cmd/platlibs.mk
++++ b/nss/cmd/platlibs.mk
+@@ -8,13 +8,13 @@ ifeq ($(BUILD_SUN_PKG), 1)
+ # set RPATH-type linker instructions here so they can be used in the shared
+ # version and in the mixed (static nss libs/shared NSPR libs) version.
+ 
+-ifeq ($(OS_ARCH), SunOS) 
+-ifeq ($(USE_64), 1)
+-EXTRA_SHARED_LIBS += -R '$$ORIGIN/../lib:/usr/lib/mps/secv1/64:/usr/lib/mps/64'
+-else
+-EXTRA_SHARED_LIBS += -R '$$ORIGIN/../lib:/usr/lib/mps/secv1:/usr/lib/mps'
+-endif
+-endif
++ifeq ($(OS_ARCH), SunOS) 
++ifeq ($(USE_64), 1)
++EXTRA_SHARED_LIBS += -R'/opt/csw/lib/64/$$ISALIST' -Wl,-M${HOME}/opencsw/.buildsys/v2/gar/lib/map.solaris10,-B,direct,-z,ignore
++else
++EXTRA_SHARED_LIBS += -R'/opt/csw/lib/$$ISALIST' -Wl,-M${HOME}/opencsw/.buildsys/v2/gar/lib/map.solaris10,-B,direct,-z,ignore
++endif
++endif
+ 
+ ifeq ($(OS_ARCH), Linux)
+ ifeq ($(USE_64), 1)
+@@ -135,14 +135,14 @@ endif
+ # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
+ # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
+ EXTRA_SHARED_LIBS += \
+-	-L$(DIST)/lib \
+-	-l$(SQLITE_LIB_NAME) \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+ 	-L$(NSPR_LIB_DIR) \
+ 	-lplc4 \
+ 	-lplds4 \
+ 	-lnspr4 \
++	-L$(prefix)/lib \
++	-l$(SQLITE_LIB_NAME) \
+ 	$(NULL)
+ endif
+ 
