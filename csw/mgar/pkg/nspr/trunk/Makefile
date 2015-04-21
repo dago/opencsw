@@ -8,7 +8,7 @@
 
 NAME = nspr
 MAJOR_VERSION = 4
-MIN_VERSION = 10.2
+MIN_VERSION = 10.8
 VERSION = $(MAJOR_VERSION).$(MIN_VERSION)
 CATEGORIES = lib
 GARTYPE = v2
@@ -24,7 +24,9 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 # PATCHFILES  = nspr-4.6.1-config.patch
 
-PACKAGING_PLATFORMS = solaris10-sparGARCOMPILER = GCC4rcv += CSWsunbird
+PACKAGING_PLATFORMS = solaris10-spar
+GARCOMPILER = GCC4
+GARFLAVOR = DBGrcv += CSWsunbird
 
 # Library splits
 
@@ -32,21 +34,21 @@ PACKAGES += CSWlibnspr4
 CATALOGNAME_CSWlibnspr4 = libnspr4
 SPKG_DESC_CSWlibnspr4 = Netscape Portable Runtime, libnspr4.so
 PKGFILES_CSWlibnspr4 += $(call baseisadirs,$(libdRUNTIME_DEP_PKGS_CSWlibnspr4 += CSWlibgcc-s1ibnspr4 = CSWnspr
-CHECKPKG_OVERRIDES_CSWlibnspr4 += soname-equals-filename
+CHECKPKG_OVERRIDES_CSWlibnspr4 += sonameCHECKPKG_OVERRIDES_CSWlibnspr4 += filename-version-does-not-match-pkginfo-versione-equals-filename
 
 PACKAGES += CSWlibplc4
 CATALOGNAME_CSWlibplc4 = libplc4
 SPKG_DESC_CSWlibplc4 = Netscape Portable Runtime, libplc4.so
 PKGFILES_CSWlibplc4 += $(call baseisadirs,$(libdir),libplc4.so)
 RUNTIME_DEP_PKGS_CSWlibplcRUNTIME_DEP_PKGS_CSWlibplc4 += CSWlibgcc-s1c4 += CSWlibnspr4
-CHECKPKG_OVERRIDES_CSWlibplc4 += soname-equals-filename
+CHECKPKG_OVERRIDES_CSWlibplc4 += sonameCHECKPKG_OVERRIDES_CSWlibplc4 += filename-version-does-not-match-pkginfo-versione-equals-filename
 
 PACKAGES += CSWlibplds4
 CATALOGNAME_CSWlibplds4 = libplds4
 SPKG_DESC_CSWlibplds4 = Netscape Portable Runtime, libplds4.so
 PKGFILES_CSWlibplds4 += $(call baseisadirs,$(libdir),libplds4.so)
 RUNTIME_DEP_PKGS_CSWlibpldsRUNTIME_DEP_PKGS_CSWlibplds4 += CSWlibgcc-s1s4 += CSWlibnspr4
-CHECKPKG_OVERRIDES_CSWlibplds4 += soname-equals-filename
+CHECKPKG_OVERRIDES_CSWlibplds4 += sonameCHECKPKG_OVERRIDES_CSWlibplds4 += filename-version-does-not-match-pkginfo-versione-equals-filename
 
 # this lib is only build on sparc, nobody uses this
 EX_FILES += .*/libnspr_flt4\.so
