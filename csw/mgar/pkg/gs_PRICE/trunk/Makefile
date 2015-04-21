@@ -25,14 +25,22 @@ RUNTIME_DEP_PKGS_CSWgs-price += CSWgnustep-back
 RUNTIME_DEP_PKGS_CSWgs-price += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgs-price += CSWlibobjc4
 
-#overrides
+#overrides, we know we need these!
 CHECKPKG_OVERRIDES_CSWgs-price += surplus-dependency|CSWgnustep-make
+CHECKPKG_OVERRIDES_CSWgs-price += surplus-dependency|CSWgnustep-gui
+CHECKPKG_OVERRIDES_CSWgs-price += surplus-dependency|CSWgnustep-base
+CHECKPKG_OVERRIDES_CSWgs-price += surplus-dependency|CSWgnustep-back
 
 #known GNUstep app bundle overrides
 CHECKPKG_OVERRIDES_CSWgs-price += no-direct-binding|/opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
 CHECKPKG_OVERRIDES_CSWgs-price += no-direct-binding|/opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|is|not|directly|bound|to|soname|libobjc.so.4
 CHECKPKG_OVERRIDES_CSWgs-price += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE
 CHECKPKG_OVERRIDES_CSWgs-price += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE
+CHECKPKG_OVERRIDES_CSWgs-price += no-direct-binding|/opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWgs-price += no-direct-binding|/opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+
+#known placement problems
+CHECKPKG_OVERRIDES_CSWgs-price += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|arch_id=18|arch_name=sparcv8+
 
 #where can we build?
 #PACKAGING_PLATFORMS += solaris9-sparc
