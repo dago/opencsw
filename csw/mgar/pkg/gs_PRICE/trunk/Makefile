@@ -41,6 +41,8 @@ CHECKPKG_OVERRIDES_CSWgs-price += no-direct-binding|/opt/csw/GNUstep/Local/Appli
 
 #known placement problems
 CHECKPKG_OVERRIDES_CSWgs-price += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgs-price += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/PRICE.app/PRICE|arch_id=3|arch_name=i386
+
 
 #where can we build?
 #PACKAGING_PLATFORMS += solaris9-sparc
