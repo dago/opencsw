@@ -24,7 +24,7 @@ define BLURB
   Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) as well
   as a full-strength general-purpose cryptography# This recipe can be used to compile openssl with Sun Studio or GCC
 # Just define the GARCOMPILER to the GNU or SUN
-GARCOMPILER = GNU
+GARCOMPILER = GCC4
 GARCOMPILER_TYPE = $(if $(findstring GCC,$(GARCOMPILER)),GNU,SUN)hy library.
 endef
 
@@ -56,7 +56,8 @@ PRESERVECONF = $(sysconfdir)/ssl/openssl.cnf
 # We do ship libcrypto in libssl package
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CCHECKPKG_OVERRIDES_CSWlibssl1-0-0 += $(CHECKPKG_OVERRIDES_CSWlibssl1-0-0_$(GARCH))
 
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0_sparcES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0_sparcES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csb/sparcv8plus+vis/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRID_sparcES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
 CHECKPKG_OVERRID_sparcES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=C
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0_i386ES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=Cr# o1-0-0
 endif
@@ -81,7 +82,7 @@ ifeq ($(shell /usr/bin/uname -r),5.9)
 endifEWS README.ENGIis taken from https://hg.openindiana.org/upstream/oracle/userland-gate/
 # original file: components/openssl/openssl-1.0.1/patches/18-compiler_opts.patch
 # I think they are smarter than me to figure what are the best compiler options
-PATCHFILES = optimized_configure_targets.patch$(PATCH_SUFFIX)
+PATCHFILES += optimized_configure_targets.patch$(PATCH_SUFFIX)
 
 # This patch add optimised build targets for some solaris isa, ie:
 # solaris-sparcv8-cc-sunw, solaris-pentium_pro-cc-sunw and solaris-sparcv9+vis-cc-sunw
@@ -95,7 +96,8 @@ e_targets.patch
 # We install engines libraries in /opt/csw/lib/engines/1.0.0/
 # instead of /opt/csw/lib/engines to avoid clashes with 0.9.8
 # and futur new release of ssl libraries
-PATCHFILES += 0003-make-engines-directory-soname-dependant.patch
+PATCHFILES += 0003-make-engines-directory-soname-depestream uses an obsolete GCC flag
+PATCHFILES += 0004-remove-obsolete-mv8-soname-dependant.patch
 
 # Update openssl.cnf path in man page to follow opencsw standard
 PATCHFILES += ope
@@ -193,7 +195,7 @@ sparcv8plus_SUN_CONFIGURE_TARGET	= solaris-sparcv9-cc-sunw
 sparcv8plus+vis_SUN_CONFIGURE_TARGET	= solaris-sparcv9+vis-cc-sunw
 sparcv9_SUN_CONFIGURE_TARGET		= solaris64-sparcv9-cc-sunw
 
-sparcv9_GNU_CONFIGURE_TARGET		= solaris-sparcv8-gcc
+sparcv8_GNU_CONFIGURE_TARGET		= solaris-sparcv8-gcc
 sparcv8plus_GNU_CONFIGURE_TARGET	= solaris-sparcv9-gcc
 sparcv8plus+vis_GNU_CONFIGURE_TARGET	= solaris-sparcv9+vis-gcc
 sparcv9_GNU_CONFIGURE_TARGET		= solaris64-sparcv9-gcc
@@ -251,10 +253,10 @@ include # We remove SSE2 hardware capability in the elf header of libcrypto as
 # Solaris 9 4/04 (according to "Sun Studio 12: C++ User's Guide")
 post-install:
 	if command -v elfedit >/dev/null 2>&1 && [ "$(GARCH)" = "i386" ] && \
-  	   /usr/ccs/bin/dump -Lv "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME) | grep SUNW_CAP >/dev/null; then \
+  	   /usr/ccs/bin/dump -Lv "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME)" | grep SUNW_CAP >/dev/null; then \
 		echo " ==> Removing the SSE2 hardware capability from libcrypto"; \
-		chmod +w "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME) \
-		elfedit -e 'cap:hw1 -and -cmp sse2' "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME) \
+		chmod +w "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME)"; \
+		elfedit -e 'cap:hw1 -and -cmp sse2' "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME)"; \
 	fi
 	@$(MAKECOOKIE)e gar/category.mk
 
