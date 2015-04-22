@@ -1,0 +1,32 @@
+#!/bin/sh
+
+#FMRI network
+
+SU=/bin/su
+DAEMON=/opt/csw/bin/tor
+CONF=/etc/opt/csw/tor/torrc
+pidfile=/tmp/tor.pid
+TOR_USER="tor"
+
+case "$1" in
+  start)
+    echo "Starting Tor"
+    $SU - $TOR_USER -c "$DAEMON --RunAsDaemon 1 --PidFile $pidfile"
+    ;;
+  stop)
+    echo "Stopping Tor"
+    kill `cat $pidfile`
+    ;;
+  restart)
+    echo "Restarting Tor"
+    kill `cat $pidfile`
+    sleep 1
+    $SU - $TOR_USER -c "$DAEMON --RunAsDaemon 1 --PidFile $pidfile"
+    ;;
+  *)
+    echo "Usage: $0 { start | stop | restart }"
+    exit 1
+    ;;
+esac
+
+exit 0

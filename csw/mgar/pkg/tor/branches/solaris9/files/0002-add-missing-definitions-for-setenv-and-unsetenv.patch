@@ -1,0 +1,43 @@
+From 98c51a37dcc68fadec74a17d4d37ce8af5a3100d Mon Sep 17 00:00:00 2001
+From: Jake Goerzen <jgoerzen@opencsw.org>
+Date: Wed, 22 Apr 2015 20:32:15 +0200
+Subject: [PATCH] add missing definitions for setenv and unsetenv
+
+---
+ src/test/test_util.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/src/test/test_util.c b/src/test/test_util.c
+index 225fb79..f476ea7 100644
+--- a/src/test/test_util.c
++++ b/src/test/test_util.c
+@@ -23,6 +23,26 @@
+ #endif
+ #include <math.h>
+ 
++/* Solaris 9 is missing definitions for setenv and unsetenv */
++
++#ifdef __sun
++void setenv(char *n, char *v, int x) {
++  char buf[256];
++  snprintf(buf,sizeof(buf),"%s=%s",n,v);
++  putenv(buf);
++}
++
++void unsetenv(char *env_name) {
++  extern char **environ;
++  char **cc;
++  int l;
++  l=strlen(env_name);
++  for (cc=environ;*cc!=NULL;cc++) {
++    if (strncmp(env_name,*cc,l)==0 && ((*cc)[l]=='='||(*cc)[l]=='\0')) break;
++  } for (; *cc != NULL; cc++) *cc=cc[1];
++}
++#endif
++
+ /* XXXX this is a minimal wrapper to make the unit tests compile with the
+  * changed tor_timegm interface. */
+ static time_t
+-- 
+1.7.10.3
+
