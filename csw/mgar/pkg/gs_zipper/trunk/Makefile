@@ -4,6 +4,7 @@
 NAME = Zipper
 VERSION = 1.5
 GARTYPE = v2
+PACKAGES += CSWgs-zipper
 
 DESCRIPTION = GNUstep graphical archive tool (zip, tar, ...)
 define BLURB
@@ -21,7 +22,7 @@ RUNTIME_DEP_PKGS_CSWZipper += CSWgnustep-base
 RUNTIME_DEP_PKGS_CSWZipper += CSWgnustep-gui
 RUNTIME_DEP_PKGS_CSWZipper += CSWgnustep-back
 RUNTIME_DEP_PKGS_CSWZipper += CSWgtar
-RUNTIME_DEP_PKGS_CSWZipper += SUNWzip
+RUNTIME_DEP_PKGS_CSWZipper += CSWzip
 
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
