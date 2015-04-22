@@ -14,9 +14,8 @@
 
 NAME = openssl
 VERSION = 1.0.1m
-CATEGORIES = lib
-GARTYPE = v2
-SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
+CATEGORIES = # Since version 1.0.0, soname is fixed and does not follow the minor releases
+SONAME=1.0.0 | tr -d '[a-z]')
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
 define BLURB
@@ -252,10 +251,10 @@ include # We remove SSE2 hardware capability in the elf header of libcrypto as
 # Solaris 9 4/04 (according to "Sun Studio 12: C++ User's Guide")
 post-install:
 	if command -v elfedit >/dev/null 2>&1 && [ "$(GARCH)" = "i386" ] && \
-  	   /usr/ccs/bin/dump -Lv "$(DESTDIR)/$(libdir)/libcrypto.so.1.0.0" | grep SUNW_CAP >/dev/null; then \
+  	   /usr/ccs/bin/dump -Lv "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME) | grep SUNW_CAP >/dev/null; then \
 		echo " ==> Removing the SSE2 hardware capability from libcrypto"; \
-		chmod +w "$(DESTDIR)/$(libdir)/libcrypto.so.1.0.0"; \
-		elfedit -e 'cap:hw1 -and -cmp sse2' "$(DESTDIR)/$(libdir)/libcrypto.so.1.0.0"; \
+		chmod +w "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME) \
+		elfedit -e 'cap:hw1 -and -cmp sse2' "$(DESTDIR)/$(libdir)/libcrypto.so.$(SONAME) \
 	fi
 	@$(MAKECOOKIE)e gar/category.mk
 
