@@ -1,46 +1,25 @@
-From c2b3c5aedbb4f94554a69a6936aed67d10ae30b6 Mon Sep 17 00:00:00 2001
+From 55d3d0705dc2c26e174a6742b08177c4c3217637 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 25 Feb 2015 10:57:44 +0100
+Date: Wed, 22 Apr 2015 09:49:56 +0200
 Subject: [PATCH] Use KRB5CONFIG
 
 ---
- configure | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ configure.ac | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/configure b/configure
-index 1616b1d..906ad4a 100755
---- a/configure
-+++ b/configure
-@@ -21116,6 +21118,7 @@ if test "${with_gssapi+set}" = set; then :
- 
- fi
- 
-+: ${KRB5CONFIG:="$GSSAPI_ROOT/bin/krb5-config"}
- 
- save_CPPFLAGS="$CPPFLAGS"
- { $as_echo "$as_me:${as_lineno-$LINENO}: checking if GSS-API support is requested" >&5
-@@ -21127,8 +21130,8 @@ $as_echo "yes" >&6; }
+diff --git a/configure.ac b/configure.ac
+index e676ff3..bfce862 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1194,8 +1194,6 @@ if test x"$want_gss" = xyes; then
    if test -z "$GSSAPI_INCS"; then
       if test -n "$host_alias" -a -f "$GSSAPI_ROOT/bin/$host_alias-krb5-config"; then
          GSSAPI_INCS=`$GSSAPI_ROOT/bin/$host_alias-krb5-config --cflags gssapi`
 -     elif test -f "$GSSAPI_ROOT/bin/krb5-config"; then
 -        GSSAPI_INCS=`$GSSAPI_ROOT/bin/krb5-config --cflags gssapi`
-+     elif test -f "$KRB5CONFIG"; then
-+        GSSAPI_INCS=`$KRB5CONFIG --cflags gssapi`
+      elif test -f "$KRB5CONFIG"; then
+         GSSAPI_INCS=`$KRB5CONFIG --cflags gssapi`
       elif test "$GSSAPI_ROOT" != "yes"; then
-         GSSAPI_INCS="-I$GSSAPI_ROOT/include"
-      fi
-@@ -21272,8 +21275,8 @@ $as_echo "#define HAVE_GSSAPI 1" >>confdefs.h
-         if test -n "$host_alias" -a -f "$GSSAPI_ROOT/bin/$host_alias-krb5-config"; then
-                                  gss_libs=`$GSSAPI_ROOT/bin/$host_alias-krb5-config --libs gssapi`
-            LIBS="$gss_libs $LIBS"
--        elif test -f "$GSSAPI_ROOT/bin/krb5-config"; then
--                                 gss_libs=`$GSSAPI_ROOT/bin/krb5-config --libs gssapi`
-+        elif test -f "$KRB5CONFIG"; then
-+                                 gss_libs=`$KRB5CONFIG --libs gssapi`
-            LIBS="$gss_libs $LIBS"
-         else
-            case $host in
 -- 
-2.2.1
+2.3.3
 
