@@ -1,6 +1,6 @@
 NAME      = imagemagick
-VERSION   = 6.9.0
-GARSUBREV = 6
+VERSION   = 6.9.1
+GARSUBREV = 1
 #BETAREV   = beta20140518
 GARTYPE   = v2
 
@@ -29,6 +29,8 @@ GARCOMPILER = GCC4
 VENDOR_URL = http://www.imagemagick.org
 
 LICENSE = LICENSE
+
+PATCHFILES += 0002_warn_all_does_not_work.patch 
 
 BUILD_DEP_PKGS += CSWliblcms-dev
 BUILD_DEP_PKGS += CSWlibcairo-dev
