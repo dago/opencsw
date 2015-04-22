@@ -25,7 +25,7 @@ define BLURB
   Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) as well
   as a full-strength general-purpose cryptography# This recipe can be used to compile openssl with Sun Studio or GCC
 # Just define the GARCOMPILER to the GNU or SUN
-GARCOMPILER = SUN
+GARCOMPILER = GNU
 GARCOMPILER_TYPE = $(if $(findstring GCC,$(GARCOMPILER)),GNU,SUN)hy library.
 endef
 
@@ -165,7 +165,7 @@ ISAEXEC = 1information #####
 # The list of instructions set or which we will 
 # provide optimized libraries and binaries
 EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
-EXTRA_BUILD_ISAS_sparc = sparcv8ppluthe openssl build system doesn't honor bindir
+EXTRA_BUILD_ISAS_sp= sparcv8ppluthe openssl build system doesn't honor bindir
 # as it doesn't install 64 bits binaries in bin/{amd64,sparcv9}
 # we fix this at the merge step
 EXTRA_MERGE_DIRS_isa-amd64 = $(bindir_install)
