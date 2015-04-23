@@ -43,7 +43,11 @@ CHECKPKG_OVERRIDES_CSWgs-zipper += soname-not-found|libgnustep-base.so.1.24|is|n
 CHECKPKG_OVERRIDES_CSWgs-zipper += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|is|not|directly|bound|to|soname|libobjc.so.4
 CHECKPKG_OVERRIDES_CSWgs-zipper += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
 CHECKPKG_OVERRIDES_CSWgs-zipper += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+
+
 CHECKPKG_OVERRIDES_CSWgs-zipper += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgs-zipper += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|arch_id=3|arch_name=i386
+
 
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
