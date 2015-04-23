@@ -17,12 +17,33 @@ DISTFILES  = $(DISTNAME).tar.gz
 BUILD_DEP_PKGS += CSWgmake
 BUILD_DEP_PKGS += CSWgcc4objc
 
-RUNTIME_DEP_PKGS_CSWZipper += CSWgnustep-make
-RUNTIME_DEP_PKGS_CSWZipper += CSWgnustep-base
-RUNTIME_DEP_PKGS_CSWZipper += CSWgnustep-gui
-RUNTIME_DEP_PKGS_CSWZipper += CSWgnustep-back
-RUNTIME_DEP_PKGS_CSWZipper += CSWgtar
-RUNTIME_DEP_PKGS_CSWZipper += CSWzip
+RUNTIME_DEP_PKGS_CSWgs-zipper += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgs-zipper += CSWlibobjc4
+RUNTIME_DEP_PKGS_CSWgs-zipper += CSWgnustep-make
+RUNTIME_DEP_PKGS_CSWgs-zipper += CSWgnustep-base
+RUNTIME_DEP_PKGS_CSWgs-zipper += CSWgnustep-gui
+RUNTIME_DEP_PKGS_CSWgs-zipper += CSWgnustep-back
+RUNTIME_DEP_PKGS_CSWgs-zipper += CSWgtar
+RUNTIME_DEP_PKGS_CSWgs-zipper += CSWzip
+
+#we depend on these packages at runtime
+# we want at least two archivers to be present, zip and gnu tar. Others are optional
+CHECKPKG_OVERRIDES_CSWgs-zipper += surplus-dependency|CSWgtar
+CHECKPKG_OVERRIDES_CSWgs-zipper += surplus-dependency|CSWzip
+CHECKPKG_OVERRIDES_CSWgs-zipper += surplus-dependency|CSWgnustep-base
+CHECKPKG_OVERRIDES_CSWgs-zipper += surplus-dependency|CSWgnustep-back
+CHECKPKG_OVERRIDES_CSWgs-zipper += surplus-dependency|CSWgnustep-make
+CHECKPKG_OVERRIDES_CSWgs-zipper += surplus-dependency|CSWgnustep-gui
+
+
+
+#overrides
+CHECKPKG_OVERRIDES_CSWgs-zipper += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper
+CHECKPKG_OVERRIDES_CSWgs-zipper += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper
+CHECKPKG_OVERRIDES_CSWgs-zipper += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|is|not|directly|bound|to|soname|libobjc.so.4
+CHECKPKG_OVERRIDES_CSWgs-zipper += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
+CHECKPKG_OVERRIDES_CSWgs-zipper += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgs-zipper += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/Zipper.app/Zipper|arch_id=18|arch_name=sparcv8+
 
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
