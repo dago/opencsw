@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-admin
-VERSION = 1.1.31
+VERSION = 1.1.38
 GARTYPE = v2
 
 DESCRIPTION = The 389 LDAP server Admin Tools
@@ -12,35 +12,39 @@ endef
 
 BUNDLE = 389-ds
 
-MASTER_SITES = http://port389.org/sources/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = https://git.fedorahosted.org/cgit/389/admin.git/snapshot/
+DISTNAME  = admin-$(NAME)-$(VERSION)
+DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSW389-admin.preremove
 
-# BUILD64	= 1
+BUILD64	= 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 
-GARCOMPILER = SOS12U3
+GARCOMPILER = SOS12U4
 
 LICENSE = LICENSE
 
 # GARFLAVOR=DBG
+# LDAP_API=mozldap
+LDAP_API=openldap
 
 PATCHFILES += 0002-add-i386-platform-to-configure.ac.patch
 PATCHFILES += 0003-correct-initscript-and-http.conf.in.patch
 PATCHFILES += 0004-change-include-preferences-in-Makefile.am.patch
+PATCHFILES += 0005-ctime_r-params-viewdata.c.patch
 
 BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
 BUILD_DEP_PKGS += CSW389-adminutil-dev
-BUILD_DEP_PKGS += CSWapache2-dev CSWapache2
+BUILD_DEP_PKGS += CSWapache24-dev
 BUILD_DEP_PKGS += CSWap2modnss
 BUILD_DEP_PKGS += CSWlibiconv-dev
 BUILD_DEP_PKGS += CSWlibicu-dev
 BUILD_DEP_PKGS += CSWsasl-dev
-BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS_openldap += CSWopenldap-dev
 BUILD_DEP_PKGS += CSWlibtool CSWautoconf CSWautomake
-
+BULID_DEP_PKGS += $(BUILD_DEP_PKGS_&(LDAP_API))
 
 PACKAGES += CSWlibds-admin-serv0
 CATALOGNAME_CSWlibds-admin-serv0 = libds_admin_serv0
@@ -100,10 +104,11 @@ CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSWpm-netaddr-ip
 CPPFLAGS = 
 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
+EXTRA_CONFIGURE_ENV=PATH=/opt/csw/gnu:$(PATH)
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-openldap-inc=$(includedir)
-CONFIGURE_ARGS += --with-openldap=$(prefix)
+CONFIGURE_ARGS_openldap += --with-openldap-inc=$(includedir)
+CONFIGURE_ARGS_openldap += --with-openldap=$(prefix)
 CONFIGURE_ARGS += --with-icu-inc=$(includedir) 
 CONFIGURE_ARGS += --with-icu-lib=$(libdir)
 CONFIGURE_ARGS += --with-icu-bin=$(bindir)
@@ -113,11 +118,12 @@ CONFIGURE_ARGS += --with-nspr-lib=$(libdir)
 CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr 
 CONFIGURE_ARGS += --with-nss-lib=$(libdir)
 CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss 
-CONFIGURE_ARGS += --with-apxs=/opt/csw/apache2/sbin/apxs
-CONFIGURE_ARGS += --with-httpd=/opt/csw/apache2/sbin/httpd
-CONFIGURE_ARGS += --with-modnss-lib=/opt/csw/apache2/libexec
-CONFIGURE_ARGS += --with-modnss-bin=/opt/csw/apache2/sbin
+CONFIGURE_ARGS += --with-apxs=/opt/csw/bin/apxs
+CONFIGURE_ARGS += --with-httpd=/opt/csw/sbin/httpd
+CONFIGURE_ARGS += --with-modnss-lib=/opt/csw/lib//apache2/modules
+CONFIGURE_ARGS += --with-modnss-bin=/opt/csw/sbin
 # CONFIGURE_ARGS += --with-adminutil=/opt/csw
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(LDAP_API))
 
 
 include gar/category.mk
