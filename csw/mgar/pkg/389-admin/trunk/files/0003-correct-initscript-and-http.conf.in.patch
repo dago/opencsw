@@ -1,47 +1,33 @@
-From 285470791f9eb6dbb196075e0f1945a09c4ad9ea Mon Sep 17 00:00:00 2001
-From: Carsten Grzemba <cgrzemba@opencsw.org>
-Date: Mon, 23 Jan 2012 15:51:51 +0100
-Subject: [PATCH] correct initscript and http.conf.in
-
----
- admserv/cfgstuff/httpd-2.2.conf.in |   10 +++++-----
- wrappers/initscript.in         |    6 ++++--
- 2 files changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/wrappers/initscript.in b/wrappers/initscript.in
-index 82dd20e..8fd03da 100644
 --- a/wrappers/initscript.in
 +++ b/wrappers/initscript.in
-@@ -7,6 +7,8 @@
+@@ -7,6 +7,9 @@
  # processname: @sbindir@/httpd
  # piddir:      @localstatedir@/run/@PACKAGE_BASE_NAME@
  #
 +#AUTOENABLE no # no SMF enable at install!
 +#
++
  
  # Source function library.
  if [ -f /etc/rc.d/init.d/functions ] ; then
-@@ -94,7 +96,8 @@ prog="@package_name@"
+@@ -94,7 +97,9 @@ prog="@package_name@"
  piddir="@localstatedir@/run/@PACKAGE_BASE_NAME@"
  # PID file
  pidfile=$piddir/admin-serv.pid
 -lockfile=/var/lock/subsys/@package_name@
 +lockfile=@localstatedir@/lock/subsys/@package_name@
 +lockdir=`dirname $lockfile`
++
  
  [ -f $exec ] || exit 0
  
-@@ -163,7 +166,8 @@ start() {
+@@ -163,7 +168,8 @@ start() {
              RETVAL=1
          fi
      fi
 -    [ $RETVAL -eq 0 -a -d /var/lock/subsys ] && touch $lockfile
 +    [ ! -d $lockdir ] && mkdir -p $lockdir
 +    [ $RETVAL -eq 0 -a -d $lockdir ] && touch $lockfile
- }
- 
- stop() {
-
--- 
-1.7.8.3
-
+     if [ -f $lockfile ]; then
+         restorecon $lockfile
+     fi

@@ -1,0 +1,11 @@
+--- a/admserv/cgi-src40/viewdata.c
++++ b/admserv/cgi-src40/viewdata.c
+@@ -398,7 +398,7 @@ output_data(LDAP *server, char *sie)
+     char *inst_time;
+ 
+     if( (parsed_time = parse_genTime (vals[0])) &&
+-        (inst_time = ctime_r(&parsed_time, buf)) )
++        (inst_time = ctime_r(&parsed_time, buf, BIG_LINE)) )
+     {
+       PR_snprintf(buf, sizeof(buf), "%s %s", inst_time, daylight ? tzname[1] : tzname[0]);
+     } else {
