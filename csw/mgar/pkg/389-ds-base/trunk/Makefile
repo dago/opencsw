@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.3.2.14
+VERSION = 1.3.2.27
 GARTYPE = v2
 
 DESCRIPTION = The enterprise-class Open Source LDAP server
@@ -14,7 +14,8 @@ BUNDLE = 389-ds
 
 MASTER_SITES = https://git.fedorahosted.org/cgit/389/ds.git/snapshot/
 # MASTER_SITES = http://port389.org/sources/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTNAME = ds-$(NAME)-$(VERSION)
+DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSW389-ds-base.postinstall
 DISTFILES += CSW389-ds-base.postremove
 
@@ -24,11 +25,15 @@ PACKAGING_PLATFORMS += solaris10-i386
 
 LICENSE = LICENSE
 
-GARCOMPILER = SOS12U3
+GARCOMPILER = SOS12U4
 # builds but was not able to debug
 # GARCOMPILER = GCC4
-LDAPAPI=mozldap
-# LDAPAPI=openldap
+# GARFLAVOR = DBG
+BUILD64_ONLY = 1
+
+# mozldap or openldap
+# but openldap hasn't work on Sparc until Dec 2014
+LDAPAPI = mozldap
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
@@ -53,15 +58,16 @@ PATCHFILES += 0014-ldap-include-Makefile.am.patch
 # needed at least on GCC4
 PATCHFILES += 0015-use-PL_strcasestr-acllas.c.patch
 PATCHFILES_GCC4 += 0010-no-Crun-Cstd-lib-config.ac.patch
-PATCHFILES += 0016-fix-bigendian-utf8compare.c
+# PATCHFILES += 0016-fix-bigendian-utf8compare.c
 PATCHFILES += 0017-disable-asm-for-Sparc.patch
-# probably only with openLDAP 
+# probably only with openLDAP should not be necessary since version 1.3.3.9
 PATCHFILES += 0018-correct-64bit-ptr-bind.c
-PATCHFILES += 0021-include-lber.h-slapi-plugin.h.patch
-PATCHFILES += 0022-adjust-mozldap-version-sasl_io.c.patch
+PATCHFILES_mozldap += 0021-include-lber.h-slapi-plugin.h.patch
+PATCHFILES_mozldap += 0022-adjust-mozldap-version-sasl_io.c.patch
+PATCHFILES += $(PATCHFILES_$(LDAPAPI))
 PATCHFILES += 0024-strndup.patch
-PATCHFILES += 0025-posix-winsync.rawentry.patch
-PATCHFILES += 0030-reconstruct-memberuid-generation-task.patch
+# PATCHFILES += 0025-posix-winsync.rawentry.patch
+# PATCHFILES += 0030-reconstruct-memberuid-generation-task.patch
 PATCHFILES += $(PATCHFILES_$(GARCOMPILER))
 
 BUILD_DEP_PKGS += CSWautoconf
@@ -83,25 +89,24 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWperl
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpython
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnspr4
-# RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpmibs25
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmp25
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpagent25
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmp30
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpagent30
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplc4
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibfreebl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWbdb48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-mozldap
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibfreebl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnssdbm3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-netaddr-ip
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n54
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc54
 RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n52
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc52
 RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWlibldap2-4-2
 
@@ -110,9 +115,8 @@ RUNTIME_DEP_PKGS_CSW389-ds-base_mozldap += CSWlibldif60
 RUNTIME_DEP_PKGS_CSW389-ds-base_mozldap += CSWlibldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base_mozldap += CSWlibssldap60
 
-RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(GARCH))
@@ -137,15 +141,13 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibnssdbm3
 EXTRA_LIB = /opt/csw/bdb48/lib
 # if use MozillaLDAP remove -I/opt/csw/include because there are OpenLDAP header
 CPPFLAGS = 
-EXTRA_CFLAGS_SOS12U3 = -xnorunpath
-EXTRA_CXXFLAGS_SOS12U3 = -norunpath
+EXTRA_CFLAGS_SOS12U4 = -xnorunpath
+EXTRA_CXXFLAGS_SOS12U4 = -norunpath
 EXTRA_CPPFLAGS_GCC4 = -DSOLARIS_GCC
 EXTRA_CPPFLAGS += $(EXTRA_CPPFLAGS_$(GARCOMPILER))
 EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS_$(GARCOMPILER))
 EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCOMPILER))
 STRIP_LIBTOOL = 1
-
-# GARFLAVOR = DBG
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ldapsdk-inc=$(includedir)/dirsrv 
