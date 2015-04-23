@@ -66,7 +66,6 @@ PACKAGES += CSW389-admin
 # OBSOLETED_BY_CSW389-admin = CSW389admin
 SPKG_DESC_CSW389-admin += $(DESCRIPTION)
 INITSMF = /etc/opt/csw/init.d/dirsrv-admin
-RUNTIME_DEP_PKGS_CSW389-admin += CSWap2worker
 RUNTIME_DEP_PKGS_CSW389-admin += CSWap2modnss
 # RUNTIME_DEP_PKGS_CSW389-admin += CSWlibldif60
 RUNTIME_DEP_PKGS_CSW389-admin += CSWperl
@@ -92,7 +91,6 @@ RUNTIME_DEP_PKGS_CSW389-admin_sparc += CSWlibicudata52
 RUNTIME_DEP_PKGS_CSW389-admin += $(RUNTIME_DEP_PKGS_CSW389-admin_$(GARCH))
 
 CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSWap2modnss
-CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSWap2worker
 CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSW389-admin-console
 CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSW389-ds-console
 CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSWpm-netaddr-ip
