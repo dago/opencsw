@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = mod_nss
-VERSION = 1.0.8
+VERSION = 1.0.11
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -14,54 +14,58 @@ LICENSE = LICENSE
 
 PACKAGES = CSWap2modnss
 
-MASTER_SITES = http://po/rt389.org/sources
+MAs://fedorahosted.org/released/$(NAME)/rt389.org/sources
 # MASTER_SITES = http://directory.fedoraproject.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWap2modnss.postinstall
-DISTFILES += CSWap2modnss.preremove
+DISTFILES += CSWap2mnss.preremove
 
 # BUILD64_LIBS_ONLY = 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS +
-GARCOMPILER = SOS12U3
+# GARCOMPILER = GCC4
+GARCOMPILER = SOS12U4
+# GARFLAVOR = DBG
 
-BUILD_DEP_PKGS += CSWapache2-dev
+BUILD_DEP_PKGS += CSWapache24-dev
 BUILD_DEP_PKGS += CSWnspr-dev 
 BUILD_DEP_PKGS += CSWlibnss-devOMPILER = SOS12U2
 
 TEST_SCRIPTS = 
-EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
+E_SOS12U4 = -xnorunpath -norunpath
+EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(GARCOMPILER))
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS_OPT += --with-apr-config
-CONFIGURE_ARGS_OPT += --with-apxs=/opt/csw/apache2/sbin/apxs
-CONFIGURE_ARGS_OPT += --with-nss-lib=/opt/csw/lib/64
-CONFIGURE_ARGS_OPT += --with-nss-inc=/opt/csw/include/nss 
-CONFIGURE_ARGS_OPT += --with-nspr-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nspr-inc=/opt/csw/include/nspr
+CONFIGURE_ARGS += --with-apr-config
+CONFIGURE_ARGS += --with-apxs=/opt/csw/bin/apxs
+CONFIGURE_ARGS += --with-nss-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-nss-inc=/opt/csw/include/nss 
+CONFIGURE_ARGS += --with-nspr-lib=/opt/csw/lib
+CONFIGURE_ARGSONFIGURE_ARGS_OPT += --with-nspr-inc=/opt/csw/include/nspr
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 INSTALL_SCRIPTS = custom
 
-# No test suite
-TEST_SCRIPTS =
+# No test suite# STRIP_DIRS = $(DESTDIR)$(prefix)/apache2/libexec
 
-STRIP_DIRS = $(DESTDIR)$(prefix)/apache2/libexec
-
-RUNTIME_DEP_PKGS_CSWap2modnss += CSWapache2
+RUNTIME_DEP_PKGS_CSWap2modnss += CSWapache24nss += CSWapache2
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWap2mc4s += CSWlibsmime3
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibssl3
 
 
-include gar/category.mk
+include gar/category.mk# AP2_ROOT      = $(prefix)
+AP2_LIBEXEC   = $(DESTDIR)$(libdir)/apache2/modules
+AP2_CONF      = $(DESTDIR)$(sysconfdir)
+AP2_SBIN      = $(DESTDIR)$(sbindir)
 
-# Apache paths
-AP2_ROOT      = $(prefix)/apache2
-AP2_LIBEXEC   = $(DESTDIR)$(AP2_ROOT)/libexec
-AP2_CONF      = $(DESTDIR)$(AP2_ROOT)/etc
-AP2_SBIN      = $(DESTDIR)$(AP2_ROOT)/sbin
+#	libtoolize --copy --force && \
+#	automake --add-missing --copy --force-missing )
+pre-configure:
+	(cd $(WORKSRC) && \
+	autoreconf --install )
+	$(MAKECOOKIE))$(AP2_ROOT)/sbin
 
 install-custom:
 	@ginstall -m 755 -d $(AP2_LIBEXEC)
