@@ -50,9 +50,9 @@ PATCHFILES += 0008-mntent-daemon.c.patch
 # PATCHFILES += 0009-fix-for-550-memberuid-not-created.patch
 # PATCHFILES += 0012-fix-for-47327.patch
 
-# PATCHFILES += 0013-use-posix-threads-configure.ac.patch
-# PATCHFILES += 0023-phtread-include-slapi2nspr.c.patch
-PATCHFILES += 0027-Slapi-rwlock-size.patch
+PATCHFILES += 0013-use-posix-threads-configure.ac.patch
+PATCHFILES += 0023-phtread-include-slapi2nspr.c.patch
+# PATCHFILES += 0027-Slapi-rwlock-size.patch
 
 PATCHFILES += 0014-ldap-include-Makefile.am.patch
 # needed at least on GCC4
