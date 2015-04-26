@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = memcached
-VERSION = 1.4.23
+VERSION = 1.4.24
 CATEGORIES = net
 GARTYPE = v2
 
@@ -12,7 +12,7 @@ define BLURB
   applications by alleviating database load.
 end+= http://www.memcached.org/files/
 DISTFILES += $(NAME)-$(VERSION).tar.gz
-DISTFILES += mman.ouch-command.patch
+ch-command.patch
 
 # If we enable GIT patching this makes a .git repo in $WORKSRC.
 # Unfortunatly this triggers maintainer mode for t/whitespace.t which
@@ -25,8 +25,8 @@ VENDOR_URL = http://memcached.org/
 BUILD_DEP_PKGS = CSWlibevent-dev
 RUNTIME_DEP_PKGS = CSW64 bit is broken on Solaris, disable until this is fixed:
 #   https://code.google.com/p/memcached/issues/detail?id=404
-# BUILD64 = 1
-# ISAEXEC = 1
+BUILD64 = 1
+ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
