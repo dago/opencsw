@@ -25,7 +25,10 @@ PATCHFILES += 0004-Sanitize-getopt.h.patch
 PACKAGES = CSWggetopt
 CATALOGNAME = ggetopt
 
-VENDOR_URL = http://software.frodo.looijaard.name/getopt/
+VENDOR_URL = http://software.frodo.looijaa#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+aard.name/getopt/
 
 EXTRA_CFLAGS += -Xc
 
