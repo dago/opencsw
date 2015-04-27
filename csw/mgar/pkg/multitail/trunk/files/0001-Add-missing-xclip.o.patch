@@ -1,0 +1,25 @@
+From 7020683db10014d023e43cc2f9922c1027020a57 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 27 Apr 2015 12:00:18 +0200
+Subject: [PATCH] Add missing xclip.o
+
+---
+ makefile.solaris_sunwspro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/makefile.solaris_sunwspro b/makefile.solaris_sunwspro
+index ccb78ca..2dcbeff 100644
+--- a/makefile.solaris_sunwspro
++++ b/makefile.solaris_sunwspro
+@@ -5,7 +5,7 @@ CONFIG_FILE=$(sysconfdir)/multitail.conf
+ CFLAGS +=${EXTRA_CFLAGS} -D_STDC_C99 -DVERSION=\"$(VERSION)\" -DCONFIG_FILE=\"$(CONFIG_FILE)\"
+ LDFLAGS+=${EXTRA_LDFLAGS} -lsocket -lpanel -lncurses -lnsl -lm
+ 
+-OBJS=utils.o mt.o error.o my_pty.o term.o scrollback.o help.o mem.o cv.o color.o stripstring.o selbox.o misc.o ui.o exec.o diff.o config.o cmdline.o globals.o history.o
++OBJS=utils.o mt.o error.o my_pty.o term.o scrollback.o help.o mem.o cv.o color.o stripstring.o selbox.o misc.o ui.o exec.o diff.o config.o cmdline.o globals.o history.o xclip.o
+ 
+ all: multitail
+ 
+-- 
+2.3.3
+
