@@ -35,20 +35,12 @@ CHECKPKG_OVERRIDES_CSWgs-terminal += surplus-dependency|CSWgnustep-base
 CHECKPKG_OVERRIDES_CSWgs-terminal += surplus-dependency|CSWgnustep-back
 CHECKPKG_OVERRIDES_CSWgs-terminal += surplus-dependency|CSWgnustep-make
 
-# we don't direcly bind right now
-CHECKPKG_OVERRIDES_CSWgs-terminal += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWgs-terminal += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
-CHECKPKG_OVERRIDES_CSWgs-terminal += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
-CHECKPKG_OVERRIDES_CSWgs-terminal += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|is|not|directly|bound|to|soname|libiconv.so.2
-CHECKPKG_OVERRIDES_CSWgs-terminal += no-direct-binding|/opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|is|not|directly|bound|to|soname|libobjc.so.4
+# we don't direcly bind right now, this also means soname doesn't get found
+CHECKPKG_OVERRIDES_CSWgs-terminal += no-direct-binding
+CHECKPKG_OVERRIDES_CSWgs-terminal += soname-not-found
 
 #known placement overrides since we use bundles
-CHECKPKG_OVERRIDES_CSWgs-terminal += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWgs-terminal += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal|arch_id=3|arch_name=i386
-
-#others
-CHECKPKG_OVERRIDES_CSWgs-terminal += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal
-CHECKPKG_OVERRIDES_CSWgs-terminal += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/Local/Applications/Terminal.app/Terminal
+CHECKPKG_OVERRIDES_CSWgs-terminal += binary-architecture-does-not-match-placement
 
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
