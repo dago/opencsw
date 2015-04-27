@@ -101,10 +101,10 @@ GARCOMPILER = GNU
 SKIPTEST ?= 1
 
 # Used multiple times in package definitions
-JAVA_LIB_VERSION = 15
-GO_LIB_VERSION = 5
+JAVA_LIB_VERSION = 16
+GO_LIB_VERSION = 7
 
-ALTERNATIVES_PRIO = 482
+ALTERNATIVES_PRIO = 510
 
 PACKAGES = $(PKG_BASENAME)core
 SPKG_DESC_$(PKG_BASENAME)core = GNU C compiler
@@ -122,6 +122,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibssp0
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibisl10
 
 # checkpkg-undetectable dependencies
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWbinutils
@@ -171,7 +172,6 @@ EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/libiberty\.a
 # Catch-all package
 
 PACKAGES += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
-CATALOGNAME_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) = lib_gnu_awt_xlib$(JAVA_LIB_VERSION)
 PKGFILES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),lib-gnu-awt-xlib\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(DESCRIPTION), lib-gnu-awt-xlib.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
@@ -179,13 +179,11 @@ RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibstdc++6
 
 PACKAGES += CSWlibgcc-s1
-CATALOGNAME_CSWlibgcc-s1 = libgcc_s1
 PKGFILES_CSWlibgcc-s1 += $(call baseisadirs,$(libdir),libgcc_s\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibgcc-s1 += $(DESCRIPTION), libgcc_s.so.1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlibgcc-s1
 
 PACKAGES += CSWlibgcj-tools$(JAVA_LIB_VERSION)
-CATALOGNAME_CSWlibgcj-tools$(JAVA_LIB_VERSION) = libgcj_tools$(JAVA_LIB_VERSION)
 PKGFILES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgcj-tools\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlibgcj-tools$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgcj-tools.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlibgcj-tools$(JAVA_LIB_VERSION)
@@ -193,44 +191,37 @@ RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += CSWlibgcj$(JAVA_LIB_VERSION)
 
 PACKAGES += CSWlibgcj$(JAVA_LIB_VERSION)
-CATALOGNAME_CSWlibgcj$(JAVA_LIB_VERSION) = libgcj$(JAVA_LIB_VERSION)
 PKGFILES_CSWlibgcj$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgcj\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlibgcj$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgcj.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
 PACKAGES += CSWlibgfortran3
-CATALOGNAME_CSWlibgfortran3 = libgfortran3
 PKGFILES_CSWlibgfortran3 += $(call baseisadirs,$(libdir),libgfortran\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibgfortran3 += $(DESCRIPTION), libgfortran.so.3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWlibgfortran3 += CSWlibgcc-s1
 
 PACKAGES += CSWlibgij$(JAVA_LIB_VERSION)
-CATALOGNAME_CSWlibgij$(JAVA_LIB_VERSION) = libgij$(JAVA_LIB_VERSION)
 PKGFILES_CSWlibgij$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgij\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlibgij$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgij.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcj$(JAVA_LIB_VERSION)
 
 PACKAGES += CSWlibgomp1
-CATALOGNAME_CSWlibgomp1 = libgomp1
 PKGFILES_CSWlibgomp1 += $(call baseisadirs,$(libdir),libgomp\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibgomp1 += $(DESCRIPTION), libgomp.so.1
 RUNTIME_DEP_PKGS_CSWlibgomp1 += CSWlibgcc-s1
 
 PACKAGES += CSWlibobjc$(LIBOBJC)
-CATALOGNAME_CSWlibobjc$(LIBOBJC) = libobjc$(LIBOBJC)
 PKGFILES_CSWlibobjc$(LIBOBJC) += $(call baseisadirs,$(libdir),libobjc\.so\.$(LIBOBJC)(\.\d+)*)
 SPKG_DESC_CSWlibobjc$(LIBOBJC) += $(DESCRIPTION), libobjc.so.$(LIBOBJC)
 RUNTIME_DEP_PKGS_CSWlibobjc$(LIBOBJC) += CSWlibgcc-s1
 
 PACKAGES += CSWlibobjc-gc$(LIBOBJC)
-CATALOGNAME_CSWlibobjc-gc$(LIBOBJC) = libobjc_gc$(LIBOBJC)
 PKGFILES_CSWlibobjc-gc$(LIBOBJC) += $(call baseisadirs,$(libdir),libobjc_gc\.so\.$(LIBOBJC)(\.\d+)*)
 SPKG_DESC_CSWlibobjc-gc$(LIBOBJC) += $(DESCRIPTION), libobjc_gc.so.$(LIBOBJC)
 RUNTIME_DEP_PKGS_CSWlibobjc-gc$(LIBOBJC) += CSWlibgcc-s1
 
 PACKAGES += CSWlibssp0
-CATALOGNAME_CSWlibssp0 = libssp0
 PKGFILES_CSWlibssp0 += $(call baseisadirs,$(libdir),libssp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
@@ -250,14 +241,12 @@ RUNTIME_DEP_PKGS_CSWlibitm1 += CSWlibgcc-s1
 LIBSTDCXX_VERSION = 6
 
 PACKAGES += CSWlibstdc++$(LIBSTDCXX_VERSION)
-CATALOGNAME_CSWlibstdc++$(LIBSTDCXX_VERSION) = libstdc++$(LIBSTDCXX_VERSION)
 PKGFILES_CSWlibstdc++$(LIBSTDCXX_VERSION) += $(call baseisadirs,$(libdir),libstdc\+\+\.so\.$(LIBSTDCXX_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlibstdc++$(LIBSTDCXX_VERSION) += $(DESCRIPTION), libstdc++.so.$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_CSWlibstdc++$(LIBSTDCXX_VERSION) += CSWlibgcc-s1
 
 # The libquadmath.so.0 library is only build on Intel
 PACKAGES_i386 += CSWlibquadmath0
-CATALOGNAME_CSWlibquadmath0 = libquadmath0
 PKGFILES_CSWlibquadmath0 += $(call baseisadirs,$(libdir),libquadmath\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibquadmath0 += GNU C compiler, libquadmath.so.0
 RUNTIME_DEP_PKGS_CSWlibquadmath0 += CSWlibgcc-s1
@@ -300,6 +289,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibstdc++$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibiconv2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibisl10
 
 # The C++ compiler needs the C compiler.
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += $(PKG_BASENAME)core
@@ -326,6 +316,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibiconv2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibisl10
 
 ALTERNATIVES_$(PKG_BASENAME)gfortran += gfortran
 ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
@@ -342,6 +333,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibiconv2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibisl10
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += surplus-dependency|CSWecj
 
 PKGFILES_$(PKG_BASENAME)java  = $(foreach F,$(JAVA_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
@@ -420,6 +412,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibiconv2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibisl10
 
 PACKAGES += $(PKG_BASENAME)ada
 SPKG_DESC_$(PKG_BASENAME)ada       = GCC Ada compiler (GNAT)
@@ -442,6 +435,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibisl10
 
 ALTERNATIVES_$(PKG_BASENAME)ada += $(PKG_VERSION_TOKEN)ada
 ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnat      gcc_ada $(bindir)/gnat$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
