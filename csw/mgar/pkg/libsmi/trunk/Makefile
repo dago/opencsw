@@ -1,5 +1,5 @@
 NAME = libsmi
-VERSION = 0.4.8
+VERSION = 0.5.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -10,18 +10,15 @@ define BLURB
   analyze dump, convert, and compare MIB definitions. Finally, the distribution contains
   a steadily maintained and revised archive of all IETF and IANA maintained standard MIB
   and PIB modules.
-endef
-
-MASTER_SITES = ftp://ftp.ibr.cs.tu-bs.de/pub/local/libsmi/
+end+= http://www.ibr.cs.tu-bs.de/projects/libsmi/download/
+DISTFILES +bsmi/
 DISTFILES  = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.ibr.cs.tu-bs.de/projects/libsmi/
 
 PACKAGES += CSWlibsmi2
 SPKG_DESC_CSWlibsmi2 = Library to access SMI MIB module definitions, libsmi.so.2
-PKGFILES_CSWlibsmi2 = $(call pkgfiles_lib,libsmi.so.2)
-RUNTIME_DEP_PKGS_CSWlibsmi = CSWlibsmi-mibs
-OBSOLETED_BY_CSWlibsmi2 = CSWlibsmi
+PKGFILES_CSWlibsmi2 = $(call pkgfiles_smi2 = CSWlibsmi
 
 PACKAGES += CSWlibsmi-dev
 SPKG_DESC_CSWlibsmi-dev = Development files for libsmi.so.2
@@ -39,23 +36,7 @@ PACKAGES += CSWlibsmi-mibs
 SPKG_DESC_CSWlibsmi-mibs = SMI MIB definitions
 PKGFILES_CSWlibsmi-mibs = $(sharedstatedir)/mibs/.*
 PKGFILES_CSWlibsmi-mibs += $(sharedstatedir)/pibs/.*
-ARCHALL_CSWlibsmi-mibs = 1
-OBSOLETED_BY_CSWlibsmi-mibs = CSWlibsmimibs
-CATALOGNAME_CSWlibsmimibs = libsmi_mibs_stub
+ARCHALL_CS
+BUILD64_LIBS_ONLY = 1FLAGS_isa-$(ISA))
 
-BUILD64_LIBS_ONLY = 1
-
-EXTRA_CPPFLAGS_isa-sparcv8 = -Dfabsf=fabs
-EXTRA_CPPFLAGS_isa-sparcv9 = -Dfabsf=fabs
-EXTRA_CPPFLAGS_isa-i386 = -Dfabsf=fabs
-EXTRA_CPPFLAGS = $(EXTRA_CPPFLAGS_isa-$(ISA))
-
-# Some tests fail, however, these are only whitespace and newline differences
-SKIPTEST ?= 1
-
-# These are just examples
-CHECKPKG_OVERRIDES_CSWlibsmi-utils += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/smicache.1
-CHECKPKG_OVERRIDES_CSWlibsmi-utils += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/smixlate.1
-CHECKPKG_OVERRIDES_CSWlibsmi-utils += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/smistrip.1
-
-include gar/category.mk
+# Some tests fail, however, these are only whitespace and newline differenceinclude gar/category.mk
