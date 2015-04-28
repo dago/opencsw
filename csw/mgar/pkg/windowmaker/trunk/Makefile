@@ -2,12 +2,17 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = windowmaker
-VERSION = 0.95.4
+VERSION = 0.95.5
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = X11 window manager
 define BLURB
+  A classic windowmanager with the NeXT and OpenStep look. Fast and low on
+  resources, it is optimal for every serous user! It is the recommended
+  window manager for GNUstep.
+endef
+
+#PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386efine BLURB
 endef
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -48,7 +53,7 @@ SPKG_DESC_CSWlibwraster3 += $(DESCRIPTION), libwraster.so.3
 RUNTIME_DEP_PKGS_CSWlibtiff5er3 += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWlibwraster3 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibwraster3 += CSWlibgif4
-RUNTIME_DEP_PKGS_CSWlibwrasterRUNTIME_DEP_PKGS_CSWlibwraster3 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibwrasterRUNTIME_DEP_PKGS_CSWlibwraster3 += CSWlibpng16-16
 RUNTIME_DEP_PKGS_CSWlibwraster3 += CSWlibxpm4r3 += CSWlibgcc-s1
 
 PACKAGES += CSWwindowmaker-dev
