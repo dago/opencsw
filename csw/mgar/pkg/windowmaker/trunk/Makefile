@@ -8,7 +8,7 @@ GARTYPE = v2
 DESCRIPTION = X11 window manager
 define BLURB
   A classic windowmanager with the NeXT and OpenStep look. Fast and low on
-  resources, it is optimal for every serous user! It is the recommended
+  resources, it is optimal for every serious user! It is the recommended
   window manager for GNUstep.
 endef
 
