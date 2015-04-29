@@ -1,5 +1,5 @@
 NAME = freetype
-VERSION = 2.4.8
+VERSION = 2.4.12
 CATEGORIES = lib
 GARTYPE = v2
 
