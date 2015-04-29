@@ -17,7 +17,7 @@ DISTNAME  = admin-$(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSW389-admin.preremove
 
-BUILD64	= 1
+BUILD64_ONLY = 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 
@@ -117,10 +117,13 @@ CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr
 CONFIGURE_ARGS += --with-nss-lib=$(libdir)
 CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss 
 CONFIGURE_ARGS += --with-apxs=/opt/csw/bin/apxs
-CONFIGURE_ARGS += --with-httpd=/opt/csw/sbin/httpd
-CONFIGURE_ARGS += --with-modnss-lib=/opt/csw/lib//apache2/modules
+CONFIGURE_ARGS_32 += --with-httpd=/opt/csw/sbin/httpd
+CONFIGURE_ARGS_32 += --with-modnss-lib=/opt/csw/lib/apache2/modules
+CONFIGURE_ARGS_64 += --with-httpd=/opt/csw/sbin/$(BUILD_ISAS)/httpd
+CONFIGURE_ARGS_64 += --with-modnss-lib=/opt/csw/lib/$(BUILD_ISAS)/apache2/modules
 CONFIGURE_ARGS += --with-modnss-bin=/opt/csw/sbin
 # CONFIGURE_ARGS += --with-adminutil=/opt/csw
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL_$(BUILD_ISAS)))
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(LDAP_API))
 
 
