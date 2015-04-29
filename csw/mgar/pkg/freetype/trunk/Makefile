@@ -36,11 +36,16 @@ CHECKPKG_OVERRIDES_CSWlibfreetype-dev += file-with-bad-content|/usr/local|root/o
 PACKAGES += CSWlibfreetype-dev
 SPKG_DESC_CSWlibfreetype-dev = Development files for libfreetype.so.6
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibfreetype-dev += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibfreetype-dev += #where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+
+GARCOMPILER = SUN CSWlibfreetype6
 
 GNUMAKE = gmake
 EXTRA_CONFIGURE_EXPORTS = GNUMAKE
 
 BUILD64_LIBS_ONLY = 1
 
-include gar/category.mk
+include
