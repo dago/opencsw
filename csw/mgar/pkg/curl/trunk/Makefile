@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.42.0
+VERSION = 7.42.1
 CATEGORIES = net
 GARTYPE = v2
 
@@ -16,6 +16,8 @@ endef
 
 MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(VVENDOR_URL = http://curl.haxx.se
 
+# Use patch until this is completely fixed:
+#   http://sourceforge.net/p/curl/bugs/1486/
 PATCHFILES += 0001-Use-KRB5CONFIG.patch
 
 # Because of OpenSSL 1.0 update
