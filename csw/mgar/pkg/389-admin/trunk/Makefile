@@ -116,7 +116,8 @@ CONFIGURE_ARGS += --with-nspr-lib=$(libdir)
 CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr 
 CONFIGURE_ARGS += --with-nss-lib=$(libdir)
 CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss 
-CONFIGURE_ARGS += --with-apxs=/opt/csw/bin/apxs
+CONFIGURE_ARGS_32 += --with-apxs=/opt/csw/bin/apxs
+CONFIGURE_ARGS_64 += --with-apxs=/opt/csw/bin/$(BUILD_ISAS)/apxs
 CONFIGURE_ARGS_32 += --with-httpd=/opt/csw/sbin/httpd
 CONFIGURE_ARGS_32 += --with-modnss-lib=/opt/csw/lib/apache2/modules
 CONFIGURE_ARGS_64 += --with-httpd=/opt/csw/sbin/$(BUILD_ISAS)/httpd
