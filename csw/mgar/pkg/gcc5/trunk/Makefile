@@ -474,6 +474,13 @@ INCOMPATIBLE_PKGS_CSWgcc5objc += CSWgcc4objc
 INCOMPATIBLE_PKGS_CSWgcc5gfortran += CSWgcc4gfortran
 INCOMPATIBLE_PKGS_CSWgcc5core += CSWgcc4core
 
+# Checkpkg still shows collisions, even as CSWgcc5* is incompatible to CSWgcc4*
+CHECKPKG_OVERRIDES_CSWgcc5g++ += file-collision
+CHECKPKG_OVERRIDES_CSWgcc5java += file-collision
+CHECKPKG_OVERRIDES_CSWgcc5objc += file-collision
+CHECKPKG_OVERRIDES_CSWgcc5gfortran += file-collision
+CHECKPKG_OVERRIDES_CSWgcc5core += file-collision
+
 #Direct binding is disabled to to problem with amd64 libs
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += no-direct-binding
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += no-direct-binding
