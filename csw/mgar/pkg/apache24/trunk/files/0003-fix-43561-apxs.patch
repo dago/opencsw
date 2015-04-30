@@ -1,0 +1,10 @@
+--- a/support/apxs.in
++++ b/support/apxs.in
+@@ -34,6 +34,7 @@ my $prefix         = get_vars("prefix");
+ my $CFG_PREFIX     = $prefix;
+ my $exec_prefix    = get_vars("exec_prefix");
+ my $datadir        = get_vars("datadir");
++my $libdir         = get_vars("libdir");
+ my $localstatedir  = get_vars("localstatedir");
+ my $CFG_TARGET     = get_vars("progname");
+ my $CFG_SYSCONFDIR = get_vars("sysconfdir");

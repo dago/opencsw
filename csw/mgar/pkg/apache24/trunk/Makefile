@@ -18,6 +18,7 @@ DISTFILES += cswapache24
 EXPANDVARS += cswapache24
 
 PATCHFILES += 0002-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
+PATCHFILES += 0003-fix-43561-apxs.patch
 
 #PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
 DISTFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
@@ -28,6 +29,8 @@ EXPANDVARS += 0001-Add-an-OpenCSW-option-to-config.layout.patch
 
 VENDOR_URL = http://httpd.apache.org/
 LICENSE = LICENSE
+
+GARCOMPILER = SOS12U4
 
 PACKAGES = CSWapache24
 SPKG_DESC_CSWapache24 = $(DESCRIPTION)
@@ -102,9 +105,10 @@ CONFIGURE_ARGS += --with-libxml2=$(includedir)/libxml2
 CONFIGURE_ARGS-32 += --with-lua=$(prefix)
 #CONFIGURE_ARGS-64 += --without-lua
 CONFIGURE_ARGS += --enable-mpms-shared=all
-CONFIGURE_ARGS += --with-mpm=prefork
+# CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --enable-layout=OpenCSW
 CONFIGURE_ARGS += --enable-mods-shared=all
+CONFIGURE_ARGS += --enable-cgi
 CONFIGURE_ARGS += --enable-privileges
 CONFIGURE_ARGS += --enable-vhost-alias
 #CONFIGURE_ARGS += --with-ssl=$(prefix)
