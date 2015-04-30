@@ -163,6 +163,10 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += discouraged-path-in-pkgmap
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += discouraged-path-in-pkgmap
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += discouraged-path-in-pkgmap
 
+# This is really part of core
+CHECKPKG_OVERRIDES_CSWgcc5core += shared-lib-pkgname-mismatch|file=opt/csw/lib/libgomp-plugin-host_nonshm.so.1.0.0|soname=libgomp-plugin-host_nonshm.so.1|pkgname=CSWgcc5core|expected=CSWlibgomp-plugin-host-nonshm1
+CHECKPKG_OVERRIDES_CSWgcc5core += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libgomp-plugin-host_nonshm.so.1.0.0|soname=libgomp-plugin-host_nonshm.so.1|pkgname=CSWgcc5core|expected=CSWlibgomp-plugin-host-nonshm1
+
 # Some static libraries are required to build binaries with gcc, for example
 # libgcc.a and libgcc_eh.a. Otherwise: ld: fatal: library -lgcc: not found
 MERGE_EXCLUDE_LIBTOOL =
@@ -451,9 +455,6 @@ ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatname  gcc_ada $(bindir)/gna
 ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatprep  gcc_ada $(bindir)/gnatprep$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatxref  gcc_ada $(bindir)/gnatxref$(PROGRAM_SUFFIX)
 
-# This is an obsolete package. Nothing depends on it, so we can remove it.
-INCOMPATIBLE_PKGS_$(PKG_BASENAME)ada = $(PKG_BASENAME)adart
-
 PACKAGES += $(PACKAGES_$(GARCH))
 CORE_BINARIES = cpp gcc gcov
 CXX_BINARIES = g\+\+ c\+\+
@@ -465,6 +466,13 @@ JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
 # We're building with the default GAR maps, currently U5.
 # LINKER_MAP_RELEASE = solaris10u8
+
+# The previous GCC4 is incompatible with GCC5 because of lots of collisions
+INCOMPATIBLE_PKGS_CSWgcc5g++ += CSWgcc4g++
+INCOMPATIBLE_PKGS_CSWgcc5java += CSWgcc4java
+INCOMPATIBLE_PKGS_CSWgcc5objc += CSWgcc4objc
+INCOMPATIBLE_PKGS_CSWgcc5gfortran += CSWgcc4gfortran
+INCOMPATIBLE_PKGS_CSWgcc5core += CSWgcc4core
 
 #Direct binding is disabled to to problem with amd64 libs
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += no-direct-binding
