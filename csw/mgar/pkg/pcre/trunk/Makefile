@@ -1,5 +1,5 @@
 NAME = pcre
-VERSION = 8.36
+VERSION = 8.37
 CATEGORIES = lib
 GARTYPE = v2
 
