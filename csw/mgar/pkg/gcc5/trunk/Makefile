@@ -163,10 +163,6 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += discouraged-path-in-pkgmap
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += discouraged-path-in-pkgmap
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += discouraged-path-in-pkgmap
 
-# This is really part of core
-CHECKPKG_OVERRIDES_CSWgcc5core += shared-lib-pkgname-mismatch|file=opt/csw/lib/libgomp-plugin-host_nonshm.so.1.0.0|soname=libgomp-plugin-host_nonshm.so.1|pkgname=CSWgcc5core|expected=CSWlibgomp-plugin-host-nonshm1
-CHECKPKG_OVERRIDES_CSWgcc5core += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libgomp-plugin-host_nonshm.so.1.0.0|soname=libgomp-plugin-host_nonshm.so.1|pkgname=CSWgcc5core|expected=CSWlibgomp-plugin-host-nonshm1
-
 # Some static libraries are required to build binaries with gcc, for example
 # libgcc.a and libgcc_eh.a. Otherwise: ld: fatal: library -lgcc: not found
 MERGE_EXCLUDE_LIBTOOL =
@@ -214,6 +210,13 @@ PACKAGES += CSWlibgomp1
 PKGFILES_CSWlibgomp1 += $(call baseisadirs,$(libdir),libgomp\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibgomp1 += $(DESCRIPTION), libgomp.so.1
 RUNTIME_DEP_PKGS_CSWlibgomp1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgcc5core += CSWlibgomp-plugin-host-nonshm1
+
+PACKAGES += CSWlibgomp-plugin-host-nonshm1
+PKGFILES_CSWlibgomp-plugin-host-nonshm1 += $(call pkgfiles_lib,libgomp-plugin-host_nonshm.so.1)
+SPKG_DESC_CSWlibgomp-plugin-host-nonshm1 = GNU Offloading and Multi Processing Runtime Library
+RUNTIME_DEP_PKGS_CSWlibgomp-plugin-host-nonshm1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgomp-plugin-host-nonshm1 += CSWlibgomp1
 
 PACKAGES += CSWlibobjc$(LIBOBJC)
 PKGFILES_CSWlibobjc$(LIBOBJC) += $(call baseisadirs,$(libdir),libobjc\.so\.$(LIBOBJC)(\.\d+)*)
@@ -496,6 +499,7 @@ CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgij$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgo$(GO_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgomp1 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgomp-plugin-host-nonshm1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibitm1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibobjc-gc4 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibobjc4 += no-direct-binding
