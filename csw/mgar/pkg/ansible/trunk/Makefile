@@ -1,5 +1,5 @@
 NAME = ansible
-VERSION = 1.9.0.1
+VERSION = 1.9.1
 GARTYPE = v2
 CATEGORIES = python
 
