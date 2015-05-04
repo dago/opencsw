@@ -1,0 +1,31 @@
+From 7720e8a3d98ad630b53e649ac4ff0150b73f8abc Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 4 May 2015 09:37:44 +0100
+Subject: [PATCH] Adapt test to account for differing tr behaviour on Solaris
+
+The tr as found in /usr/xpg4/bin fails to strip the [ character as
+used in tr -d "[]". To correct this, prefix the [ with the escape
+sequence so it is interpreted as a character, not the start of a
+special sequence.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ t/t5500-fetch-pack.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 3a9b775..1df340c 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -547,7 +547,7 @@ check_prot_host_port_path () {
+ 		*ssh*)
+ 		pp=ssh
+ 		uah=userandhost
+-		ehost=$(echo $3 | tr -d "[]")
++		ehost=$(echo $3 | tr -d "\[]")
+ 		diagport="Diag: port=$4"
+ 		;;
+ 		*)
+-- 
+2.3.3
+
