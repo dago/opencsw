@@ -89,12 +89,12 @@ GAROSREL := $(if $(GAROSREL),$(GAROSREL),$(shell /usr/bin/uname -r))
 
 # Select compiler
 # GARCOMPILER can be either GNU/SUN which selects the default
-# Sun or GNU compiler, or the specific verions SOS11/SOS12/SOS12U1/SOS12U2/SOS12U3/SOS12U4/GCC3/GCC4
+# Sun or GNU compiler, or the specific verions SOS11/SOS12/SOS12U1/SOS12U2/SOS12U3/SOS12U4/GCC3/GCC4/GCC5
 
 GARCOMPILER ?= SUN
 
 # We have parameters for the following compilers
-GARCOMPILERS = GCC3 GCC4 SOS11 SOS12 SOS12U1 SOS12U2 SOS12U3 SOS12U4
+GARCOMPILERS = GCC3 GCC4 GCC5 SOS11 SOS12 SOS12U1 SOS12U2 SOS12U3 SOS12U4
 
 GARCOMPILER-SUN-5.9 = SOS12
 GARCOMPILER-SUN-5.10 = SOS12
@@ -246,6 +246,7 @@ ARCHFLAGS_SOS12U3_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
 ARCHFLAGS_SOS12U4_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
    ARCHFLAGS_GCC3_sparcv9+fmuladd = ERROR
    ARCHFLAGS_GCC4_sparcv9+fmuladd = -m64 -mcpu=ultrasparc3 -mfmaf -Wa,-xarch=v9b
+   ARCHFLAGS_GCC5_sparcv9+fmuladd = -m64 -mcpu=ultrasparc3 -mfmaf -Wa,-xarch=v9b
       MEMORYMODEL_sparcv9+fmuladd = 64
 
      ARCHFLAGS_SOS11_sparcv9+vis2 = -xarch=v9b
@@ -256,6 +257,7 @@ ARCHFLAGS_SOS12U4_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
    ARCHFLAGS_SOS12U4_sparcv9+vis2 = -m64 -xarch=sparcvis2
       ARCHFLAGS_GCC3_sparcv9+vis2 = ERROR
       ARCHFLAGS_GCC4_sparcv9+vis2 = -m64 -mcpu=ultrasparc3 -mvis2 -Wa,-xarch=v9b
+      ARCHFLAGS_GCC5_sparcv9+vis2 = -m64 -mcpu=ultrasparc3 -mvis2 -Wa,-xarch=v9b
          MEMORYMODEL_sparcv9+vis2 = 64
 
       ARCHFLAGS_SOS11_sparcv9+vis = -xarch=v9a
@@ -266,6 +268,7 @@ ARCHFLAGS_SOS12U4_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
     ARCHFLAGS_SOS12U4_sparcv9+vis = -m64 -xarch=sparcvis
        ARCHFLAGS_GCC3_sparcv9+vis = -m64 -mcpu=ultrasparc -mvis
        ARCHFLAGS_GCC4_sparcv9+vis = -m64 -mcpu=ultrasparc -mvis -Wa,-xarch=v9a
+       ARCHFLAGS_GCC5_sparcv9+vis = -m64 -mcpu=ultrasparc -mvis -Wa,-xarch=v9a
           MEMORYMODEL_sparcv9+vis = 64
 
           ARCHFLAGS_SOS11_sparcv9 = -xarch=v9
@@ -276,6 +279,7 @@ ARCHFLAGS_SOS12U4_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
         ARCHFLAGS_SOS12U4_sparcv9 = -m64 -xarch=sparc
            ARCHFLAGS_GCC3_sparcv9 = -m64 -mcpu=v9
            ARCHFLAGS_GCC4_sparcv9 = -m64 -mcpu=v9 -Wa,-xarch=v9
+           ARCHFLAGS_GCC5_sparcv9 = -m64 -mcpu=v9 -Wa,-xarch=v9
               MEMORYMODEL_sparcv9 = 64
 
   ARCHFLAGS_SOS11_sparcv8plus+fmuladd = ERROR
@@ -286,6 +290,7 @@ ARCHFLAGS_SOS12U3_sparcv8plus+fmuladd = -m32 -xarch=xparcfmaf -fma=fused
 ARCHFLAGS_SOS12U4_sparcv8plus+fmuladd = -m32 -xarch=xparcfmaf -fma=fused
    ARCHFLAGS_GCC3_sparcv8plus+fmuladd = ERROR
    ARCHFLAGS_GCC4_sparcv8plus+fmuladd = -mcpu=v9 -mfmaf -Wa,-xarch=v8plusb
+   ARCHFLAGS_GCC5_sparcv8plus+fmuladd = -mcpu=v9 -mfmaf -Wa,-xarch=v8plusb
       MEMORYMODEL_sparcv8plus+fmuladd = 32
 
   ARCHFLAGS_SOS11_sparcv8plus+vis2 = -xarch=v8plusb
@@ -296,6 +301,7 @@ ARCHFLAGS_SOS12U3_sparcv8plus+vis2 = -m32 -xarch=sparcvis2
 ARCHFLAGS_SOS12U4_sparcv8plus+vis2 = -m32 -xarch=sparcvis2
    ARCHFLAGS_GCC3_sparcv8plus+vis2 = ERROR
    ARCHFLAGS_GCC4_sparcv8plus+vis2 = -mcpu=v9 -mvis2 -Wa,-xarch=v8plusb
+   ARCHFLAGS_GCC5_sparcv8plus+vis2 = -mcpu=v9 -mvis2 -Wa,-xarch=v8plusb
       MEMORYMODEL_sparcv8plus+vis2 = 32
 
   ARCHFLAGS_SOS11_sparcv8plus+vis = -xarch=v8plusa
@@ -306,6 +312,7 @@ ARCHFLAGS_SOS12U3_sparcv8plus+vis = -m32 -xarch=sparcvis
 ARCHFLAGS_SOS12U4_sparcv8plus+vis = -m32 -xarch=sparcvis
    ARCHFLAGS_GCC3_sparcv8plus+vis = -mcpu=v8 -mvis
    ARCHFLAGS_GCC4_sparcv8plus+vis = -mcpu=v9 -mvis -Wa,-xarch=v8plusa
+   ARCHFLAGS_GCC5_sparcv8plus+vis = -mcpu=v9 -mvis -Wa,-xarch=v8plusa
       MEMORYMODEL_sparcv8plus+vis = 32
 
       ARCHFLAGS_SOS11_sparcv8plus = -xarch=v8plus
@@ -316,6 +323,7 @@ ARCHFLAGS_SOS12U4_sparcv8plus+vis = -m32 -xarch=sparcvis
     ARCHFLAGS_SOS12U4_sparcv8plus = -m32 -xarch=sparc
        ARCHFLAGS_GCC3_sparcv8plus = -mcpu=v8 -mv8plus
        ARCHFLAGS_GCC4_sparcv8plus = -mcpu=v9 -Wa,-xarch=v8plus
+       ARCHFLAGS_GCC5_sparcv8plus = -mcpu=v9 -Wa,-xarch=v8plus
           MEMORYMODEL_sparcv8plus = 32
 
           ARCHFLAGS_SOS11_sparcv8 = -xarch=v8
@@ -326,6 +334,7 @@ ARCHFLAGS_SOS12U4_sparcv8plus+vis = -m32 -xarch=sparcvis
         ARCHFLAGS_SOS12U4_sparcv8 = -m32 -xarch=v8
            ARCHFLAGS_GCC3_sparcv8 = -mcpu=v8
            ARCHFLAGS_GCC4_sparcv8 = -mcpu=v8
+           ARCHFLAGS_GCC5_sparcv8 = -mcpu=v8
               MEMORYMODEL_sparcv8 = 32
 
    ARCHFLAGS_SOS11_sparcv8-fsmuld = -xarch=v8a
@@ -336,6 +345,7 @@ ARCHFLAGS_SOS12U4_sparcv8plus+vis = -m32 -xarch=sparcvis
  ARCHFLAGS_SOS12U4_sparcv8-fsmuld = -m32 -xarch=v8a
     ARCHFLAGS_GCC3_sparcv8-fsmuld = ERROR
     ARCHFLAGS_GCC4_sparcv8-fsmuld = ERROR
+    ARCHFLAGS_GCC5_sparcv8-fsmuld = ERROR
        MEMORYMODEL_sparcv8-fsmuld = 32
 
             ARCHFLAGS_SOS11_amd64 = -xarch=amd64
@@ -346,6 +356,7 @@ ARCHFLAGS_SOS12U4_sparcv8plus+vis = -m32 -xarch=sparcvis
           ARCHFLAGS_SOS12U4_amd64 = -m64 -xarch=sse2
              ARCHFLAGS_GCC3_amd64 = -m64 -march=opteron
              ARCHFLAGS_GCC4_amd64 = -m64 -march=opteron
+             ARCHFLAGS_GCC5_amd64 = -m64 -march=opteron
                 MEMORYMODEL_amd64 = 64
 
   ARCHFLAGS_SOS11_pentium_pro+mmx = -xarch=pentium_proa
@@ -356,6 +367,7 @@ ARCHFLAGS_SOS12U3_pentium_pro+mmx = -m32 -xarch=pentium_proa
 ARCHFLAGS_SOS12U4_pentium_pro+mmx = -m32 -xarch=pentium_proa
    ARCHFLAGS_GCC3_pentium_pro+mmx = -m32 -march=pentium2
    ARCHFLAGS_GCC4_pentium_pro+mmx = -m32 -march=pentium2
+   ARCHFLAGS_GCC5_pentium_pro+mmx = -m32 -march=pentium2
       MEMORYMODEL_pentium_pro+mmx = 32
 
       ARCHFLAGS_SOS11_pentium_pro = -xarch=pentium_pro -xchip=pentium_pro
@@ -366,6 +378,7 @@ ARCHFLAGS_SOS12U4_pentium_pro+mmx = -m32 -xarch=pentium_proa
     ARCHFLAGS_SOS12U4_pentium_pro = -m32 -xarch=pentium_pro -xchip=pentium_pro
        ARCHFLAGS_GCC3_pentium_pro = -m32 -march=pentiumpro
        ARCHFLAGS_GCC4_pentium_pro = -m32 -march=pentiumpro
+       ARCHFLAGS_GCC5_pentium_pro = -m32 -march=pentiumpro
           MEMORYMODEL_pentium_pro = 32
 
       ARCHFLAGS_SOS11_pentium+mmx = ERROR
@@ -376,6 +389,7 @@ ARCHFLAGS_SOS12U4_pentium_pro+mmx = -m32 -xarch=pentium_proa
     ARCHFLAGS_SOS12U4_pentium+mmx = ERROR
        ARCHFLAGS_GCC3_pentium+mmx = -m32 -march=pentium-mmx
        ARCHFLAGS_GCC4_pentium+mmx = -m32 -march=pentium-mmx
+       ARCHFLAGS_GCC5_pentium+mmx = -m32 -march=pentium-mmx
           MEMORYMODEL_pentium+mmx = 32
 
           ARCHFLAGS_SOS11_pentium = -xchip=pentium
@@ -385,7 +399,7 @@ ARCHFLAGS_SOS12U4_pentium_pro+mmx = -m32 -xarch=pentium_proa
         ARCHFLAGS_SOS12U3_pentium = -m32 -xchip=pentium
         ARCHFLAGS_SOS12U4_pentium = -m32 -xchip=pentium
            ARCHFLAGS_GCC3_pentium = -m32 -march=pentium
-           ARCHFLAGS_GCC4_pentium = -m32 -march=pentium
+           ARCHFLAGS_GCC5_pentium = -m32 -march=pentium
               MEMORYMODEL_pentium = 32
 
              ARCHFLAGS_SOS11_i486 = -xarch=386 -xchip=486
@@ -396,6 +410,7 @@ ARCHFLAGS_SOS12U4_pentium_pro+mmx = -m32 -xarch=pentium_proa
            ARCHFLAGS_SOS12U4_i486 = -m32 -xarch=386 -xchip=486
               ARCHFLAGS_GCC3_i486 = -m32 -march=i486
               ARCHFLAGS_GCC4_i486 = -m32 -march=i486
+              ARCHFLAGS_GCC5_i486 = -m32 -march=i486
                  MEMORYMODEL_i486 = 32
 
              ARCHFLAGS_SOS11_i386 = -xarch=386
@@ -406,6 +421,7 @@ ARCHFLAGS_SOS12U4_pentium_pro+mmx = -m32 -xarch=pentium_proa
            ARCHFLAGS_SOS12U4_i386 = -m32 -xarch=386
               ARCHFLAGS_GCC3_i386 = -m32 -march=i386
               ARCHFLAGS_GCC4_i386 = -m32 -march=i386
+              ARCHFLAGS_GCC5_i386 = -m32 -march=i386
                  MEMORYMODEL_i386 = 32
 
 # ISALIST_$(GARCOMPILER) contains all ISAs which are compilable with the selected compiler
@@ -436,6 +452,7 @@ OPT_FLAGS_SOS12U3 ?= $(OPT_FLAGS_SOS)
 OPT_FLAGS_SOS12U4 ?= $(OPT_FLAGS_SOS)
    OPT_FLAGS_GCC3 ?= $(OPT_FLAGS_GCC)
    OPT_FLAGS_GCC4 ?= $(OPT_FLAGS_GCC)
+   OPT_FLAGS_GCC5 ?= $(OPT_FLAGS_GCC)
 
   OPT_FLAGS_SOS11_sparc ?= $(OPT_FLAGS_SOS11)
   OPT_FLAGS_SOS12_sparc ?= $(OPT_FLAGS_SOS12)
@@ -445,6 +462,7 @@ OPT_FLAGS_SOS12U3_sparc ?= $(OPT_FLAGS_SOS12U3)
 OPT_FLAGS_SOS12U4_sparc ?= $(OPT_FLAGS_SOS12U4)
    OPT_FLAGS_GCC3_sparc ?= $(OPT_FLAGS_GCC3)
    OPT_FLAGS_GCC4_sparc ?= $(OPT_FLAGS_GCC4)
+   OPT_FLAGS_GCC5_sparc ?= $(OPT_FLAGS_GCC5)
    OPT_FLAGS_SOS11_i386 ?= $(OPT_FLAGS_SOS11)
    OPT_FLAGS_SOS12_i386 ?= $(OPT_FLAGS_SOS12)
  OPT_FLAGS_SOS12U1_i386 ?= $(OPT_FLAGS_SOS12U1)
@@ -453,20 +471,27 @@ OPT_FLAGS_SOS12U4_sparc ?= $(OPT_FLAGS_SOS12U4)
  OPT_FLAGS_SOS12U4_i386 ?= $(OPT_FLAGS_SOS12U4)
     OPT_FLAGS_GCC3_i386 ?= $(OPT_FLAGS_GCC3)
     OPT_FLAGS_GCC4_i386 ?= $(OPT_FLAGS_GCC4)
+    OPT_FLAGS_GCC5_i386 ?= $(OPT_FLAGS_GCC5)
 
 # Most of these are empty because '-march' implies '-mtune'
           OPT_ISAFLAGS_GCC3_amd64 ?=
           OPT_ISAFLAGS_GCC4_amd64 ?=
+          OPT_ISAFLAGS_GCC5_amd64 ?=
 OPT_ISAFLAGS_GCC3_pentium_pro+mmx ?=
 OPT_ISAFLAGS_GCC4_pentium_pro+mmx ?=
+OPT_ISAFLAGS_GCC5_pentium_pro+mmx ?=
     OPT_ISAFLAGS_GCC3_pentium_pro ?=
     OPT_ISAFLAGS_GCC4_pentium_pro ?=
+    OPT_ISAFLAGS_GCC5_pentium_pro ?=
     OPT_ISAFLAGS_GCC3_pentium+mmx ?=
     OPT_ISAFLAGS_GCC4_pentium+mmx ?=
+    OPT_ISAFLAGS_GCC5_pentium+mmx ?=
         OPT_ISAFLAGS_GCC3_pentium ?=
         OPT_ISAFLAGS_GCC4_pentium ?=
+        OPT_ISAFLAGS_GCC5_pentium ?=
            OPT_ISAFLAGS_GCC3_i386 ?= -mtune=i686
            OPT_ISAFLAGS_GCC4_i386 ?= -mtune=i686
+           OPT_ISAFLAGS_GCC5_i386 ?= -mtune=i686
 
 
   DBG_FLAGS_SOS11_sparc ?= -g
@@ -477,6 +502,7 @@ DBG_FLAGS_SOS12U3_sparc ?= -g
 DBG_FLAGS_SOS12U4_sparc ?= -g
    DBG_FLAGS_GCC3_sparc ?= -g
    DBG_FLAGS_GCC4_sparc ?= -g
+   DBG_FLAGS_GCC5_sparc ?= -g
    DBG_FLAGS_SOS11_i386 ?= -g
    DBG_FLAGS_SOS12_i386 ?= -g
  DBG_FLAGS_SOS12U1_i386 ?= -g
@@ -485,6 +511,7 @@ DBG_FLAGS_SOS12U4_sparc ?= -g
  DBG_FLAGS_SOS12U4_i386 ?= -g
     DBG_FLAGS_GCC3_i386 ?= -g
     DBG_FLAGS_GCC4_i386 ?= -g
+    DBG_FLAGS_GCC5_i386 ?= -g
 
 # This variable contains the opt flags for the current compiler on the current architecture
 FLAVOR_FLAGS ?= $($(GARFLAVOR)_ISAFLAGS_$(GARCOMPILER)_$(ISA)) $($(GARFLAVOR)_FLAGS_$(GARCOMPILER)_$(GARCH))
@@ -567,6 +594,7 @@ ISABINDIR ?= $(ISABINDIR_$(ISA))
 
    GCC3_CC_HOME ?= /opt/csw/gcc3
    GCC4_CC_HOME ?= /opt/csw
+   GCC5_CC_HOME ?= /opt/csw
   SOS11_CC_HOME ?= /opt/studio/SOS11/SUNWspro
   SOS12_CC_HOME ?= /opt/studio/SOS12/SUNWspro
 SOS12U1_CC_HOME ?= /opt/studio/sunstudio12.1
@@ -575,9 +603,11 @@ SOS12U3_CC_HOME ?= /opt/solarisstudio12.3
 SOS12U4_CC_HOME ?= /opt/solarisstudio12.4
 
    GCC4_VERSION ?= 4.9
+   GCC5_VERSION ?= 5.1
 
      GCC3_CC ?= $(GCC3_CC_HOME)/bin/gcc
      GCC4_CC ?= $(GCC4_CC_HOME)/bin/gcc-$(GCC4_VERSION)
+     GCC5_CC ?= $(GCC5_CC_HOME)/bin/gcc-$(GCC5_VERSION)
     SOS11_CC ?= $(SOS11_CC_HOME)/bin/cc
     SOS12_CC ?= $(SOS12_CC_HOME)/bin/cc
   SOS12U1_CC ?= $(SOS12U1_CC_HOME)/bin/cc
@@ -586,6 +616,7 @@ SOS12U4_CC_HOME ?= /opt/solarisstudio12.4
   SOS12U4_CC ?= $(SOS12U4_CC_HOME)/bin/cc
     GCC3_CXX ?= $(GCC3_CC_HOME)/bin/g++
     GCC4_CXX ?= $(GCC4_CC_HOME)/bin/g++-$(GCC4_VERSION)
+    GCC5_CXX ?= $(GCC5_CC_HOME)/bin/g++-$(GCC5_VERSION)
    SOS11_CXX ?= $(SOS11_CC_HOME)/bin/CC
    SOS12_CXX ?= $(SOS12_CC_HOME)/bin/CC
  SOS12U1_CXX ?= $(SOS12U1_CC_HOME)/bin/CC
@@ -594,6 +625,7 @@ SOS12U4_CC_HOME ?= /opt/solarisstudio12.4
  SOS12U4_CXX ?= $(SOS12U4_CC_HOME)/bin/CC
     GCC3_F77 ?= $(GCC3_CC_HOME)/bin/g77
     GCC4_F77 ?= $(GCC4_CC_HOME)/bin/gfortran-$(GCC4_VERSION)
+    GCC5_F77 ?= $(GCC5_CC_HOME)/bin/gfortran-$(GCC5_VERSION)
    SOS11_F77 ?= $(SOS11_CC_HOME)/bin/f77
    SOS12_F77 ?= $(SOS12_CC_HOME)/bin/f77
  SOS12U1_F77 ?= $(SOS12U1_CC_HOME)/bin/f77
@@ -602,6 +634,7 @@ SOS12U4_CC_HOME ?= /opt/solarisstudio12.4
  SOS12U4_CXX ?= $(SOS12U4_CC_HOME)/bin/CC
      GCC3_FC ?= $(GCC3_CC_HOME)/bin/g77
      GCC4_FC ?= $(GCC4_CC_HOME)/bin/gfortran-$(GCC4_VERSION)
+     GCC5_FC ?= $(GCC5_CC_HOME)/bin/gfortran-$(GCC5_VERSION)
     SOS11_FC ?= $(SOS11_CC_HOME)/bin/f95
     SOS12_FC ?= $(SOS12_CC_HOME)/bin/f95
   SOS12U1_FC ?= $(SOS12U1_CC_HOME)/bin/f95
@@ -611,6 +644,7 @@ SOS12U4_CC_HOME ?= /opt/solarisstudio12.4
 
     GCC3_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
     GCC4_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
+    GCC5_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC5_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
    SOS11_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_CC_FLAGS) $(EXTRA_SOS_CC_FLAGS) $(EXTRA_CC_FLAGS)
    SOS12_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_CC_FLAGS) $(EXTRA_SOS_CC_FLAGS) $(EXTRA_CC_FLAGS)
  SOS12U1_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U1_CC_FLAGS) $(EXTRA_SOS_CC_FLAGS) $(EXTRA_CC_FLAGS)
@@ -619,6 +653,7 @@ SOS12U4_CC_HOME ?= /opt/solarisstudio12.4
  SOS12U4_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U4_CC_FLAGS) $(EXTRA_SOS_CC_FLAGS) $(EXTRA_CC_FLAGS)
    GCC3_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
    GCC4_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
+   GCC5_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC5_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
   SOS11_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_CXX_FLAGS) $(EXTRA_SOS_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
   SOS12_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_CXX_FLAGS) $(EXTRA_SOS_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
 SOS12U1_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U1_CXX_FLAGS) $(EXTRA_SOS_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
@@ -627,6 +662,7 @@ SOS12U3_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_
 SOS12U4_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U4_CXX_FLAGS) $(EXTRA_SOS_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
     GCC3_AS_FLAGS ?= $(EXTRA_GCC3_AS_FLAGS) $(EXTRA_GCC_AS_FLAGS) $(EXTRA_AS_FLAGS)
     GCC4_AS_FLAGS ?= $(EXTRA_GCC4_AS_FLAGS) $(EXTRA_GCC_AS_FLAGS) $(EXTRA_AS_FLAGS)
+    GCC5_AS_FLAGS ?= $(EXTRA_GCC5_AS_FLAGS) $(EXTRA_GCC_AS_FLAGS) $(EXTRA_AS_FLAGS)
    SOS11_AS_FLAGS ?= $(EXTRA_SOS11_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
    SOS12_AS_FLAGS ?= $(EXTRA_SOS12_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
  SOS12U1_AS_FLAGS ?= $(EXTRA_SOS12U1_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
@@ -634,8 +670,9 @@ SOS12U4_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_
  SOS12U3_AS_FLAGS ?= $(EXTRA_SOS12U3_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
  SOS12U4_AS_FLAGS ?= $(EXTRA_SOS12U4_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
     GCC3_LD_FLAGS ?= -L$(GCC3_CC_HOME)/lib/$(MM_LIBDIR) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
-    GCC3_LD_FLAGS ?= $(foreach D,$(filter-out $(libpath,$(abspath $(GCC3_CC_HOME)/lib/$(MM_LIBDIR))),-L$D) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
+    GCC3_LD_FLAGS ?= $(foreach D,$(filter-out $(libpath,$(abspath $(GCC3_CC_HOME)/lib/$(MM_LIBDIR))),-L$D) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
     GCC4_LD_FLAGS ?= $(foreach D,$(filter-out $(libpath),$(abspath $(GCC4_CC_HOME)/lib/$(MM_LIBDIR))),-L$D) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
+    GCC5_LD_FLAGS ?= $(foreach D,$(filter-out $(libpath),$(abspath $(GCC5_CC_HOME)/lib/$(MM_LIBDIR))),-L$D) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC5_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
 
    SOS11_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
    SOS12_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
@@ -645,6 +682,7 @@ SOS12U4_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_
  SOS12U4_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U4_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
       GCC3_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_FFLAGS) $(EXTRA_GCC_FFLAGS) $(EXTRA_FFLAGS)
       GCC4_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_FFLAGS) $(EXTRA_GCC_FFLAGS) $(EXTRA_FFLAGS)
+      GCC5_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC5_FFLAGS) $(EXTRA_GCC_FFLAGS) $(EXTRA_FFLAGS)
      SOS11_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_FFLAGS) $(EXTRA_SOS_FFLAGS) $(EXTRA_FFLAGS)
      SOS12_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_FFLAGS) $(EXTRA_SOS_FFLAGS) $(EXTRA_FFLAGS)
    SOS12U1_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U1_FFLAGS) $(EXTRA_SOS_FFLAGS) $(EXTRA_FFLAGS)
@@ -653,6 +691,7 @@ SOS12U4_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_
    SOS12U4_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U4_FFLAGS) $(EXTRA_SOS_FFLAGS) $(EXTRA_FFLAGS)
       GCC3_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_FCFLAGS) $(EXTRA_GCC_FCFLAGS) $(EXTRA_FCFLAGS)
       GCC4_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_FCFLAGS) $(EXTRA_GCC_FCFLAGS) $(EXTRA_FCFLAGS)
+      GCC5_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC5_FCFLAGS) $(EXTRA_GCC_FCFLAGS) $(EXTRA_FCFLAGS)
      SOS11_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_FCFLAGS) $(EXTRA_SOS_FCFLAGS) $(EXTRA_FCFLAGS)
      SOS12_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_FCFLAGS) $(EXTRA_SOS_FCFLAGS) $(EXTRA_FCFLAGS)
    SOS12U1_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U1_FCFLAGS) $(EXTRA_SOS_FCFLAGS) $(EXTRA_FCFLAGS)
@@ -668,6 +707,10 @@ SOS12U4_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_
    GCC4_CXX_VERSION = $(shell $(GCC4_CXX) -v 2>&1| ggrep version)
    GCC4_F77_VERSION = $(shell $(GCC4_F77) -v 2>&1| ggrep version)
     GCC4_FC_VERSION = $(shell $(GCC4_FC) -v 2>&1| ggrep version)
+    GCC5_CC_VERSION = $(shell $(GCC5_CC) -v 2>&1| ggrep version)
+   GCC5_CXX_VERSION = $(shell $(GCC5_CXX) -v 2>&1| ggrep version)
+   GCC5_F77_VERSION = $(shell $(GCC5_F77) -v 2>&1| ggrep version)
+    GCC5_FC_VERSION = $(shell $(GCC5_FC) -v 2>&1| ggrep version)
 
    SOS11_CC_VERSION = $(shell $(SOS11_CC) -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
   SOS11_CXX_VERSION = $(shell $(SOS11_CXX) -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
@@ -765,6 +808,7 @@ FCFLAGS  ?= $(strip $($(GARCOMPILER)_FCFLAGS) $(_CATEGORY_FCFLAGS) $(EXTRA_FCFLA
 
 GCC3_LD_OPTIONS = $(foreach D,$(filter-out $(libpath),$(abspath $(GCC3_CC_HOME)/lib/$(MM_LIBDIR))),-R$D) $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
 GCC4_LD_OPTIONS = $(foreach D,$(filter-out $(libpath),$(abspath $(GCC4_CC_HOME)/lib/$(MM_LIBDIR))),-R$D) $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
+GCC5_LD_OPTIONS = $(foreach D,$(filter-out $(libpath),$(abspath $(GCC5_CC_HOME)/lib/$(MM_LIBDIR))),-R$D) $(EXTRA_GCC5_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
 SOS11_LD_OPTIONS = $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 SOS12_LD_OPTIONS = $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 SOS12U1_LD_OPTIONS = $(EXTRA_SOS12U1_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
