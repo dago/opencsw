@@ -1,0 +1,76 @@
+From 6fe0705c4b3e59a34b1276f48e00f8e0e85ddaac Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 4 May 2015 09:37:44 +0100
+Subject: [PATCH] Modify use of sed and tr to be compatible with xpg4 tools on
+ Solaris
+
+The tr as found in /usr/xpg4/bin fails to strip the [ character as
+used in tr -d "[]". To correct this, prefix the [ with the escape
+sequence so it is interpreted as a character, not the start of a
+special sequence.
+
+A sed command with a trailing space isn't accepted by sed on solaris,
+so remove it since it's not semantically important.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ t/t5500-fetch-pack.sh | 2 +-
+ t/t5601-clone.sh      | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 3a9b775..1df340c 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -547,7 +547,7 @@ check_prot_host_port_path () {
+ 		*ssh*)
+ 		pp=ssh
+ 		uah=userandhost
+-		ehost=$(echo $3 | tr -d "[]")
++		ehost=$(echo $3 | tr -d "\[]")
+ 		diagport="Diag: port=$4"
+ 		;;
+ 		*)
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 1befc45..41021e4 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -412,7 +412,7 @@ test_expect_success 'clone ssh://host.xz:22/~repo' '
+ #IPv6
+ for tuah in ::1 [::1] [::1]: user@::1 user@[::1] user@[::1]: [user@::1] [user@::1]:
+ do
+-	ehost=$(echo $tuah | sed -e "s/1]:/1]/ "| tr -d "[]")
++	ehost=$(echo $tuah | sed -e "s/1\]:/1\]/ "| tr -d "\[]")
+ 	test_expect_success "clone ssh://$tuah/home/user/repo" "
+ 	  test_clone_url ssh://$tuah/home/user/repo $ehost /home/user/repo
+ 	"
+@@ -421,7 +421,7 @@ done
+ #IPv6 from home directory
+ for tuah in ::1 [::1] user@::1 user@[::1] [user@::1]
+ do
+-	euah=$(echo $tuah | tr -d "[]")
++	euah=$(echo $tuah | tr -d "\[]")
+ 	test_expect_success "clone ssh://$tuah/~repo" "
+ 	  test_clone_url ssh://$tuah/~repo $euah '~repo'
+ 	"
+@@ -430,7 +430,7 @@ done
+ #IPv6 with port number
+ for tuah in [::1] user@[::1] [user@::1]
+ do
+-	euah=$(echo $tuah | tr -d "[]")
++	euah=$(echo $tuah | tr -d "\[]")
+ 	test_expect_success "clone ssh://$tuah:22/home/user/repo" "
+ 	  test_clone_url ssh://$tuah:22/home/user/repo '-p 22' $euah /home/user/repo
+ 	"
+@@ -439,7 +439,7 @@ done
+ #IPv6 from home directory with port number
+ for tuah in [::1] user@[::1] [user@::1]
+ do
+-	euah=$(echo $tuah | tr -d "[]")
++	euah=$(echo $tuah | tr -d "\[]")
+ 	test_expect_success "clone ssh://$tuah:22/~repo" "
+ 	  test_clone_url ssh://$tuah:22/~repo '-p 22' $euah '~repo'
+ 	"
+-- 
+2.3.3
+
