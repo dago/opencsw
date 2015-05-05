@@ -1,15 +1,13 @@
 NAME = libdatrie
-VERSION = 0.2.5
-CATEGORIES = lib
+VERSION = 0.2.9
 GARTYPE = v2
 
 DESCRIPTION = Double array tree library
 define BLURB
 endef
 
-MASTER_SITES = ftp://linux.thai.net/pub/ThaiLinux/software/libthai/
-DISTFILES += $(DISTNAME).tar.gz
-PATCHFILES += 0001-Remove-unnecessary-inclusing-of-stdint.h.patch
+MASTER_SITES += ftp://linux.thai.net/pub/thailinux/software/libthai/
+DISTFILES += $(DISTNAME).tar.xzof-stdint.h.patch
 
 VENDOR_URL = http://linux.thai.net/~thep/datrie/datrie.html
 
@@ -39,4 +37,4 @@ CONFIGURE_ARGS += --with-html-docdir=$(docdir)/libdatrie-dev/html
 BUILD_OVERRIDE_VARS = ICONV_LIBS
 BUILD_OVERRIDE_VAR_ICONV_LIBS = -liconv
 
-include gar/category.mk
+include
