@@ -1,0 +1,12 @@
+diff -up jss-4.2.6/mozilla/security/jss/org/mozilla/jss/asn1/OBJECT_IDENTIFIER.java.jn jss-4.2.6/mozilla/security/jss/org/mozilla/jss/asn1/OBJECT_IDENTIFIER.java
+--- jss-4.2.6/mozilla/security/jss/org/mozilla/jss/asn1/OBJECT_IDENTIFIER.java.jn	2014-09-10 09:21:52.663959115 -0700
++++ jss-4.2.6/mozilla/security/jss/org/mozilla/jss/asn1/OBJECT_IDENTIFIER.java	2014-09-10 09:22:38.662788747 -0700
+@@ -117,7 +117,7 @@ public class OBJECT_IDENTIFIER implement
+      * The OID space for FIPS-180-2 SHA256/SHA384/SHA512 standardized algorithms.
+      */
+     public static final OBJECT_IDENTIFIER HASH_ALGORITHM =
+-        new OBJECT_IDENTIFIER( new long[] {2, 16, 840, 1, 101, 3, 4 } );
++        new OBJECT_IDENTIFIER( new long[] {2, 16, 840, 1, 101, 3, 4, 2 } );
+ 
+ 
+     /**

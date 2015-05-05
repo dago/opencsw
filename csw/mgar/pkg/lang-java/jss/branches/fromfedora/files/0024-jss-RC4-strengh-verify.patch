@@ -1,0 +1,12 @@
+diff -up jss-4.2.6/mozilla/security/jss/org/mozilla/jss/crypto/KeyGenAlgorithm.java.nkinderSaved jss-4.2.6/mozilla/security/jss/org/mozilla/jss/crypto/KeyGenAlgorithm.java
+--- jss-4.2.6/mozilla/security/jss/org/mozilla/jss/crypto/KeyGenAlgorithm.java.nkinderSaved	2014-09-26 14:40:03.452845047 -0700
++++ jss-4.2.6/mozilla/security/jss/org/mozilla/jss/crypto/KeyGenAlgorithm.java	2014-09-26 14:41:02.101598146 -0700
+@@ -127,7 +127,7 @@ public class KeyGenAlgorithm extends Alg
+     RC4 = new KeyGenAlgorithm(CKM_RC4_KEY_GEN, "RC4",
+             new KeyStrengthValidator() {
+                 public boolean isValidKeyStrength(int strength) {
+-                    return true;
++                    return strength>=40 && strength <= (256*8);
+                 }
+             }, null, null);
+ 

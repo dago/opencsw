@@ -1,0 +1,345 @@
+diff -up jss-4.2.6/mozilla/security/jss/lib/jss.def.cfuSaved jss-4.2.6/mozilla/security/jss/lib/jss.def
+--- jss-4.2.6/mozilla/security/jss/lib/jss.def.cfuSaved	2014-09-29 14:12:27.560206348 -0700
++++ jss-4.2.6/mozilla/security/jss/lib/jss.def	2014-09-29 14:12:34.376194464 -0700
+@@ -334,6 +334,8 @@ Java_org_mozilla_jss_CryptoManager_setOC
+ Java_org_mozilla_jss_CryptoManager_verifyCertificateNowNative;
+ Java_org_mozilla_jss_CryptoManager_verifyCertificateNowCUNative;
+ Java_org_mozilla_jss_asn1_ASN1Util_getTagDescriptionByOid;
++Java_org_mozilla_jss_ssl_SocketBase_setSSLVersionRange;
++Java_org_mozilla_jss_ssl_SSLSocket_setSSLVersionRangeDefault;
+ ;+    local:
+ ;+       *;
+ ;+};
+diff -up jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SSLSocket.c.cfuSaved jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SSLSocket.c
+--- jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SSLSocket.c.cfuSaved	2014-09-29 14:12:27.565206339 -0700
++++ jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SSLSocket.c	2014-09-29 14:13:33.222091053 -0700
+@@ -56,6 +56,105 @@
+ #endif
+ 
+ 
++/*
++ * support TLS v1.1 and v1.2
++ *   sets default SSL version range for sockets created after this call
++ */
++JNIEXPORT void JNICALL
++Java_org_mozilla_jss_ssl_SSLSocket_setSSLVersionRangeDefault(JNIEnv *env,
++    jclass clazz, jint ssl_variant, jint min, jint max)
++{
++    SECStatus status;
++    SSLVersionRange vrange;
++
++    if (ssl_variant <0 || ssl_variant >= JSSL_enums_size|| 
++            min <0 || min >= JSSL_enums_size ||
++            max <0 || max >= JSSL_enums_size) {
++        char buf[128];
++        PR_snprintf(buf, 128, "JSS setSSLVersionRangeDefault(): for variant=%d min=%d max=%d failed - out of range for array JSSL_enums size: %d", JSSL_enums[ssl_variant], min, max, JSSL_enums_size);
++        JSSL_throwSSLSocketException(env, buf);
++        goto finish;
++    }
++
++    vrange.min = JSSL_enums[min];
++    vrange.max = JSSL_enums[max];
++
++    /* get supported range */
++    SSLVersionRange supported_range;
++    status = SSL_VersionRangeGetSupported(JSSL_enums[ssl_variant],
++                &supported_range);
++    if( status != SECSuccess ) {
++        char buf[128];
++        PR_snprintf(buf, 128, "SSL_VersionRangeGetSupported() for variant=%d failed: %d", JSSL_enums[ssl_variant], PR_GetError());
++        JSSL_throwSSLSocketException(env, buf);
++        goto finish;
++    }
++    /* now check the min and max */
++    if (vrange.min < supported_range.min  ||
++                vrange.max > supported_range.max) {
++        char buf[128];
++        PR_snprintf(buf, 128, "SSL_VersionRangeSetDefault() for variant=%d with min=%d max=%d out of range (%d:%d): %d", JSSL_enums[ssl_variant], vrange.min, vrange.max, supported_range.min, supported_range.max, PR_GetError());
++        JSSL_throwSSLSocketException(env, buf);
++        goto finish;
++    }
++
++    /* set the default SSL Version Range */
++    status = SSL_VersionRangeSetDefault(JSSL_enums[ssl_variant],
++                 &vrange);
++    if( status != SECSuccess ) {
++        char buf[128];
++        PR_snprintf(buf, 128, "SSL_VersionRangeSetDefault() for variant=%d with min=%d max=%d failed: %d", JSSL_enums[ssl_variant], vrange.min, vrange.max, PR_GetError());
++        JSSL_throwSSLSocketException(env, buf);
++        goto finish;
++    }
++
++finish:
++    return;
++}
++
++/*
++ * support TLS v1.1 and v1.2
++ *   sets SSL version range for this socket
++ */
++JNIEXPORT void JNICALL
++Java_org_mozilla_jss_ssl_SocketBase_setSSLVersionRange
++    (JNIEnv *env, jobject self, jint min, jint max)
++{
++    SECStatus status;
++    JSSL_SocketData *sock = NULL;
++    SSLVersionRange vrange;
++
++    if ( min <0 || min >= JSSL_enums_size ||
++            max <0 || max >= JSSL_enums_size) {
++        char buf[128];
++        PR_snprintf(buf, 128, "JSS setSSLVersionRange(): for max=%d failed - out of range for array JSSL_enums size: %d", min, max, JSSL_enums_size);
++        JSSL_throwSSLSocketException(env, buf);
++        goto finish;
++    }
++
++    /* get my fd */
++    if( JSSL_getSockData(env, self, &sock) != PR_SUCCESS ) {
++        goto finish;
++    }
++
++    vrange.min = JSSL_enums[min];
++    vrange.max = JSSL_enums[max];
++
++    /*
++     * set the SSL Version Range 
++     * The validity of the range will be checked by this NSS call
++     */
++    status = SSL_VersionRangeSet(sock->fd, &vrange);
++    if( status != SECSuccess ) {
++        JSSL_throwSSLSocketException(env, "SSL_VersionRangeSet failed");
++        goto finish;
++    }
++
++finish:
++    EXCEPTION_CHECK(env, sock)
++    return;
++}
++
+ JNIEXPORT void JNICALL
+ Java_org_mozilla_jss_ssl_SSLSocket_setSSLDefaultOption(JNIEnv *env,
+     jclass clazz, jint joption, jint on)
+diff -up jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SSLSocket.java.cfuSaved jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SSLSocket.java
+--- jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SSLSocket.java.cfuSaved	2014-09-29 14:12:27.566206338 -0700
++++ jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SSLSocket.java	2014-09-29 14:12:34.377194462 -0700
+@@ -36,6 +36,7 @@
+ 
+ package org.mozilla.jss.ssl;
+ 
++import java.lang.IllegalArgumentException;
+ import java.net.*;
+ import java.net.SocketException;
+ import java.net.SocketTimeoutException;
+@@ -948,6 +949,63 @@ public class SSLSocket extends java.net.
+         setSSLDefaultOption(SocketBase.SSL_NO_CACHE, !b);
+     }
+ 
++   /*
++    * _min_enum and _max_enum should be one of the following:
++    *     SocketBase.SSL_LIBRARY_VERSION_3_0
++    *     SocketBase.SSL_LIBRARY_VERSION_TLS_1_0
++    *     SocketBase.SSL_LIBRARY_VERSION_TLS_1_1
++    *     SocketBase.SSL_LIBRARY_VERSION_TLS_1_2
++    */
++    public static class SSLVersionRange {
++        private int _min_enum;
++        private int _max_enum;
++        public static final int ssl3 = SocketBase.SSL_LIBRARY_VERSION_3_0;
++        public static final int tls1_0 = SocketBase.SSL_LIBRARY_VERSION_TLS_1_0;
++        public static final int tls1_1 = SocketBase.SSL_LIBRARY_VERSION_TLS_1_1;
++        public static final int tls1_2 = SocketBase.SSL_LIBRARY_VERSION_TLS_1_2;
++        public SSLVersionRange(int min_enum, int max_enum)
++          throws IllegalArgumentException {
++            if ((min_enum >= SocketBase.SSL_LIBRARY_VERSION_3_0) &&
++                (max_enum <= SocketBase.SSL_LIBRARY_VERSION_TLS_1_2) &&
++                (min_enum <= max_enum)) {
++                _min_enum = min_enum;
++                _max_enum = max_enum;
++            } else {
++                throw new IllegalArgumentException("JSS SSLSocket SSLVersionRange: arguments out of range");
++            }
++        }
++
++        int getMinEnum() { return _min_enum; }
++        int getMaxEnum() { return _max_enum; }
++
++    }
++
++    public static class SSLProtocolVariant {
++        private int _enum;
++        private SSLProtocolVariant(int val) { _enum = val; }
++
++        int getEnum() { return _enum; }
++
++        public static final SSLProtocolVariant STREAM =
++            new SSLProtocolVariant(SocketBase.SSL_Variant_Stream);
++        public static final SSLProtocolVariant DATA_GRAM =
++            new SSLProtocolVariant(SocketBase.SSL_Variant_Datagram);
++
++    }
++
++    public static void setSSLVersionRangeDefault(SSLProtocolVariant ssl_variant, SSLVersionRange range)
++        throws SocketException
++    {
++        if (range == null)
++            throw new SocketException("setSSLVersionRangeDefault: range null");
++        setSSLVersionRangeDefault(ssl_variant.getEnum(), range.getMinEnum(), range.getMaxEnum());
++    }
++
++    /** 
++     * Sets SSL Version Range Default
++     */
++    private static native void setSSLVersionRangeDefault(int ssl_variant, int min, int max)
++        throws SocketException;
+ 
+     private static void setSSLDefaultOption(int option, boolean on)
+         throws SocketException
+@@ -1221,6 +1279,8 @@ public class SSLSocket extends java.net.
+     public final static int TLS_DHE_DSS_EXPORT1024_WITH_DES_CBC_SHA = 0x0063;
+     public final static int TLS_DHE_DSS_EXPORT1024_WITH_RC4_56_SHA  = 0x0065;
+     public final static int TLS_DHE_DSS_WITH_RC4_128_SHA            = 0x0066;
++    public final static int TLS_DHE_RSA_WITH_AES_128_CBC_SHA256     = 0x0067;
++    public final static int TLS_DHE_RSA_WITH_AES_256_CBC_SHA256     = 0x006B;
+ 
+ // New TLS cipher suites in NSS 3.4 
+     public final static int TLS_RSA_WITH_AES_128_CBC_SHA          =  0x002F;
+@@ -1236,6 +1296,10 @@ public class SSLSocket extends java.net.
+     public final static int TLS_DHE_DSS_WITH_AES_256_CBC_SHA      =  0x0038;
+     public final static int TLS_DHE_RSA_WITH_AES_256_CBC_SHA      =  0x0039;
+     public final static int TLS_DH_ANON_WITH_AES_256_CBC_SHA      =  0x003A;
++    public final static int TLS_RSA_WITH_NULL_SHA256              =  0x003B;
++    public final static int TLS_RSA_WITH_AES_128_CBC_SHA256       =  0x003C;
++    public final static int TLS_RSA_WITH_AES_256_CBC_SHA256       =  0x003D;
++
+ 
+     public final static int TLS_RSA_WITH_CAMELLIA_128_CBC_SHA     =  0x0041;
+     public final static int TLS_DH_DSS_WITH_CAMELLIA_128_CBC_SHA  =  0x0042;
+@@ -1251,6 +1315,12 @@ public class SSLSocket extends java.net.
+     public final static int TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA =  0x0088;
+     public final static int TLS_DH_ANON_WITH_CAMELLIA_256_CBC_SHA =  0x0089;
+ 
++    public final static int TLS_RSA_WITH_SEED_CBC_SHA             =  0x0096;
++
++    public final static int TLS_RSA_WITH_AES_128_GCM_SHA256       =  0x009C;
++    public final static int TLS_DHE_RSA_WITH_AES_128_GCM_SHA256   =  0x009E;
++    public final static int TLS_DHE_DSS_WITH_AES_128_GCM_SHA256   =  0x00A2;
++
+     public final static int TLS_ECDH_ECDSA_WITH_NULL_SHA          =  0xc001;
+     public final static int TLS_ECDH_ECDSA_WITH_RC4_128_SHA       =  0xc002;
+     public final static int TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA  =  0xc003;
+@@ -1281,5 +1351,13 @@ public class SSLSocket extends java.net.
+     public final static int TLS_ECDH_anon_WITH_AES_128_CBC_SHA    =  0xc018;
+     public final static int TLS_ECDH_anon_WITH_AES_256_CBC_SHA    =  0xc019;
+ 
++    public final static int TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 = 0xc023;
++    public final static int TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256   = 0xc027;
++
++    public final static int TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 = 0xc02B;
++    public final static int TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256  = 0xc02D;
++    public final static int TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256   = 0xc02F;
++    public final static int TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256    = 0xc031;
++
+ }
+ 
+diff -up jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SocketBase.java.cfuSaved jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SocketBase.java
+--- jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SocketBase.java.cfuSaved	2014-09-29 14:12:27.564206341 -0700
++++ jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/SocketBase.java	2014-09-29 14:12:34.378194460 -0700
+@@ -114,6 +114,15 @@ class SocketBase {
+     static final int SSL_REQUIRE_ALWAYS = 19;
+     static final int SSL_REQUIRE_FIRST_HANDSHAKE = 20;
+     static final int SSL_REQUIRE_NO_ERROR = 21;
++    /* ssl/sslproto.h for supporting SSLVersionRange */
++    static final int SSL_LIBRARY_VERSION_2 = 22;
++    static final int SSL_LIBRARY_VERSION_3_0 = 23;
++    static final int SSL_LIBRARY_VERSION_TLS_1_0 = 24;
++    static final int SSL_LIBRARY_VERSION_TLS_1_1 = 25;
++    static final int SSL_LIBRARY_VERSION_TLS_1_2 = 26;
++    /* ssl/sslt.h */
++    static final int SSL_Variant_Stream = 27;
++    static final int SSL_Variant_Datagram = 28;
+ 
+ 
+     static final int SSL_AF_INET  = 50;
+@@ -190,6 +199,18 @@ class SocketBase {
+     native void setSSLOption(int option, int on)
+         throws SocketException;
+ 
++    void setSSLVersionRange(org.mozilla.jss.ssl.SSLSocket.SSLVersionRange range)
++        throws SocketException
++    {
++        setSSLVersionRange(range.getMinEnum(), range.getMaxEnum());
++    }
++
++    /**
++     * Sets SSL Version Range for this socket to support TLS v1.1 and v1.2
++     */
++    native void setSSLVersionRange(int min, int max)
++        throws SocketException;
++
+     /** 
+      * Sets the SSL option setting mode value use for options
+      * that have more values than just enable/diasable.
+diff -up jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/common.c.cfuSaved jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/common.c
+--- jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/common.c.cfuSaved	2014-09-29 14:12:27.562206345 -0700
++++ jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/common.c	2014-09-29 14:12:34.378194460 -0700
+@@ -38,6 +38,7 @@
+ #include <pk11func.h>
+ #include <ssl.h>
+ #include <sslerr.h>
++#include <sslproto.h>
+ 
+ #include <jssutil.h>
+ #include <jss_exceptions.h>
+@@ -407,8 +408,16 @@ PRInt32 JSSL_enums[] = {
+     SSL_REQUIRE_ALWAYS,         /* 19 */        /* ssl.h */
+     SSL_REQUIRE_FIRST_HANDSHAKE,/* 20 */        /* ssl.h */
+     SSL_REQUIRE_NO_ERROR,       /* 21 */        /* ssl.h */
++    SSL_LIBRARY_VERSION_2,      /* 22 */        /* sslproto.h */
++    SSL_LIBRARY_VERSION_3_0,    /* 23 */        /* sslproto.h */
++    SSL_LIBRARY_VERSION_TLS_1_0, /* 24 */        /* sslproto.h */
++    SSL_LIBRARY_VERSION_TLS_1_1, /* 25 */        /* sslproto.h */
++    SSL_LIBRARY_VERSION_TLS_1_2, /* 26 */        /* sslproto.h */
++    ssl_variant_stream,         /* 27 */        /* sslt.h */
++    ssl_variant_datagram,       /* 28 */        /* sslt.h */
+     0
+ };
++
+ 
+ 
+ JNIEXPORT void JNICALL
+diff -up jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/jssl.h.cfuSaved jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/jssl.h
+--- jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/jssl.h.cfuSaved	2014-09-29 14:12:27.563206343 -0700
++++ jss-4.2.6/mozilla/security/jss/org/mozilla/jss/ssl/jssl.h	2014-09-29 14:13:59.605044228 -0700
+@@ -111,6 +111,7 @@ JSSL_DestroySocketData(JNIEnv *env, JSSL
+ 
+ 
+ extern PRInt32 JSSL_enums[];
++#define JSSL_enums_size 29
+ 
+ JSSL_SocketData*
+ JSSL_CreateSocketData(JNIEnv *env, jobject sockObj, PRFileDesc* newFD,
+diff -up jss-4.2.6/mozilla/security/jss/org/mozilla/jss/tests/Constants.java.cfuSaved jss-4.2.6/mozilla/security/jss/org/mozilla/jss/tests/Constants.java
+--- jss-4.2.6/mozilla/security/jss/org/mozilla/jss/tests/Constants.java.cfuSaved	2014-09-29 14:12:27.567206336 -0700
++++ jss-4.2.6/mozilla/security/jss/org/mozilla/jss/tests/Constants.java	2014-09-29 14:12:34.379194458 -0700
+@@ -149,6 +149,21 @@ public interface Constants {
+ /*52*/  new cipher(SSLSocket.SSL2_DES_64_CBC_WITH_MD5, "SSL2_DES_64_CBC_WITH_MD5"),
+ /*53*/  new cipher(SSLSocket.SSL2_RC4_128_EXPORT40_WITH_MD5, "SSL2_RC4_128_EXPORT40_WITH_MD5"),
+ /*54*/  new cipher(SSLSocket.SSL2_RC2_128_CBC_EXPORT40_WITH_MD5, "SSL2_RC2_128_CBC_EXPORT40_WITH_MD5"),
++/*55*/  new cipher(SSLSocket.TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256"),
++/*56*/  new cipher(SSLSocket.TLS_DHE_RSA_WITH_AES_256_CBC_SHA256, "TLS_DHE_RSA_WITH_AES_256_CBC_SHA256"),
++/*57*/  new cipher(SSLSocket.TLS_RSA_WITH_NULL_SHA256, "TLS_RSA_WITH_NULL_SHA256"),
++/*58*/  new cipher(SSLSocket.TLS_RSA_WITH_AES_128_CBC_SHA256, "TLS_RSA_WITH_AES_128_CBC_SHA256"),
++/*59*/  new cipher(SSLSocket.TLS_RSA_WITH_AES_256_CBC_SHA256, "TLS_RSA_WITH_AES_256_CBC_SHA256"),
++/*60*/  new cipher(SSLSocket.TLS_RSA_WITH_SEED_CBC_SHA, "TLS_RSA_WITH_SEED_CBC_SHA"),
++/*61*/  new cipher(SSLSocket.TLS_RSA_WITH_AES_128_GCM_SHA256, "TLS_RSA_WITH_AES_128_GCM_SHA256"),
++/*62*/  new cipher(SSLSocket.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"),
++/*63*/  new cipher(SSLSocket.TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, "TLS_DHE_DSS_WITH_AES_128_GCM_SHA256"),
++/*64*/  new cipher(SSLSocket.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"),
++/*65*/  new cipher(SSLSocket.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"),
++/*66*/  new cipher(SSLSocket.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"),
++/*67*/  new cipher(SSLSocket.TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, "TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256"),
++/*68*/  new cipher(SSLSocket.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"),
++/*69*/  new cipher(SSLSocket.TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, "TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256")
+     };
+     
+     /** Cipher supported by JSSE (JDK 1.5.x) */
