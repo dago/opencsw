@@ -15,12 +15,14 @@ VENDOR_URL = http://collectd.org/
 # Lots of others missing
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWnetsnmp-dev
+BUILD_DEP_PKGS += CSWjdk7
 
 EXTRA_CPPFLAGS = -D__EXTENSIONS__
 
 GARCOMPILER = GNU
 
 BUILD64 = 1
+# BUILD64_ONLY = 1
 ISAEXEC = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
@@ -31,6 +33,32 @@ CONFIGURE_ARGS += --disable-dns
 
 # Make sure net-snmp-config is found at the correct path for both 32 and 64 bit
 CONFIGURE_ARGS += --with-snmp-config=$(bindir)/net-snmp-config
+
+# Use only Java 8 and 64 bit until this is fixed:
+#   https://github.com/collectd/collectd/issues/1007
+# Also the detection uses "find" which does not follow symlinks
+
+JAVA_ARCHDIR-sparc-32 = sparc
+JAVA_ARCHDIR-sparc-64 = sparcv9
+JAVA_ARCHDIR-i386-32 = i386
+JAVA_ARCHDIR-i386-64 = amd64
+JAVA_ARCHDIR = $(JAVA_ARCHDIR-$(GARCH)-$(MEMORYMODEL))
+
+JAVA_HOME=/opt/csw/java/jdk/jdk7
+JAVA_LIBDIR = $(JAVA_HOME)/jre/lib/$(JAVA_ARCHDIR)/server
+
+JAVAC = $(JAVA_HOME)/bin/javac
+JAR = $(JAVA_HOME)/bin/jar
+JAVA_CPPFLAGS = -I$(JAVA_HOME)/include
+JAVA_LDFLAGS = -L$(JAVA_LIBDIR) -R$(JAVA_LIBDIR)
+
+CONFIGURE_ARGS += --enable-java
+CONFIGURE_ARGS += JAVAC="$(JAVAC)"
+CONFIGURE_ARGS += JAR="$(JAR)"
+CONFIGURE_ARGS += JAVA_CPPFLAGS="$(JAVA_CPPFLAGS)"
+CONFIGURE_ARGS += JAVA_LDFLAGS="$(JAVA_LDFLAGS)" 
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 PACKAGES += CSWlibcollectdclient1
 SPKG_DESC_CSWlibcollectdclient1 = $(DESCRIPTION), libcollectdclient.so.1
@@ -72,6 +100,16 @@ RUNTIME_DEP_PKGS_CSWcollectd-plugin-gmond += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-gmond += CSWlibganglia0
 # No 64 bit ganglia yet
 CHECKPKG_OVERRIDES_CSWcollectd-plugin-gmond += 64-bit-binaries-missing
+
+PACKAGES += CSWcollectd-plugin-java
+SPKG_DESC_CSWcollectd-plugin-java = CollectD Plugin for Java
+PKGFILES_CSWcollectd-plugin-java += $(call pkgfiles_lib,collectd/java.so)
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-java += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-java += CSWjre7
+# There are some symlinks that confuse checkpkg
+CHECKPKG_OVERRIDES_CSWcollectd-plugin-java += soname-not-found|libjvm.so|is|needed|by|opt/csw/lib/sparcv9/collectd/java.so
+CHECKPKG_OVERRIDES_CSWcollectd-plugin-java += soname-not-found|libjvm.so|is|needed|by|opt/csw/lib/collectd/java.so
+CHECKPKG_OVERRIDES_CSWcollectd-plugin-java += surplus-dependency|CSWjre7
 
 PACKAGES += CSWcollectd-plugin-mysql
 SPKG_DESC_CSWcollectd-plugin-mysql = CollectD Plugin for MySQL
