@@ -1,0 +1,23 @@
+diff -rupN jss-4.2.6.orig/mozilla/security/coreconf/config.mk jss-4.2.6/mozilla/security/coreconf/config.mk
+--- jss-4.2.6.orig/mozilla/security/coreconf/config.mk	2007-05-03 23:54:05.000000000 -0700
++++ jss-4.2.6/mozilla/security/coreconf/config.mk	2013-07-22 18:42:19.000000000 -0700
+@@ -68,8 +68,19 @@ TARGET_OSES = FreeBSD BSD_OS NetBSD Open
+ ifeq (,$(filter-out $(TARGET_OSES),$(OS_TARGET)))
+ include $(CORE_DEPTH)/coreconf/$(OS_TARGET).mk
+ else
++ifeq ($(OS_TARGET), Linux)
++OS_RELEASE_VER_MAJOR := $(shell echo $(OS_RELEASE) | cut -f1 -d.)
++OS_RELEASE_VER_MINOR := $(shell echo $(OS_RELEASE) | cut -f2 -d.)
++OS_RELEASE_GT_2_6 := $(shell [ $(OS_RELEASE_VER_MAJOR) -ge 2 -o \( $(OS_RELEASE_VER_MAJOR) -eq 2 -a $(OS_RELEASE_VER_MINOR) -ge 6 \) ] && echo true)
++ifeq ($(OS_RELEASE_GT_2_6),true)
++include $(CORE_DEPTH)/coreconf/Linux2.6.mk
++else
+ include $(CORE_DEPTH)/coreconf/$(OS_TARGET)$(OS_RELEASE).mk
+ endif
++else
++include $(CORE_DEPTH)/coreconf/$(OS_TARGET)$(OS_RELEASE).mk
++endif
++endif
+ 
+ #######################################################################
+ # [4.0] Master "Core Components" source and release <platform> tags   #
