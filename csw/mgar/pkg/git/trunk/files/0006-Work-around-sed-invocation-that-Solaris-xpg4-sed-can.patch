@@ -1,0 +1,44 @@
+From bec24a752202eb5b440ca6d056fa217e39e1d6ab Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 5 May 2015 22:04:21 +0100
+Subject: [PATCH] Work around sed invocation that Solaris' xpg4/sed cannot
+ handle
+
+In 99094a7a, a trivial && breakage was fixed. This exposed a problem
+with the test when run on Solaris with /usr/xpg4/bin/sed that had gone
+silently undetected since its introduction in e4bd10b2. Solaris' sed
+executes the requested substitution but prints a warning about the
+missing newline at the end of the file and exists with status 2.
+
+% echo "CHANGE_ME" | \
+tr -d "\\012" | /usr/xpg4/bin/sed -e 's/CHANGE_ME/change_me/'
+sed: Missing newline at end of file standard input.
+change_me
+% echo $?
+2
+
+To work around this, use perl to execute the substitution instead. By
+using inplace replacement, we can subsequently drop the mv command.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ t/t9500-gitweb-standalone-no-errors.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index e94b2f1..eb264f9 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -290,8 +290,7 @@ test_expect_success 'setup incomplete lines' '
+ 	echo "incomplete" | tr -d "\\012" >>file &&
+ 	git commit -a -m "Add incomplete line" &&
+ 	git tag incomplete_lines_add &&
+-	sed -e s/CHANGE_ME/change_me/ <file >file+ &&
+-	mv -f file+ file &&
++	perl -pi -e "s/CHANGE_ME/change_me/" file &&
+ 	git commit -a -m "Incomplete context line" &&
+ 	git tag incomplete_lines_ctx &&
+ 	echo "Dominus regit me," >file &&
+-- 
+2.3.3
+
