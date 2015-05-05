@@ -1,4 +1,4 @@
-From 6fe0705c4b3e59a34b1276f48e00f8e0e85ddaac Mon Sep 17 00:00:00 2001
+From 8bf59ec75260d585ad49dceb7bd51d632eca432a Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Mon, 4 May 2015 09:37:44 +0100
 Subject: [PATCH] Modify use of sed and tr to be compatible with xpg4 tools on
@@ -32,7 +32,7 @@ index 3a9b775..1df340c 100755
  		;;
  		*)
 diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 1befc45..41021e4 100755
+index 1befc45..97af1fb 100755
 --- a/t/t5601-clone.sh
 +++ b/t/t5601-clone.sh
 @@ -412,7 +412,7 @@ test_expect_success 'clone ssh://host.xz:22/~repo' '
@@ -40,7 +40,7 @@ index 1befc45..41021e4 100755
  for tuah in ::1 [::1] [::1]: user@::1 user@[::1] user@[::1]: [user@::1] [user@::1]:
  do
 -	ehost=$(echo $tuah | sed -e "s/1]:/1]/ "| tr -d "[]")
-+	ehost=$(echo $tuah | sed -e "s/1\]:/1\]/ "| tr -d "\[]")
++	ehost=$(echo $tuah | sed -e "s/1]:/1]/" | tr -d "\[]")
  	test_expect_success "clone ssh://$tuah/home/user/repo" "
  	  test_clone_url ssh://$tuah/home/user/repo $ehost /home/user/repo
  	"
