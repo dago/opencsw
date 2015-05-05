@@ -108,6 +108,7 @@ RUNTIME_DEP_PKGS_CSWcollectd-plugin-java += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-java += CSWjre7
 # There are some symlinks that confuse checkpkg
 CHECKPKG_OVERRIDES_CSWcollectd-plugin-java += soname-not-found|libjvm.so|is|needed|by|opt/csw/lib/sparcv9/collectd/java.so
+CHECKPKG_OVERRIDES_CSWcollectd-plugin-java += soname-not-found|libjvm.so|is|needed|by|opt/csw/lib/amd64/collectd/java.so
 CHECKPKG_OVERRIDES_CSWcollectd-plugin-java += soname-not-found|libjvm.so|is|needed|by|opt/csw/lib/collectd/java.so
 CHECKPKG_OVERRIDES_CSWcollectd-plugin-java += surplus-dependency|CSWjre7
 
