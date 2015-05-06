@@ -5,6 +5,7 @@ NAME = jss
 MAJOR_VERSION = 4
 FULLVERSION = 4.3.2
 VERSION = 4.2.6
+RELEASE = 37.el7
 GARTYPE = v2
 CATEGORIES = java
 
@@ -22,12 +23,13 @@ VENDOR_URL=https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/JSS
 GARFLAVOR = OPT
 BUILD64 = 1
 
-# MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/mozilla.org/mozilla.org/mozilla.org/security/jss/releases/JSS_4_3_2_RTM/
-# DISTFILES  = $(NAME)$(MAJOR_VERSION).jar
+# The source for this package was pulled from upstream's cvs. Use the
+# following commands to generate the tarball:
+# cvs -d :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot export -r JSS_4_2_6_RTM -d jss-4.2.6 -N mozilla/security/coreconf mozilla/security/jss
+MASTER_SITES =  http://pki.fedoraproject.org/pki/sources/$(NAME)/$(NAME)-$(VERSION)-$(RELEASE)/
 DISTFILES += COPYING
 DISTFILES += $(DISTNAME).tar.gz
 
-PACKAGES = CSWjss4
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 
@@ -56,12 +58,25 @@ PATCHFILES += 0004-jss-fixed-build-issue-on-F17-or-newer.patch
 PATCHFILES += 0023-jss-SHA-OID-fix.patch
 PATCHFILES += 0024-jss-RC4-strengh-verify.patch
 PATCHFILES += 0025-jss-support-TLS1_1-TLS1_2.patch
+PATCHFILES += 0026-SunOS5.mk.patch
 
-PACKAGES = CSWjss4
+PACKAGES += CSWjss4
 CATALOGNAME_CSWjss4 = jss4
 SPKG_DESC_CSWjss4 += $(DESCRIPTION), jss4.jar, libjss4.so
+RUNTIME_DEP_PKGS_CSWjss4 += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSWjss4 += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWjss4 += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWjss4 += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWjss4 += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWjss4 += CSWlibnspr4
+CHECKPKG_OVERRIDES_CSWjss4 += soname-equals-filename|file=/opt/csw/lib/amd64/libjss4.so
+CHECKPKG_OVERRIDES_CSWjss4 += soname-equals-filename|file=/opt/csw/lib/libjss4.so
+CHECKPKG_OVERRIDES_CSWjss4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libjss4.so|soname=libjss4.so|pkgname=CSWjss4|expected=CSWlibjss4
+CHECKPKG_OVERRIDES_CSWjss4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libjss4.so|soname=libjss4.so|pkgname=CSWjss4|expected=CSWlibjss4
 
-PACKAGES = CSWjss4-doc
+
+
+PACKAGES += CSWjss4-doc
 CATALOGNAME_CSWjss4-doc = jss4_doc
 PKGFILES_CSWjss4-doc = $(PKGFILES_DOC)
 SPKG_DESC_CSWjss4-doc += $(DESCRIPTION), javadoc
@@ -71,16 +86,20 @@ WORKSRC = $(WORKDIR)
 DISTDIR = mozilla/security/jss
 LICENSE = COPYING
 
-OBJ_PATH = $(shell uname -s)$(GAROSREL)_$(shell uname -m)_$(GARFLAVOR).OBJ
+OBJ_PATH_32 = $(shell uname -s)$(GAROSREL)_$(shell uname -m)_$(GARFLAVOR).OBJ
+OBJ_PATH_64 = $(shell uname -s)$(GAROSREL)_$(shell uname -m)_64_$(GARFLAVOR).OBJ
+OBJ_PATH = $(OBJ_PATH_$(MEMORYMODEL_$(ISA)))
 
 CONFIGURE_ARGS_OPT += BUILD_OPT=1
 CONFIGURE_ARGS += NSPR_INCLUDE_DIR=$(shell pkg-config --cflags-only-I nspr | sed 's/-I//')
-CONFIGURE_ARGS += NSPR_LIB_DIR=$(shell pkg-config --libs-only-L nspr | sed 's/-L//')
+CONFIGURE_ARGS_32 += NSPR_LIB_DIR=$(shell pkg-config --libs-only-L nspr | sed 's/-L//')
+CONFIGURE_ARGS_64 += NSPR_LIB_DIR=$(shell PKG_CONFIG_PATH=/opt/csw/lib/64/pkgconfig pkg-config --libs-only-L nspr | sed 's/-L//')
 CONFIGURE_ARGS += NSS_INCLUDE_DIR=$(shell pkg-config --cflags-only-I nss | sed 's/-I//')
-CONFIGURE_ARGS += NSS_LIB_DIR=$(shell pkg-config --libs-only-L nss | sed 's/-L//')
+CONFIGURE_ARGS_32 += NSS_LIB_DIR=$(shell pkg-config --libs-only-L nss | sed 's/-L//')
+CONFIGURE_ARGS_64 += NSS_LIB_DIR=$(shell PKG_CONFIG_PATH=/opt/csw/lib/64/pkgconfig pkg-config --libs-only-L nss | sed 's/-L//')
 CONFIGURE_ARGS += JAVA_HOME=/usr/java
-CONFIGURE_ARGS_64 += USE_64
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL_$(BUILD_ISAS)))
+CONFIGURE_ARGS_64 += USE_64=1
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL_$(ISA)))
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 	
 CONFIGURE_SCRIPTS = 
@@ -101,7 +120,7 @@ build-jss:
 	@$(MAKECOOKIE)
 
 install-custom: 
-	(cd $(WORKSRC) && $(EXTRA_INSTALL_ENV) gmake -C mozilla/security/jss install $(CONFIGURE_ARGS))
+	(cd $(WORKSRC) && $(EXTRA_INSTALL_ENV) gmake -C mozilla/security/jss install $(CONFIGURE_ARGS) ROOT=$(DESTDIR))
 	ginstall -d $(JAVA_INSTALL_DIR)
 	ginstall -d $(DESTDIR)$(libdir)
 	(cd $(WORKSRC)/mozilla/dist && \
