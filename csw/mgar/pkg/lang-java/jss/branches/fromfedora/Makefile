@@ -60,6 +60,7 @@ PATCHFILES += 0024-jss-RC4-strengh-verify.patch
 PATCHFILES += 0025-jss-support-TLS1_1-TLS1_2.patch
 PATCHFILES += 0026-SunOS5.mk.patch
 
+MERGE_INCLUDE_FILES += $(datadir)/java/64/jss4.jar
 PACKAGES += CSWjss4
 CATALOGNAME_CSWjss4 = jss4
 SPKG_DESC_CSWjss4 += $(DESCRIPTION), jss4.jar, libjss4.so
@@ -74,11 +75,9 @@ CHECKPKG_OVERRIDES_CSWjss4 += soname-equals-filename|file=/opt/csw/lib/libjss4.s
 CHECKPKG_OVERRIDES_CSWjss4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libjss4.so|soname=libjss4.so|pkgname=CSWjss4|expected=CSWlibjss4
 CHECKPKG_OVERRIDES_CSWjss4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libjss4.so|soname=libjss4.so|pkgname=CSWjss4|expected=CSWlibjss4
 
-
-
 PACKAGES += CSWjss4-doc
 CATALOGNAME_CSWjss4-doc = jss4_doc
-PKGFILES_CSWjss4-doc = $(PKGFILES_DOC)
+PKGFILES_CSWjss4-doc = $(call baseisadirs,$(datadir)/jssdoc,.*)
 SPKG_DESC_CSWjss4-doc += $(DESCRIPTION), javadoc
 ARCHALL_CSWjss4-doc = 1
 
