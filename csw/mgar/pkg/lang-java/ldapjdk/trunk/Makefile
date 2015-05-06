@@ -1,10 +1,10 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = ldapsdk_java
-VERSION = 20020819
+NAME = ldapjdk
+VERSION = 4.18
 GARTYPE = v2
-CATEGORIES = java
+# CATEGORIES = java
 
 DESCRIPTION = Mozilla LDAP SDK for Java
 define BLURB
@@ -14,8 +14,10 @@ In the LDAP protocol, requests and responses are encoded using the Basic Encodin
 endef
 
 # MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/directory/java-sdk
-MASTER_SITES = http://www-archive.mozilla.org/directory
-DISTFILES  = $(NAME)_$(VERSION).tar.gz
+# MASTER_SITES = http://www-archive.mozilla.org/directory/
+MASTER_SITES = http://pki.fedoraproject.org/pki/sources/ldapjdk/
+DISTNAME = $(NAME)-$(VERSION)
+# DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
 PACKAGES = CSWldapjdk
@@ -32,7 +34,9 @@ DISTDIR = mozilla/directory/java-sdk
 LICENSE = COPYING
 # LICENSE = $(WORKDIR)/$(DISTDIR)/relnotes.htm
 
-JAVA_HOME = /usr/j2sdk1.4.2_17
+PATCHFILES += 0001-matching-rule-parsing.patch
+
+# JAVA_HOME = /usr/j2sdk1.4.2_17
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
@@ -43,11 +47,12 @@ include gar/category.mk
 
 install-custom: 
 	@ginstall -d $(DESTDIR)$(datadir)/java
-	@gcp -fp $(WORKSRC)/$(DISTDIR)/dist/packages/$(CATALOGNAME_CSWldapjdk).jar $(DESTDIR)$(datadir)/java
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(DISTDIR)/dist/packages/$(CATALOGNAME_CSWldapjdk).jar $(DESTDIR)$(datadir)/java
 	@$(MAKECOOKIE)
 
 build-custom:
-	@( cd $(WORKSRC)/$(DISTDIR); \
-	  JAVA_HOME=$(JAVA_HOME) gmake -f ldap.mk MOZ_SRC=. JAVA_VERSION=1.4 ; \
+	@( cd $(WORKSRC)/$(DISTNAME)/$(DISTDIR); \
+	  JAVA_HOME=$(JAVA_HOME) gmake -f ldap.mk MOZ_SRC=. JAVA_VERSION=1.7 ; \
 	  JAVA_HOME=$(JAVA_HOME) gmake -f ldap.mk basepackage )
 	@$(MAKECOOKIE)
+
