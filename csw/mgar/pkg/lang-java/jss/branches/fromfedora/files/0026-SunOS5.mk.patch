@@ -1,0 +1,11 @@
+--- a/mozilla/security/coreconf/SunOS5.mk
++++ b/mozilla/security/coreconf/SunOS5.mk
+@@ -177,7 +177,7 @@ ifeq ($(USE_64), 1)
+ endif
+ 	DSO_LDOPTS += -G -h $(notdir $@)
+ endif
+-DSO_LDOPTS += -z combreloc -z defs -z ignore
++DSO_LDOPTS += -R'/opt/csw/lib/$$ISALIST' -M /home/grzemba/opencsw/.buildsys/v2/gar/lib/map.solaris10 -B direct -z combreloc -z defs -z ignore
+ 
+ # -KPIC generates position independent code for use in shared libraries.
+ # (Similarly for -fPIC in case of gcc.)
