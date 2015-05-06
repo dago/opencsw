@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-console
-VERSION = 1.1.7
+VERSION = 1.1.9
 MAJOR_VERSION = 1.1
 GARTYPE = v2
 CATEGORIES = java
@@ -14,8 +14,10 @@ A Java based remote management console used for managing 389
 Administration Server and 389 Directory Server.
 endef
 
-MASTER_SITES = http://port389.org/sources
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+# MASTER_SITES = http://port389.org/sources/
+MASTER_SITES = https://git.fedorahosted.org/cgit/389/console.git/snapshot/
+DISTNAME = console-$(NAME)-$(VERSION)
+DISTFILES  = $(DISTNAME).tar.bz2
 
 BUNDLE = 389-ds
 
@@ -43,7 +45,7 @@ include gar/category.mk
 install-custom: 
 	@ginstall -d $(DESTDIR)$(datadir)/java
 	@ginstall -d $(DESTDIR)$(bindir)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/$(NAME)-$(VERSION)_en.jar $(DESTDIR)$(datadir)/java
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/$(NAME)_en.jar $(DESTDIR)$(datadir)/java/$(NAME)-$(VERSION)_en.jar
 	@ginstall -m 755 $(WORKSRC)/$(DISTNAME)/389-console $(DESTDIR)$(bindir)
 	@( cd $(DESTDIR)$(datadir)/java ; \
 	   ln -s $(NAME)-$(VERSION)_en.jar $(NAME)-$(MAJOR_VERSION)_en.jar ; \
@@ -63,7 +65,7 @@ install-custom:
 	@$(MAKECOOKIE)
 
 build-custom:
-	@( cd $(WORKSRC)/$(DISTNAME); \
+	( cd $(WORKSRC)/$(DISTNAME); \
 	  pwd; \
-	  ant -Dbuilt.dir=`pwd`/built -Dldapjdk.local.location=/opt/csw/share/java -Djss.local.location=/opt/csw/share/java -Dconsole.local.location=/opt/csw/share/java )
+	  ant -Dbuilt.dir=`pwd`/built -Dlib.dir=$(libdir) -Dclassdest=$(datadir)/java -Dldapjdk.local.location=$(datadir)/java -Djss.local.location=$(datadir)/java -Dman.dir=$(INSTALLISADIR)/$(mandir) -Dconsole.local.location=$(datadir)/java )
 	@$(MAKECOOKIE)
