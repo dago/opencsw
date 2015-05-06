@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = LibreCAD
-VERSION = 2.0.0rc2
+VERSION = 2.0.7
 GIT_VERSION = $(VERSION)
 GARTYPE = v2
 CATEGORIES = gnome
@@ -57,8 +57,6 @@ RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibmuparser2
 # RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtsql4
 # CHECKPKG_OVERRIDES_CSWlibrecad += file-with-bad-content|/usr/share|root/opt/csw/bin/librecad
-OBSOLETED_BY_CSWlibrecad = CSWLibreCAD
-CHECKPKG_OVERRIDES_CSWLibreCAD += catalogname-not-lowercase
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
