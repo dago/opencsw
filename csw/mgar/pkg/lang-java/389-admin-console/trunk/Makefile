@@ -3,7 +3,7 @@
 #
 NAME = 389-admin-console
 SHORTNAME = 389-admin
-VERSION = 1.1.8
+VERSION = 1.1.10
 MAJOR_VERSION = 1.1
 GARTYPE = v2
 CATEGORIES = java
@@ -14,8 +14,9 @@ A Java based remote management console used for managing 389
 Administration Server and 389 Directory Server.
 endef
 
-MASTER_SITES = http://port389.org/sources
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = https://git.fedorahosted.org/cgit/389/admin-console.git/snapshot/
+DISTNAME = admin-console-$(NAME)-$(VERSION)
+DISTFILES  = $(DISTNAME).tar.xz
 
 BUNDLE = 389-ds
 
