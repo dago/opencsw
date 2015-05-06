@@ -31,10 +31,10 @@ PACKAGING_PLATFORMS += solaris9-sparc
 PACKAGING_PLATFORMS += solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
-AS += penti+= CSWlibpng-dev
-SPKG_DESC_CSWlibpng-dev +SC_CSWlibpng-dev = $(DESCRIPTION), development files
-RUNTIME_DEP_PKGS_CSWlibpng-6-16
-BUILD_DEP_PKGS_CSWlibpng-dev += CSWlibz-dev
+AS += penti+= CSWlibpng16-dev
+SPKG_DESC_CSWlibpng16-dev += $(DESCRIPTION), development files
+RUNTIME_DEP_PKGS_CSWlibpng16-dev += CSWlibpng16-16
+BUILD_DEP_PKGS_CSWlibpng16-dev += CSWlibz-dev
 
 PACKAGES += CSWlibpng-utils
 SPKG_DESC_CSWlibpng-utils += $(DESCRIPTION), binary utilities
