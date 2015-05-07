@@ -38,7 +38,7 @@ SPKG_DESC_CSWlibpng15-dev = $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWlibpng15-dev += CSWlibpng15-15
 
 #we obsolete the unversioned developer package
-#OBSOLETED_BY_CSWlibpng15-dev = CSWlibpng-dev+= CSWlibpng15-15
+OBSOLETED_BY_CSWlibpng15-dev = CSWlibpng-dev+= CSWlibpng15-15
 
 PACKAGES += CSWlibpng15-15
 CATALOGNAME_CSWlibpng15-15 = libpng15_15
