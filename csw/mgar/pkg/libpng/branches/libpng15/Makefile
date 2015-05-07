@@ -26,7 +26,12 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_BUILD_ISAS = sparcv8plus+vis
 EXTRA_BUILD_ISAS += sparcv8plus+vis2
-EXTRA_BUILD_ISAS#we need a versioned developer package, since the pkg-config package is versioned 
+EXTRA_BUILD_ISAS#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc
+PACKAGING_PLATFORMS += solaris10-i386
+AS#we need a versioned developer package, since the pkg-config package is versioned 
 #and has an unversioned symlink
 PACKAGES = CSWlibpng15-dev
 SPKG_DESC_CSWlibpng15-dev = $(DESCRIPTION), development files
