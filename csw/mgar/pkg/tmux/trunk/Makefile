@@ -1,5 +1,5 @@
 NAME = tmux
-VERSION = 1.9a
+VERSION = 2.0
 GARTYPE = v2
 
 DESCRIPTION = Terminal Multiplexer
