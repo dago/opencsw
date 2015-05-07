@@ -35,6 +35,7 @@ AS += penti+= CSWlibpng16-dev
 SPKG_DESC_CSWlibpng16-dev += $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWlibpng16-dev += CSWlibpng16-16
 BUILD_DEP_PKGS_CSWlibpng16-dev += CSWlibz-dev
+OBSOLETED_BY_CSWlibpng16-dev += CSWlibpng-dev
 
 PACKAGES += CSWlibpng-utils
 SPKG_DESC_CSWlibpng-utils += $(DESCRIPTION), binary utilities
