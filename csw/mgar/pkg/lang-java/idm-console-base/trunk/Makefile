@@ -40,31 +40,23 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 CHECKPKG_OVERRIDES_CSWidm-console-base += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Framework
-CHECKPKG_OVERRIDES_CSWidm-console-base += file-needed-but-no-package-satisfies-it|/opt/csw/share/java/idm-console-mcc-1.1.9_en.jar|CSWidm-console-base|contains|symlink|/opt/csw/share/java/idm-console-mcc-1.1_en.jar|which|needs|the|target|file:|/opt/csw/share/java/idm-console-mcc-1.1.9_en.jar
-CHECKPKG_OVERRIDES_CSWidm-console-base += file-needed-but-no-package-satisfies-it|/opt/csw/share/java/idm-console-mcc-1.1.9_en.jar|CSWidm-console-base|contains|symlink|/opt/csw/share/java/idm-console-mcc_en.jar|which|needs|the|target|file:|/opt/csw/share/java/idm-console-mcc-1.1.9_en.jar
-CHECKPKG_OVERRIDES_CSWidm-console-base += file-needed-but-no-package-satisfies-it|/opt/csw/share/java/idm-console-nmclf-1.1.9_en.jar|CSWidm-console-base|contains|symlink|/opt/csw/share/java/idm-console-nmclf-1.1_en.jar|which|needs|the|target|file:|/opt/csw/share/java/idm-console-nmclf-1.1.9_en.jar
-CHECKPKG_OVERRIDES_CSWidm-console-base += file-needed-but-no-package-satisfies-it|/opt/csw/share/java/idm-console-nmclf-1.1.9_en.jar|CSWidm-console-base|contains|symlink|/opt/csw/share/java/idm-console-nmclf_en.jar|which|needs|the|target|file:|/opt/csw/share/java/idm-console-nmclf-1.1.9_en.jar
 
 include gar/category.mk
 
 install-custom: 
 	@ginstall -d $(DESTDIR)$(datadir)/java
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-base.jar $(DESTDIR)$(datadir)/java/idm-console-base-$(VERSION).jar
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-mcc.jar $(DESTDIR)$(datadir)/java/idm-console-mcc-$(VERSION).jar
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-mcc_en.jar $(DESTDIR)$(datadir)/java/idm-console-mcc_en-$(VERSION).jar
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-nmclf.jar $(DESTDIR)$(datadir)/java/idm-console-nmclf-$(VERSION).jar
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-nmclf_en.jar $(DESTDIR)$(datadir)/java/idm-console-nmclf_en-$(VERSION).jar
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-base.jar $(DESTDIR)$(datadir)/java/
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-mcc.jar $(DESTDIR)$(datadir)/java/
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-mcc_en.jar $(DESTDIR)$(datadir)/java/
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-nmclf.jar $(DESTDIR)$(datadir)/java/
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/release/jars/idm-console-nmclf_en.jar $(DESTDIR)$(datadir)/java/
 	@( cd $(DESTDIR)$(datadir)/java ; \
 	   ln -s idm-console-base-$(VERSION).jar idm-console-base-$(MAJOR_VERSION).jar ; \
-	   ln -s idm-console-base-$(VERSION).jar idm-console-base.jar ; \
-	   ln -s idm-console-mcc-$(VERSION).jar idm-console-mcc-$(MAJOR_VERSION).jar ; \
-	   ln -s idm-console-mcc-$(VERSION).jar idm-console-mcc.jar ; \
-	   ln -s idm-console-mcc-$(VERSION)_en.jar idm-console-mcc-$(MAJOR_VERSION)_en.jar ; \
-	   ln -s idm-console-mcc-$(VERSION)_en.jar idm-console-mcc_en.jar ; \
-	   ln -s idm-console-nmclf-$(VERSION).jar idm-console-nmclf-$(MAJOR_VERSION).jar ; \
-	   ln -s idm-console-nmclf-$(VERSION).jar idm-console-nmclf.jar ; \
-	   ln -s idm-console-nmclf-$(VERSION)_en.jar idm-console-nmclf-$(MAJOR_VERSION)_en.jar ; \
-	   ln -s idm-console-nmclf-$(VERSION)_en.jar idm-console-nmclf_en.jar )
+	   ln -s idm-console-base.jar idm-console-base-$(VERSION).jar ; \
+	   ln -s idm-console-mcc.jar idm-console-mcc-$(VERSION).jar ; \
+	   ln -s idm-console-mcc_en.jar idm-console-mcc-$(VERSION)_en.jar ; \
+	   ln -s idm-console-nmclf.jar idm-console-nmclf-$(VERSION).jar ; \
+	   ln -s idm-console-nmclf_en.jar idm-console-nmclf-$(VERSION)_en.jar )
 	@$(MAKECOOKIE)
 
 build-custom:
