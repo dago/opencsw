@@ -57,4 +57,5 @@ include
 post-install:
 #we remove the symlink for this package only which is now superseded by 16
 	rm -f $(DESTDIR)$(libdir)/libpng.pc
+	rm -f $(DESTDIR)$(libdir)/libpng.so
 	@$(MAKECOOKIE)
