@@ -37,6 +37,11 @@ PACKAGES = CSWlibpng15-dev
 SPKG_DESC_CSWlibpng15-dev = $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWlibpng15-dev += CSWlibpng15-15
 
+#we package in only certain versioned files
+PKGFILES_CSWlibpng15-dev += $(call baseisadirs,$(libdir),libpng15-config)
+PKGFILES_CSWlibpng15-dev += $(call baseisadirs,$(libdir),pkgconfig/libpng15.pc)
+PKGFILES_CSWlibpng15-dev += $(call baseisadirs,$(libdir),include/libpng16/*)
+
 #we obsolete the unversioned developer package
 OBSOLETED_BY_CSWlibpng15-dev = CSWlibpng-dev+= CSWlibpng15-15
 
@@ -45,17 +50,8 @@ CATALOGNAME_CSWlibpng15-15 = libpng15_15
 PKGFILES_CSWlibpng15-15 += $(call baseisadirs,$(libdir),libpng15\.so\.15(\.\d+)*)
 SPKG_DESC_CSWlibpng15-15 += $(DESCRIPTION), libpng15.so.15
 RUNTIME_DEP_PKGS_CSWlibpng += CSWlibpng15-15
-RUNTIME_DEP_PKGS_CSWlibpng15-15 += CSWlibz1
-
-# The CSWpng package must also pull in libpng.so.3 and libpng12.so.0
-OBSOLETED_BY_CSWlibpng15-15 = CSWpng
-
+RUNTIME_DEP_PKGS_CSWlibpng15
 BUILD64_LIBS_ONLY = 1
 
-include
+include gar/category.mk
 
-post-install:
-#we remove the symlink for this package only which is now superseded by 16
-	rm -f $(DESTDIR)$(libdir)/libpng.pc
-	rm -f $(DESTDIR)$(libdir)/libpng.so
-	@$(MAKECOOKIE)
