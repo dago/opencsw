@@ -53,5 +53,7 @@ RUNTIME_DEP_PKGS_CSWlibpng += CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWlibpng15
 BUILD64_LIBS_ONLY = 1
 
+CHECKPKG_OVERRIDES_CSWlibpng15-dev += surplus-dependency|CSWlibpng15-15
+
 include gar/category.mk
 
