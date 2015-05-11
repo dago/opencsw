@@ -25,7 +25,8 @@ DISTFILES += LICENSE
 # PATCHFILES  = nspr-4.6.1-config.patch
 
 PACKAGING_PLATFORMS = solaris10-spar
-GARCOMPILER = GCC4
+# GARCOMPILER = GCC4
+GARCOMPILER = SOS12U4
 GARFLAVOR = DBGrcv += CSWsunbird
 
 # Library splits
