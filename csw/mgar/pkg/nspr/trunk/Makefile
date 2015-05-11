@@ -27,7 +27,7 @@ DISTFILES += LICENSE
 PACKAGING_PLATFORMS = solaris10-spar
 # GARCOMPILER = GCC4
 GARCOMPILER = SOS12U4
-GARFLAVOR = DBGrcv += CSWsunbird
+# GARFLAVOR = DBGrcv += CSWsunbird
 
 # Library splits
 
