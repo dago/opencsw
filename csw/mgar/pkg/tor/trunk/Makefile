@@ -1,18 +1,16 @@
 # $Id$
 NAME = tor
-VERSION = 0.2.5.12
+VERSION = 0.2.6.7
 GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
 define BLURB
 Basically tor provides a distributed network of servers (onion routers). Users bounce their TCP streams (web traffic, ftp, ssh, etc) around the routers, and recipients, observers, and even the routers themselves have difficulty tracking the source of the stream.uter
-def# This is where the source git repo is located but we are building from the
-# official alpha release tar.gz distfile downloaded from MATER_SITES.
-# GIT_REPOS = git://git.torproject.org/tor.gitefine BLURB
+define BLURB
 endef
 
 MASTER_SITES = http://www.torproject.org/dist/
-DISTFILES  = $(DPATCHFILES += 0001-add-test-to-detect-we-are-on-Solaris.patch(DISTNAME).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -40,7 +38,7 @@ MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILUSERGROUP = /etc/opt/csw/pkg/CS
 PROTOTYPE_FILES_tor += /var/opt/csw/tor
 PROTOTYPE_PERMS_tor = 0700
 PROTOTYPE_USER_tor = tor
-PROTOTYPE_GROUP_tor = torILES += tor/torrc
+PROTOTYPE_GROUP_tor = torILTEST_SCRIPTS =ILES += tor/torrc
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
