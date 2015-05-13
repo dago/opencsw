@@ -1,0 +1,44 @@
+From 104a97a81ae81b29ae5796f9d1e48463b6305635 Mon Sep 17 00:00:00 2001
+From: Freddy DISSAUX <dsx@bsdsx.fr>
+Date: Fri, 8 May 2015 11:01:26 +0200
+Subject: [PATCH] fix possible MAX redefinition
+
+---
+ src/gethostnamadr_async.c | 4 ++++
+ src/getnetnamadr_async.c  | 2 ++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/src/gethostnamadr_async.c b/src/gethostnamadr_async.c
+index 2d6ecb7..5d34956 100644
+--- a/src/gethostnamadr_async.c
++++ b/src/gethostnamadr_async.c
+@@ -40,8 +40,12 @@
+ 
+ #include "asr_private.h"
+ 
++#ifndef MAXALIASES
+ #define MAXALIASES	35
++#endif
++#ifndef MAXADDRS
+ #define MAXADDRS	35
++#endif
+ 
+ struct hostent_ext {
+ 	struct hostent	 h;
+diff --git a/src/getnetnamadr_async.c b/src/getnetnamadr_async.c
+index ec14262..cc37ef0 100644
+--- a/src/getnetnamadr_async.c
++++ b/src/getnetnamadr_async.c
+@@ -33,7 +33,9 @@
+ 
+ #include "asr_private.h"
+ 
++#ifndef MAXALIASES
+ #define MAXALIASES	16
++#endif
+ 
+ struct netent_ext {
+ 	struct netent	 n;
+-- 
+2.3.1
+
