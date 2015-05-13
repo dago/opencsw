@@ -1,5 +1,5 @@
 NAME = quilt
-VERSION = 0.63
+VERSION = 0.64
 GARTYPE = v2
 
 DESCRIPTION = A patch management tool
