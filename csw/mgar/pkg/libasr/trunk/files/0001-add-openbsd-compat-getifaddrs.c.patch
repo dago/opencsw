@@ -1,0 +1,24 @@
+From cf1d038c260ca6fd161174d6c5c42aaee90b1532 Mon Sep 17 00:00:00 2001
+From: Freddy DISSAUX <dsx@bsdsx.fr>
+Date: Thu, 7 May 2015 09:53:12 +0200
+Subject: [PATCH] add openbsd-compat/getifaddrs.c
+
+---
+ src/Makefile.am | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 286d382..7121b0b 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -11,6 +11,7 @@ libasr_la_SOURCES +=	$(top_srcdir)/openbsd-compat/strlcat.c
+ libasr_la_SOURCES +=	$(top_srcdir)/openbsd-compat/strlcpy.c
+ libasr_la_SOURCES +=	$(top_srcdir)/openbsd-compat/strsep.c
+ libasr_la_SOURCES +=	$(top_srcdir)/openbsd-compat/strtonum.c
++libasr_la_SOURCES +=	$(top_srcdir)/openbsd-compat/getifaddrs.c
+ 
+ include_HEADERS =	asr.h
+ 
+-- 
+2.3.1
+
