@@ -35,7 +35,12 @@ CHECKPKG_OVERRIDES_CSWquilt += missing-dependency|CSWemacs-common
 
 # Don't split out small stuff
 OBSOLETED_BY_CSWquilt += CSWquilt-el
-OBSOLETED_BY_CSWquilt += CSWquilt-completionfdir = /etc/opt/csw
+OBSOLETED_BY_CSWquilt += CSWquilt-completionfd#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc
+PACKAGING_PLATFORMS += solaris10-i386
+fdir = /etc/opt/csw
 
 CONFIGURE_ARGS =  $(DIRPATHS)
 CONFIGURE_ARGS += --with-bash=/opt/csw/bin/bash
