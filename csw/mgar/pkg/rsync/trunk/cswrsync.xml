@@ -1,0 +1,49 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+
+<service_bundle type='manifest' name='export'>
+  
+  <service name='network/cswredis' type='service' version='0'>
+    
+    <dependency name='fs' grouping='require_all' restart_on='none' type='service'>
+      <service_fmri value='svc:/system/filesystem/local'/>
+    </dependency>
+    
+    <dependency name='networking' grouping='require_all' restart_on='none' type='service'>
+      <service_fmri value='svc:/milestone/network:default'/>
+    </dependency>
+    
+    <exec_method name='start' type='method' exec='/opt/csw/bin/redis-server %{redis/config}' timeout_seconds='60'>
+      <method_context working_directory='/var/opt/csw/redis/data'>
+        <!-- method_credential user='rails' group='other'/ -->
+      </method_context>
+    </exec_method>
+
+    <exec_method name='stop' type='method' exec=':kill' timeout_seconds='60'>
+    </exec_method>
+    
+    <!-- 'default' instance is the buildbot master -->
+    <instance name='default' enabled='false'>
+        <property_group name='redis' type='application'>
+            <propval name='config' type='astring' value='/etc/opt/csw/redis.conf' />
+        </property_group>
+    </instance>
+
+        <stability value='Evolving' />
+
+        <template>
+                <common_name>
+                        <loctext xml:lang='C'>
+                                Redis
+                        </loctext>
+                </common_name>
+                <documentation>
+                        <doc_link name='redis.io'
+                                uri='http://redis.io' />
+                </documentation>
+        </template>
+
+    
+  </service>
+  
+</service_bundle>
