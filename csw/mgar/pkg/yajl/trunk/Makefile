@@ -46,3 +46,14 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
+post-install-isa-sparcv8plus post-install-isa-pentium_pro:
+	mv $(DESTDIR)$(sharedstatedir)/pkgconfig $(DESTDIR)$(libdir)
+	rmdir $(DESTDIR)$(sharedstatedir)
+	@$(MAKECOOKIE)
+
+post-install-isa-sparcv9 post-install-isa-amd64:
+	mv $(DESTDIR)$(sharedstatedir)/pkgconfig $(DESTDIR)$(libdir)
+	rmdir $(DESTDIR)$(sharedstatedir)
+	perl -i -npe 's!/lib!/lib/64!' $(DESTDIR)$(libdir)/pkgconfig/yajl.pc
+	@$(MAKECOOKIE)
+
