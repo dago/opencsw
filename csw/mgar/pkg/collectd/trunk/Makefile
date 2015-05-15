@@ -15,6 +15,7 @@ VENDOR_URL = http://collectd.org/
 # Lots of others missing
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWnetsnmp-dev
+BUILD_DEP_PKGS += CSWlibyajl-dev
 BUILD_DEP_PKGS += CSWjdk7
 
 EXTRA_CPPFLAGS = -D__EXTENSIONS__
@@ -81,6 +82,7 @@ RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgcrypt20
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWcollectd += CSWperl
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibyajl2
 # These are pulled in because of a linker anomaly
 RUNTIME_DEP_PKGS_CSWcollectd-sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWcollectd-i386 += CSWlibmemcached8
@@ -104,6 +106,7 @@ CHECKPKG_OVERRIDES_CSWcollectd-plugin-gmond += 64-bit-binaries-missing
 PACKAGES += CSWcollectd-plugin-java
 SPKG_DESC_CSWcollectd-plugin-java = CollectD Plugin for Java
 PKGFILES_CSWcollectd-plugin-java += $(call pkgfiles_lib,collectd/java.so)
+PKGFILES_CSWcollectd-plugin-java += $(sharedstatedir)/java/.*
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-java += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-java += CSWjre7
 # There are some symlinks that confuse checkpkg
