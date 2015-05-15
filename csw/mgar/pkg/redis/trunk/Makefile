@@ -23,6 +23,9 @@ GARCOMPILER = GNU
 PATCHFILES += 0001-Fix-tclsh-finding.patch
 PATCHFILES += 0001-Use-substitute-for-flock.patch
 
+GARCis is the path to the SMF DTD
+CHECKPKG_OVERRIDES_CSWredis += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswredis.xml
+
 GARCOMPILER = GCC4
 
 # These are set in the Makefile and are not inherited when we force our CFLAGS in
