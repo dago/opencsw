@@ -16,7 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://samba.anu.edu.au/ft+= $(DISTNAME).tar.gz
-DISTFILES += cswrsyncd
+DISTFILES += cswrsyncd.xml
 DISTFILES += rsyncd.conf.CSWTFILES += cswrsyncd
 
 VENDOR_URL = http://rsync.samba.org/
@@ -26,13 +26,14 @@ SPKG_DESC_CSWrsync = Utility which provides fast increme# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWrsync += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWrsync += CSWlibiconv2
 
-INITSMF += /etc/opt/csw/init.d/cswrsyncd
-
 PACKAGES += CSWrsyncd
 SPKG_DESC_CSWrsyncd = Daemon for rsyncd server
 PKGFILES_CSWrsyncd += $(sysconfdir)/rsyncd.conf.CSW
 PKGFILES_CSWrsyncd += $(mandir)/man5/rsyncd.conf.5
-PKGFILES_CSWrsyncd += $(INITSMF)
+PKGFILES_CSWrsyncd += /var/opt/csw/svc/manifest/cswrsyncd.xml
+
+# This the URL of the DTD
+CHECKPKG_OVERRIDES_CSWrsyncd += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswrsyncd.xml
 
 # rsyncd is in fact rsync --daemon
 RUNTIME_DEP_PKGS_CSWrsyncd += CSWrsync
@@ -53,12 +54,17 @@ REINPLACE_MATCH_conf = /etc/rsyncd\.conf
 REINPLACE_WITH_conf = $(sysconfdir)/rsyncd.conf
 REINPLACE_FILES_conf += $(mandir)/man1/rsync.1
 REINPLACE_FILES_conf += $(mandir)/man5/rsyncd.conf.5
-REINPLACE_WHEN_c# There is one ACL-test on NFSv4 failling
-SKIPTEST ?= 1_conf = postinstall
+REINPLACE_WHEN_cPROTOTYPE_MODIFIERS += smf
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswrsyncd.xml
+PROTOTYPE_CLASS_smf = manifest
 
-include gar/categot-install-modulated:
-	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -m 0755 $(WORKDIR)/cswrsyncd $(DESTDIR)/etc/opt/cs	ginstall -d $(DESTDIR)$(sysconfdir)
+# There is one ACL-test on NFSv4 failling
+SKIPTEST ?= 1
+
+include gar/category.mk
+
+post-install:
+	ginstall -D -m 0644 $(WORKDIR)/cswrsyncd.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswrsyncd.xmls	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -m 0644 $(WORKDIR)/rsyncd.conf.CSW $(DESTDIR)$(sysconfdir)
 	ginstall -d $(DESTDIR)$(sharedstatedir)/rsync/support/
 	ginstall -m 0755 $(WORKSRC)/support/* $(DESTDIR)$(sharedstatedir)/rsync/support/
