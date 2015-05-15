@@ -1,0 +1,32 @@
+From 1fbc72d8acbe47f7958470cc5e70a319f5b2b821 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 4 May 2015 11:46:02 +0200
+Subject: [PATCH] Use correct grep
+
+---
+ bin/logstash | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/bin/logstash b/bin/logstash
+index b4b2801..89b450f 100755
+--- a/bin/logstash
++++ b/bin/logstash
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # Run logstash from source
+ #
+ # This is most useful when done from a git checkout.
+@@ -18,6 +18,9 @@
+ # Defaults you can override with environment variables
+ LS_HEAP_SIZE="${LS_HEAP_SIZE:=500m}"
+ 
++# We need GNU grep as 'grep'
++PATH=/opt/csw/gnu:$PATH
++
+ unset CDPATH
+ basedir=$(cd `dirname $0`/..; pwd)
+ . "${basedir}/bin/logstash.lib.sh"
+-- 
+2.3.3
+
