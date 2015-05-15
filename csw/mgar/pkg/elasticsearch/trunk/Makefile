@@ -64,7 +64,9 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-PRESERVECONF += $(sysconfdir)/elasticsearch.yml
+PRESERVECONF += $(sysconfdir)/elasticsearch/elasticsearch.yml
+PRESERVECONF += $(sysconfdir)/elasticsearch/logging.yml
+
 SIGAR_i386 += libsigar-x86-solaris.so
 SIGAR_i386 += libsigar-amd64-solaris.so
 SIGAR_sparc += libsigar-sparc-solaris.so
