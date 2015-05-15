@@ -3,7 +3,7 @@
 
 <service_bundle type='manifest' name='export'>
   
-  <service name='network/cswrsync' type='service' version='0'>
+  <service name='network/cswrsyncd' type='service' version='0'>
     
     <dependency name='fs' grouping='require_all' restart_on='none' type='service'>
       <service_fmri value='svc:/system/filesystem/local'/>
@@ -13,7 +13,7 @@
       <service_fmri value='svc:/milestone/network:default'/>
     </dependency>
     
-    <exec_method name='start' type='method' exec='/opt/csw/bin/rsyncd --daemon -v --config=%{rsyncd/config}' timeout_seconds='60'/>
+    <exec_method name='start' type='method' exec='/opt/csw/bin/rsync --daemon -v --config=%{rsyncd/config}' timeout_seconds='60'/>
     <exec_method name='stop' type='method' exec=':kill' timeout_seconds='60'/>
     
     <instance name='default' enabled='false'>
