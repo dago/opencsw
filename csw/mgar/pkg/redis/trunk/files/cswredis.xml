@@ -3,7 +3,7 @@
 
 <service_bundle type='manifest' name='export'>
   
-  <service name='network/cswredis' type='service' version='0'>
+  <service name='network/csw/redis-server' type='service' version='0'>
     
     <dependency name='fs' grouping='require_all' restart_on='none' type='service'>
       <service_fmri value='svc:/system/filesystem/local'/>
