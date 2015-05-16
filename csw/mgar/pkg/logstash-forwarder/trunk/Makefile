@@ -21,6 +21,7 @@ RUNTIME_DEP_PKGS_CSWlogstash-forwarder += CSWlibgo5
 
 # Due to the way the headers work only 64 bits is supported
 CHECKPKG_OVERRIDES_CSWlogstash-forwarder += binary-architecture-does-not-match-placement|file=opt/csw/bin/logstash-forwarder|arch_id=43|arch_name=sparcv9
+CHECKPKG_OVERRIDES_CSWlogstash-forwarder += binary-architecture-does-not-match-placement|file=opt/csw/bin/logstash-forwarder|arch_id=62|arch_name=amd64
 
 # This is the DTD for SMF
 CHECKPKG_OVERRIDES_CSWlogstash-forwarder += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/logstash-forwarder.xml
