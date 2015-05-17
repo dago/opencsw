@@ -33,6 +33,10 @@ BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+# Stripping destroys GO binaries
+#   http://lists.opencsw.org/pipermail/maintainers/2015-May/020001.html
+NOSTRIP = 1
+
 PRESERVECONF += $(sysconfdir)/logstash-forwarder/logstash-forwarder.conf
 
 PROTOTYPE_MODIFIERS += smf
