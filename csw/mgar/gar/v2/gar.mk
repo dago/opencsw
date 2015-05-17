@@ -675,7 +675,7 @@ test-modulated: build-modulated pre-test pre-test-modulated pre-test-$(MODULATIO
 
 # strip - Strip executables
 ifneq ($(GARFLAVOR),DBG)
-POST_INSTALL_TARGETS := strip $(POST_INSTALL_TARGETS)
+POST_INSTALL_TARGETS := $(if $(NOSTRIP),,strip) $(POST_INSTALL_TARGETS)
 endif
 
 strip:
