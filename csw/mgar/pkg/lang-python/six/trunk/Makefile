@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = six
-VERSION = 1.4.1
+VERSION = 1.9.0
 CATEGORIES = python
 GARTYPE = v2
 
