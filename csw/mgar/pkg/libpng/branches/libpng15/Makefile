@@ -13,20 +13,16 @@ NAME = libpng
 VERSION = 1.5.13
 CATEGORIES = lib
 GARTYPE = v2
-DESCRIPTION = The official library for Portable Network Graphics format (PNG)
-define BLURB
-endef
-VENDOR_URL = http://www.libpng.org/pub/png/libpng.html
+DESCRIPTION = The official library for Portable Network Graph
+MASTER_SITES +tml
 MASTER_SITES = $(SF_MIRROR)
-MASTER_SITES += ftp://ftp.simplesystems.org/pub/libpng/png/src/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES += ftp://ftp.simplesystems.org/pub/libpng/pn+= $(NAME)-$(VERSION).tar.gz
+
+VENDOR_URL = http://www.libpng.org/pub/png/libpng.html
 LICENSE = LICENSE
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-EXTRA_BUILD_ISAS = sparcv8plus+vis
-EXTRA_BUILD_ISAS += sparcv8plus+vis2
-EXTRA_BUILD_ISAS#where can we build?
+EXTRA_BUILD_ISAS += sparcv8plus+vis
+EXTRA_BUILD_ISAS += sparcv8plus+vis2AS#where can we build?
 PACKAGING_PLATFORMS += solaris9-sparc
 PACKAGING_PLATFORMS += solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc
