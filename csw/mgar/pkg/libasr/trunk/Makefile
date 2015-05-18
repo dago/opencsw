@@ -5,7 +5,7 @@ NAME = libasr
 VERSION = 201505061057
 GARTYPE = v2
 
-DESCRIPTION = libasr is a free, simple and portable asynchronous resolver library.
+DESCRIPTION = A free, simple and portable asynchronous resolver library
 define BLURB
  libasr is a free, simple and portable asynchronous resolver library.
  
@@ -23,37 +23,35 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.opensmtpd.org/archives/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += openbsd-compat.tgz
 
-ifneq ($(GAROSREL),11)
-PATCHFILES += 0001-add-openbsd-compat-getifaddrs.c.patch
-endif
+PATCHFILES-5.10 += 0001-add-openbsd-compat-getifaddrs.c.patch
 PATCHFILES += 0002-fix-possible-MAX-redefinition.patch
+PATCHFILES += $(PATHFILES-$(GAROSREL))
 
-GARCOMPILER = GNU
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
-PACKAGES += CSWlibasr
-CATALOGNAME_CSWlibasr = libasr
-PKGFILES_CSWlibasr += $(call baseisadirs,$(libdir),libasr\.so(\.\d+)*)
-SPKG_DESC_CSWlibasr += $(DESCRIPTION), libasr.so
+BUILD64 = 1
+
+PACKAGES += CSWlibasr0
+PKGFILES_CSWlibasr0 += $(call pkgfiles_lib,libasr.so.0)
+SPKG_DESC_CSWlibasr0 += $(DESCRIPTION), libasr.so.0
 
 PACKAGES += CSWlibasr-dev
-CATALOGNAME_CSWlibasr-dev = libasr_dev
-SPKG_DESC_CSWlibasr-dev += $(DESCRIPTION), development files
-RUNTIME_DEP_PKGS_CSWlibasr-dev += CSWlibasr
+SPKG_DESC_CSWlibasr-dev += Development files for libasr.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibasr-dev += CSWlibasr0
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-mantype=man
 
 include gar/category.mk
 
-ifneq ($(GAROSREL),11)
 # ifaddrs.h    taken from https://java.net/projects/solaris/sources/on-src/content/usr/src/head/ifaddrs.h?raw=true
 # getifaddrs.c taken from https://java.net/projects/solaris/sources/on-src/content/usr/src/lib/libsocket/inet/getifaddrs.c?raw=true
 # libsocket_priv.h is a gruik hack
-pre-build-modulated:
-	cp $(FILEDIR)/openbsd-compat/ifaddrs.h $(WORKSRC)/openbsd-compat/
-	cp $(FILEDIR)/openbsd-compat/getifaddrs.c $(WORKSRC)/openbsd-compat/
-	cp $(FILEDIR)/openbsd-compat/libsocket_priv.h $(WORKSRC)/openbsd-compat/
+pre-build:
+	$(if $(filter 5.10,$(GAROSREL)),cp -rp $(WORKDIR)/openbsd-compat/* $(WORKSRC)/openbsd-compat)
 	@$(MAKECOOKIE)
-endif
