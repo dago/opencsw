@@ -66,7 +66,9 @@ EX_FILES += .*/libnspr_flt4\.so
 PACKAGES = CSWnspr-dev
 CATALOGNAME_CSWnspr-dev = nspr_dev
 SPKG_DESC_CSWnspr-dev = Netscape Portable Runti.*compile-et\.pl
-RUNTIME_DEP_PKGS_CSWnspr-dev  = CSWlibnspr4
+RUNTIME_DEP_+= CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWnspr-dev += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWnspr-dev += CSWlibpldsdev  = CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWnspr-dev += CSWperl
 # OBSOLETED_BY_libnspr-flt4 e-equals-filename
 
