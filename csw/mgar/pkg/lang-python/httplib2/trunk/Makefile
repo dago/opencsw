@@ -1,6 +1,6 @@
 # $Id$
 NAME = httplib2
-VERSION = 0.9
+VERSION = 0.9.1
 CATEGORIES = python
 GARTYPE = v2
 
@@ -20,3 +20,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+post-install:
+	(cd $(DESTDIR)/$(SITE_PACKAGES)/$(NAME) && chmod +r cacerts.txt)
+	$(MAKECOOKIE)
