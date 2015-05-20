@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = pdfminer
-# VERSION = 
+VERSION =  HEAD
 GIT_VERSION = HEAD
 GARTYPE = v2
 CATEGORIES = python
