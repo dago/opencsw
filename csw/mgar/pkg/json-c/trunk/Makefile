@@ -28,11 +28,11 @@ PACKAGES += CSWlibjson-c3
 PKGFILES_CSWlibjson-c3 += $(call pkgfiles_lib,libjson-c.so.3)
 SPKG_DESC_CSWlibjson-c3 += $(DESCRIPTION), libjson-c.so.3
 
-PACKAGES += CSWjson-c-dev
-SPKG_DESC_CSWjson-c-dev += $(DESCRIPTION), development files
-# PKGFILES_CSWjson-c-dev += $(PKGFILES_DEVEL)
+PACKAGES += CSWlibjson-c-dev
+SPKG_DESC_CSWlibjson-c-dev += $(DESCRIPTION), development files
+# PKGFILES_CSWlibjson-c-dev += $(PKGFILES_DEVEL)
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWjson-c-dev += CSWlibjson-c3
+RUNTIME_DEP_PKGS_CSWlibjson-c-dev += CSWlibjson-c3
 
 BUILD64 = 1
 
