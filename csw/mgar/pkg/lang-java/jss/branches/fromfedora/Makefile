@@ -72,8 +72,11 @@ RUNTIME_DEP_PKGS_CSWjss4 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWjss4 += CSWlibnspr4
 CHECKPKG_OVERRIDES_CSWjss4 += soname-equals-filename|file=/opt/csw/lib/amd64/libjss4.so
 CHECKPKG_OVERRIDES_CSWjss4 += soname-equals-filename|file=/opt/csw/lib/libjss4.so
+CHECKPKG_OVERRIDES_CSWjss4 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libjss4.so
 CHECKPKG_OVERRIDES_CSWjss4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libjss4.so|soname=libjss4.so|pkgname=CSWjss4|expected=CSWlibjss4
 CHECKPKG_OVERRIDES_CSWjss4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libjss4.so|soname=libjss4.so|pkgname=CSWjss4|expected=CSWlibjss4
+CHECKPKG_OVERRIDES_CSWjss4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libjss4.so|soname=libjss4.so|pkgname=CSWjss4|expected=CSWlibjss4
+
 
 PACKAGES += CSWjss4-doc
 CATALOGNAME_CSWjss4-doc = jss4_doc
