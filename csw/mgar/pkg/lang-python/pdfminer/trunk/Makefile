@@ -12,6 +12,9 @@ define BLURB
   Long description
 endef
 
+
+
+VENDOR_URL = https://github.com/euske/pdfminer
 MASTER_SITES =
 GIT_REPOS = http://github.com/euske/$(NAME).git
 GIT_TREEISH_pdfminer.git = $(GIT_VERSION)
