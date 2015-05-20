@@ -2,7 +2,8 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = pdfminer
-VERSION = 20140328
+# VERSION = 
+GIT_VERSION = HEAD
 GARTYPE = v2
 CATEGORIES = python
 
@@ -11,13 +12,19 @@ define BLURB
   Long description
 endef
 
-MASTER_SITES = https://pypi.python.org/packages/source/p/$(NAME)/
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES =
+GIT_REPOS = http://github.com/euske/$(NAME).git
+GIT_TREEISH_pdfminer.git = $(GIT_VERSION)
+
+LICENSE = README.md
+
+# MASTER_SITES = https://pypi.python.org/packages/source/p/$(NAME)/
 
 PACKAGES = CSWpy-pdfminer
 ARCHALL_CSWpy-pdfminer = 1
+CHECKPKG_OVERRIDES_CSWpy-pdfminer += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/pdfminer/cmapdb.py
+CHECKPKG_OVERRIDES_CSWpy-pdfminer += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/pdfminer/cmapdb.py
 
-MODULATIONS_PYTHON_VERSION = 2_6
 
 SKIPTEST = 1
 
