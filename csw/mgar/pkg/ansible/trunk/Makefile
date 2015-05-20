@@ -89,4 +89,6 @@ include gar/category.mk
 post-install:
 	ginstall -D -m 0644 $(WORKDIR)/hosts.CSW $(DESTDIR)$(sysconfdir)/ansible/hosts.CSW
 	ginstall -D -m 0644 $(WORKSRC)/examples/ansible.cfg $(DESTDIR)/$(sysconfdir)/ansible/ansible.cfg.CSW
+	ginstall -d -m 0755 $(DESTDIR)$(sharedstatedir)/ansible
+	cp -rp $(WORKSRC)/plugins $(DESTDIR)$(sharedstatedir)/ansible/plugins
 	@$(MAKECOOKIE)
