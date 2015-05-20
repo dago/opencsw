@@ -85,8 +85,15 @@ WORKSRC = $(WORKDIR)
 DISTDIR = mozilla/security/jss
 LICENSE = COPYING
 
-OBJ_PATH_32 = $(shell uname -s)$(GAROSREL)_$(shell uname -m)_$(GARFLAVOR).OBJ
-OBJ_PATH_64 = $(shell uname -s)$(GAROSREL)_$(shell uname -m)_64_$(GARFLAVOR).OBJ
+OS_TEST := $(shell uname -m)
+ifeq ($(OS_TEST),i86pc)
+    OS_RELEASE := $(shell uname -r)_$(OS_TEST)
+else
+    OS_RELEASE := $(shell uname -r)
+endif
+
+OBJ_PATH_32 = $(shell uname -s)$(OS_RELEASE)_$(GARFLAVOR).OBJ
+OBJ_PATH_64 = $(shell uname -s)$(OS_RELEASE)_64_$(GARFLAVOR).OBJ
 OBJ_PATH = $(OBJ_PATH_$(MEMORYMODEL_$(ISA)))
 
 CONFIGURE_ARGS_OPT += BUILD_OPT=1
@@ -100,6 +107,7 @@ CONFIGURE_ARGS += JAVA_HOME=/usr/java
 CONFIGURE_ARGS_64 += USE_64=1
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL_$(ISA)))
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+EXTRA_DSO_LDOPTS = $(LINKER_MAPS) -B direct
 	
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = jss
@@ -114,7 +122,7 @@ include gar/category.mk
 build-jss:
 	(cd $(WORKSRC) && \
 	gmake -C mozilla/security/coreconf $(CONFIGURE_ARGS) && \
-	gmake -C mozilla/security/jss $(CONFIGURE_ARGS) && \
+	gmake -C mozilla/security/jss $(CONFIGURE_ARGS) EXTRA_DSO_LDOPTS="$(EXTRA_DSO_LDOPTS)" && \
 	gmake -C mozilla/security/jss javadoc $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
