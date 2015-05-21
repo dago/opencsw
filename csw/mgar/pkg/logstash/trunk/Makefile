@@ -10,6 +10,7 @@ DESCRIPTION = A tool for managing events and logs
 MASTER_SITES = https://download.elasticsearch.org/logstash/logstash/
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += logstash
+DISTFILES += cswlogstash.xml
 
 PATCHFILES += 0001-Use-correct-grep.patch
 
@@ -39,10 +40,16 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+PROTOTYPE_MODIFIERS += smf
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswlogstash.xml
+PROTOTYPE_CLASS_smf = manifest
+
 include gar/category.mk
 
 install-custom:
 	ginstall -D -m 0755 $(WORKDIR)/logstash $(DESTDIR)$(bindir)/logstash
 	ginstall -d -m 0755 $(DESTDIR)$(sharedstatedir)/logstash
 	cd $(WORKSRC) && tar cf - . | (cd $(DESTDIR)$(sharedstatedir)/logstash; tar xf -)
+	ginstall -d -m 0755 $(DESTDIR)$(sysconfdir)/logstash/conf.d
+	ginstall -D -m 0644 $(WORKDIR)/cswlogstash.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswlogstash.xml
 	@$(MAKECOOKIE)
