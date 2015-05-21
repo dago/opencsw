@@ -25,7 +25,7 @@
     <!-- 'default' instance is the buildbot master -->
     <instance name='default' enabled='false'>
         <property_group name='redis' type='application'>
-            <propval name='config' type='astring' value='/etc/opt/csw/redis.conf' />
+            <propval name='config' type='astring' value='/etc/opt/csw/redis/redis.conf' />
         </property_group>
     </instance>
 
