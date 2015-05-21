@@ -51,12 +51,14 @@ PROTOTYPE_MODIFIERS += smf
 PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswredis.xml
 PROTOTYPE_CLASS_smf = manifest
 
-PRESERVECONF += $(sysconfdir)/redis.conf
+PRESERVECONF += $(sysconfdir)/redis/redis.conf
+PRESERVECONF += $(sysconfdir)/redis/sentinel.conf
 
 include gar/category.mk
 
 post-install:
-	ginstall -D -m 0644 $(WORKSRC)/redis.conf $(DESTDIR)$(sysconfdir)/redis.conf
+	ginstall -D -m 0644 $(WORKSRC)/redis.conf $(DESTDIR)$(sysconfdir)/redis/redis.conf
+	ginstall -D -m 0644 $(WORKSRC)/sentinel.conf $(DESTDIR)$(sysconfdir)/redis/sentinel.conf
 	ginstall -D -m 0644 $(WORKDIR)/cswredis.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswredis.xml
 	ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/redis/data
 	@$(MAKECOOKIE)
