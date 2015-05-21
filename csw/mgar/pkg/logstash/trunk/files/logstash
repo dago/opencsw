@@ -3,5 +3,4 @@
 JAVA_HOME=/opt/csw/java/jre/jre8
 export JAVA_HOME
 
-cd /opt/csw/share/logstash
-exec bin/logstash "$@"
+exec /opt/csw/share/logstash/bin/logstash "$@"
