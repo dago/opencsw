@@ -33,6 +33,9 @@ CHECKPKG_OVERRIDES_CSWlogstash += missing-dependency|CSWlibruby1-9-1-1|or|CSWrub
 # This can not be tracked with checkpkg
 CHECKPKG_OVERRIDES_CSWlogstash += surplus-dependency|CSWjre8
 
+# This is the DTD for SMF
+CHECKPKG_OVERRIDES_CSWlogstash += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswlogstash.xml
+
 LICENSE = LICENSE
 
 CONFIGURE_SCRIPTS =
