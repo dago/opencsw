@@ -23,7 +23,9 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # EXTRA_CPPFLAGS += -features=extensions -D__FUNCTION__=__func__
 
-CONFIGURE_ARGS = $(DIRPATHS) GREP=/opt/csw/bin/ggrep
+GREP=ggrep
+EXTRA_EXPORTS=GREP
+
 CONFIGURE_ARGS += --program-prefix=g
 # http://sourceware.org/bugzilla/show_bug.cgi?id=12265
 CONFIGURE_ARGS += --disable-werror
@@ -63,7 +65,7 @@ CHECKPKG_OVERRIDES_CSWbinutils += file-collision|/opt/csw/share/locale/it/LC_MES
 include gar/category.mk
 
 # We need GNU grep 
-#PATH := /opt/csw/gnu:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
 
 post-install-modulated:
 	@# Every package carries his own links in /opt/csw/gnu
