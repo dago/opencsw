@@ -51,16 +51,14 @@ GARCOMPILER = GNU
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibz1
-RUNTIME_DEP_PKGS_CSWbinutils-i386 += CSWlibfl2
-RUNTIME_DEP_PKGS_CSWbinutils += $(RUNTIME_DEP_PKGS_CSWbinutils-$(GARCH))
+RUNTIME_DEP_PKGS_CSWbinutils-i386_5.10 += CSWlibfl2
+RUNTIME_DEP_PKGS_CSWbinutils-i386_5.11 += CSWlibfl2
+RUNTIME_DEP_PKGS_CSWbinutils += $(RUNTIME_DEP_PKGS_CSWbinutils-$(GARCH)_$(GAROSREL))
 
 CHECKPKG_OVERRIDES_CSWbinutils += file-with-bad-content
 #Until removed from GDB:
 CHECKPKG_OVERRIDES_CSWbinutils += file-collision|/opt/csw/share/locale/uk/LC_MESSAGES/bfd.mo|CSWbinutils|CSWgdb
 CHECKPKG_OVERRIDES_CSWbinutils += file-collision|/opt/csw/share/locale/it/LC_MESSAGES/opcodes.mo|CSWbinutils|CSWgdb
-CHECKPKG_OVERRIDES_CSWbinutils_i386_5.9 += surplus-dependency|CSWlibfl2
-CHECKPKG_OVERRIDES_CSWbinutils_i386_5.9 += dependency-on-nonexistent-package|CSWlibfl2
-CHECKPKG_OVERRIDES_CSWbinutils += $(CHECKPKG_OVERRIDES_CSWbinutils_$(GARCH)_$(GAROSREL))
 
 include gar/category.mk
 
