@@ -28,6 +28,7 @@ EXTRA_CONFIGURE_EXPORTS += GREP
 CONFIGURE_ENV_GREP = /opt/csw/bin/ggrep
 
 
+CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 # http://sourceware.org/bugzilla/show_bug.cgi?id=12265
 CONFIGURE_ARGS += --disable-werror
