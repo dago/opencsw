@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec /opt/csw/java/jre/jre8/bin/java -jar /opt/csw/share/java/svc-graphite.jar "$@"
