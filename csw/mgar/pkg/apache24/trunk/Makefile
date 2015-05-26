@@ -43,6 +43,9 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWapache24 += CSWopenldap
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlighttpd
+EXTRA_MERGE_DIRS_isa-amd64 += /etc/opt/csw/64/apache2/extra
 
 # This is because /opt/csw/sbin/sparcv9 is missing, most certainly an checkpkg issue
 CHECKPKG_OVERRIDES_CSWapache24 += missing-dependency|CSWbonnie++|or|CSWcollectd|or|CSWleafnode|or|CSWlighttpd|or|CSWlogrotate|or|CSWopenldap|or|CSWproftpd|or|CSWsysstat|or|CSWzabbix-agent|or|CSWzabbix-server
@@ -98,8 +101,15 @@ EXTRA_LIB = $(prefix)/bdb48/lib
 
 BUILD64 = 1
 
+# ifeq ($(MEMORYMODEL),64)
+# 	MODULE_CONF=$(DESTDIR)$(sysconfdir)/64/apache2/extra/module.load
+# else
+# 	MODULE_CONF=$(DESTDIR)$(sysconfdir)/apache2/extra/module.load
+# endif
+MODULE_CONF=$(DESTDIR)$(sysconfdir)/$(MM_LIBDIR)/apache2/extra/module.load
+
 # Build Configuration
-CONFIGURE_ARGS  = --with-apr=$(prefix)
+CONFIGURE_ARGS += --with-apr=$(prefix)
 CONFIGURE_ARGS += --with-pcre=$(bindir)/pcre-config
 CONFIGURE_ARGS += --with-libxml2=$(includedir)/libxml2
 CONFIGURE_ARGS-32 += --with-lua=$(prefix)
@@ -115,7 +125,6 @@ CONFIGURE_ARGS += --enable-vhost-alias
 CONFIGURE_ARGS += --with-ssl
 # As requested in https://www.opencsw.org/mantis/view.php?id=5152
 CONFIGURE_ARGS += --enable-proxy-html
-
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 EXTRA_CFLAGS += -DSSL_EXPERIMENTAL -DSSL_ENGINE
@@ -144,6 +153,16 @@ post-install:
 	perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' $(DESTDIR)$(sysconfdir)/apache2/httpd.conf
 	perl -pi -e 's|usr/local/etc/apache|etc/opt/csw/apache2|g' $(DESTDIR)$(mandir)/man1/*
 	perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' $(DESTDIR)$(mandir)/man8/*
+	ginstall -d $(dir $(MODULE_CONF))
+	(cd $(DESTDIR)$(sysconfdir)/apache2 && \
+		grep LoadModule httpd.conf > $(MODULE_CONF) && \
+		gsed -e '/^#LoadModule/d' -i httpd.conf; \
+		gsed -e '/^LoadModule/d' -i httpd.conf; \
+		gsed -e '/# LoadModule/a <IfDefine 64bit>\n\Include $(sysconfdir)/64/apache2/extra/modules.load\n\</IfDefine>\n\<IfDefine !64bit>\n\Include $(sysconfdir)/apache2/extra/modules.load\n\</IfDefine>' -i httpd.conf; \
+	)
 	ginstall -D -m 0755 $(WORKDIR)/cswapache24 $(DESTDIR)/etc/opt/csw/init.d/cswapache24
+	gsed -e '/#FMRI/a [ \$${ENABLE64} = "true" ] && MM=/64' -i $(DESTDIR)/etc/opt/csw/init.d/cswapache24
+	gsed -e '/#FMRI/a ENABLE64=\$$(/usr/bin/svcprop -p config/enable_64bit ${SMF_FMRI})' -i $(DESTDIR)/etc/opt/csw/init.d/cswapache24
+	gsed -e '/APACHECTL=/s/sbin/sbin\$${MM}/' -i $(DESTDIR)/etc/opt/csw/init.d/cswapache24
 	echo "# create server.(crt|csr)/server.key" > $(DESTDIR)$(sysconfdir)/apache2/server
 	@$(MAKECOOKIE)
