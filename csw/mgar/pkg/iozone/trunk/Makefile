@@ -1,5 +1,5 @@
 NAME = iozone
-VERSION = 3.429
+VERSION = 3.430
 DISTVERSION = $(subst .,_,$(VERSION))
 GARTYPE = v2
 CATEGORIES = apps
@@ -36,8 +36,7 @@ PATCHFILES  += patch_manfile.diff
 # Use vx_ioctl.h in BUILDSRC instead of /opt/VRTSvxfs/include/sys/fs/
 PATCHFILES  += patch_vxioctl.diff
 
-# Dependency for contributed scripts
-RUNTIME_DEP_PKGS = CSWgnuplot
+# Dependency for contributed script_CSWiozone += CSWperl_PKGS = CSWgnuplot
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
@@ -67,10 +66,7 @@ BUILD_OVERRIDE_VAR_S10CCFLAGS =
 BUILD_OVERRIDE_VARS += LDFLAGS
 BUILD_OVERRIDE_VAR_LDFLAGS = $(LDFLAGS)
 
-BUILD_SCRIPTS = $(WORKSRC)/src/current/makefile
-
-CHECKPKG_OVERRIDES_CSWiozone += surplus-dependency|CSWgnuplot
-CHECKPKG_OVERRIDES_CSWiozone += missing-dependency|CSWperl
+BUILD_SCRIPTS = $(WORKSRC)/src/pendency|CSWperl
 
 # There is no test suite
 TEST_SCRIPTS =
