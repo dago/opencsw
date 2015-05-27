@@ -8,7 +8,8 @@ CATEGORIES = python
 DESCRIPTION = Backend data caching and persistence daemon for Graphite
 
 MASTER_SITES = $(PYPI_MIRROR)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += cswcarbon-cache.xml
 
 PACKAGES += CSWpy-carbon
 SPKG_DESC_CSWpy-carbon = Backend data caching and persistence daemon for Graphite
@@ -22,6 +23,9 @@ RUNTIME_DEP_PKGS_CSWpy-carbon += CSWpy-txamqp
 CHECKPKG_OVERRIDES_CSWpy-carbon += surplus-dependency|CSWpython27
 CHECKPKG_OVERRIDES_CSWpy-carbon += surplus-dependency|CSWpy-twisted
 CHECKPKG_OVERRIDES_CSWpy-carbon += surplus-dependency|CSWpy-txamqp
+
+# This is for the SMF DTD
+CHECKPKG_OVERRIDES_CSWpy-carbon += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswcarbon-cache.xml
 
 CONFDIR = $(sysconfdir)/graphite
 STORAGEDIR = $(localstatedir)/graphite
@@ -81,6 +85,10 @@ REINPLACE_MATCH_stor = join\(graphite_root, "storage"\)
 REINPLACE_WITH_stor = "$(STORAGEDIR)"
 REINPLACE_FILES_stor += lib/carbon/conf.py
 
+PROTOTYPE_MODIFIERS += smf
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-cache.xml
+PROTOTYPE_CLASS_smf = manifest
+
 include gar/category.mk
 
 post-extract:
@@ -93,4 +101,5 @@ post-install:
 	ginstall -d -m 0755 $(DESTDIR)$(STORAGEDIR)
 	mv $(DESTDIR)$(CONFDIR)/storage/* $(DESTDIR)$(STORAGEDIR)
 	rmdir $(DESTDIR)$(CONFDIR)/storage
+	ginstall -D -m 0644 $(WORKDIR)/cswcarbon-cache.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswcarbon-cache.xml
 	@$(MAKECOOKIE)
