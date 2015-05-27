@@ -1,4 +1,4 @@
-#!/sbin/sh
+#!/sbin/ksh
 #
 # Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
 # Use is subject to license terms.
@@ -11,6 +11,8 @@
 #RC_KLEV 0,1,2,S
 #RC_SLEV 3
 #FMRI network
+ENABLE64=$(/usr/bin/svcprop -p config/enable_64bit ${SMF_FMRI})
+[ ${ENABLE64} = "true" ] && MM=/64
 
 APACHE_HOME=@prefix@
 CONF_FILE=@sysconfdir@/apache2/httpd.conf

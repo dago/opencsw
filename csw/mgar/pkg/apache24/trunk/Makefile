@@ -45,7 +45,7 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWopenldap
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlighttpd
-EXTRA_MERGE_DIRS_isa-amd64 += /etc/opt/csw/64/apache2/extra
+EXTRA_MERGE_DIRS_isa-extra += /etc/opt/csw/64/apache2/extra
 
 # This is because /opt/csw/sbin/sparcv9 is missing, most certainly an checkpkg issue
 CHECKPKG_OVERRIDES_CSWapache24 += missing-dependency|CSWbonnie++|or|CSWcollectd|or|CSWleafnode|or|CSWlighttpd|or|CSWlogrotate|or|CSWopenldap|or|CSWproftpd|or|CSWsysstat|or|CSWzabbix-agent|or|CSWzabbix-server
@@ -161,8 +161,6 @@ post-install:
 		gsed -e '/# LoadModule/a <IfDefine 64bit>\n\Include $(sysconfdir)/64/apache2/extra/modules.load\n\</IfDefine>\n\<IfDefine !64bit>\n\Include $(sysconfdir)/apache2/extra/modules.load\n\</IfDefine>' -i httpd.conf; \
 	)
 	ginstall -D -m 0755 $(WORKDIR)/cswapache24 $(DESTDIR)/etc/opt/csw/init.d/cswapache24
-	gsed -e '/#FMRI/a [ \$${ENABLE64} = "true" ] && MM=/64' -i $(DESTDIR)/etc/opt/csw/init.d/cswapache24
-	gsed -e '/#FMRI/a ENABLE64=\$$(/usr/bin/svcprop -p config/enable_64bit ${SMF_FMRI})' -i $(DESTDIR)/etc/opt/csw/init.d/cswapache24
 	gsed -e '/APACHECTL=/s/sbin/sbin\$${MM}/' -i $(DESTDIR)/etc/opt/csw/init.d/cswapache24
 	echo "# create server.(crt|csr)/server.key" > $(DESTDIR)$(sysconfdir)/apache2/server
 	@$(MAKECOOKIE)
