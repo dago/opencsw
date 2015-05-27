@@ -3,7 +3,13 @@ Installation of Graphite
 
 pkgutil -y -i graphite_web
 
+* Configuration files
+    /etc/opt/csw/graphite
+
 carbon-cache.py start
+-> TBD: SMF
+
+-> TBD: Other Daemons carbon-relay.py, carbon-aggregator.py
 
 /opt/csw/apache2/etc/httpd.conf:
   Include etc/extra/graphite-vhost.conf
@@ -11,3 +17,14 @@ carbon-cache.py start
 python2.7 /opt/csw/lib/python2.7/site-packages/graphite/manage.py syncdb
 chown -R nobody:nobody /var/opt/csw/graphite
 
+* Settings:
+    /opt/csw/lib/python2.7/site-packages/graphite/local_settings.py
+
+* Remove user from Django:
+    http://stackoverflow.com/questions/26713443/django-delete-superuser
+  > django-admin.py shell
+  $ from django.contrib.auth.models import User
+  $ User.objects.get(username="joebloggs", is_superuser=True).delete()
+
+
+TBD: Grafana Dashboard ("Kibana for Graphite")

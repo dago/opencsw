@@ -123,7 +123,7 @@ CONFIG_FILES += graphite.wsgi
 # There is no testsuite
 TEST_SCRIPTS =
 
-PRESERVECONF += $(prefix)/apache2/etc/extra/graphite-vhost.conf
+PRESERVECONF += $(prefix)/apache2/etc/extra/httpd-graphite-vhost.conf
 
 # TBD: This needs customization of pathes
 PRESERVECONF += /opt/csw/lib/python2.6/site-packages/graphite/local_settings.py
@@ -140,7 +140,7 @@ V2_6 = 2.6
 V2_7 = 2.7
 
 post-install:
-	ginstall -D -m 0644 $(DESTDIR)$(CONFDIR)/examples/example-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/graphite-vhost.conf.CSW
+	ginstall -D -m 0644 $(DESTDIR)$(CONFDIR)/examples/example-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-graphite-vhost.conf.CSW
 	rm -f $(DESTDIR)$(CONFDIR)/examples/example-graphite-vhost.conf	
 	mv $(DESTDIR)/opt/csw/lib/python$(V$(PYTHON_VERSION))/site-packages/graphite/local_settings.py.example \
 	   $(DESTDIR)/opt/csw/lib/python$(V$(PYTHON_VERSION))/site-packages/graphite/local_settings.py.CSW
