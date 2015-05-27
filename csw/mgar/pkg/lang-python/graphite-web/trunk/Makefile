@@ -101,17 +101,17 @@ REINPLACE_FILES_noprefix += examples/example-graphite-vhost.conf
 
 REINPLACEMENTS += localsettings_conf
 REINPLACE_MATCH_localsettings_conf = \#CONF_DIR.*
-REINPLACE_WITH_localsettings_conf = CONF_DIR = '$(CONFDIR)'
+REINPLACE_WITH_localsettings_conf = CONF_DIR = "$(CONFDIR)"
 REINPLACE_FILES_localsettings_conf += webapp/graphite/local_settings.py.example
 
 REINPLACEMENTS += localsettings_storage
 REINPLACE_MATCH_localsettings_storage = \#STORAGE_DIR.*
-REINPLACE_WITH_localsettings_storage = STORAGE_DIR = '$(STORAGEDIR)'
+REINPLACE_WITH_localsettings_storage = STORAGE_DIR = "$(STORAGEDIR)"
 REINPLACE_FILES_localsettings_storage += webapp/graphite/local_settings.py.example
 
 REINPLACEMENTS += localsettings_content
 REINPLACE_MATCH_localsettings_content = \#CONTENT_DIR.*
-REINPLACE_WITH_localsettings_content = CONTENT_DIR = '$(WEBAPPDIR)/webapp/content'
+REINPLACE_WITH_localsettings_content = CONTENT_DIR = "$(WEBAPPDIR)/webapp/content"
 REINPLACE_FILES_localsettings_content += webapp/graphite/local_settings.py.example
 
 EXTRA_INSTALL_ARGS += --install-data=$(CONFDIR)
