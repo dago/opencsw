@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = django
-VERSION = 1.6.5
+VERSION = 1.8.2
 CATEGORIES = python
 GARTYPE = v2
 
@@ -17,40 +17,32 @@ define BLURB
   the stringent requirements of the experienced Web developers who wrote it. It
   lets you build high-performing, elegant Web applications quickly.
 endef
-SPKG_SOURCEURL = http://www.djangoproject.com/
-# UFILES_REGEX = Django-(\d+(?:\.\d+)*).tar.gz
 
-MASTER_SITES = http://www.djangoproject.com/download/$(VERSION)/tarball/
-DISTFILES  = $(DISTNAME).tar.gz
+#MASTER_SITES = http://www.djangoproject.com/download/$(VERSION)/tarball/
+MASTER_SITES += https://www.djangoproject.com/m/releases/1.8/
 DISTNAME = Django-$(VERSION)
+DISTFILES += $(DISTNAME).tar.gz
 
-PACKAGES = CSWpy-django
-CATALOGNAME_CSWpy-django = py_django
-ARCHALL = 1
+VENDOR_URL = http://www.djangoproject.com/
+
+# Django 1.8 only supports Python 2.7:
+#   https://docs.djangoproject.com/en/1.8/faq/install/#what-python-version-can-i-use-with-django
+MODULATIONS_PYTHON_VERSION = 2_7
+
+PACKAGES += CSWpy-django
+SPKG_DESC_CSWpy-django = A high-level Python Web framework
+# PKGFILES is catchall
+ARCHALL_CSWpy-django = 1
+
+# /usr/share/zoneinfo
+CHECKPKG_OVERRIDES_CSWpy-django += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/django/conf/__init__.py
+
+# Django 1.8 only supports Python 2.7, see above
+CHECKPKG_OVERRIDES_CSWpy-django += python-package-missing-py26-files
+
 # /opt/csw/lib/python2.6/site-packages/django/contrib/auth/hashers.py 
 # likes to import test/signals.py
 # https://code.djangoproject.com/ticket/20349
 MERGE_EXCLUDE_CATEGORY = 
 
-RUNTIME_DEP_PKGS =
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpython-dev
-
-CONFIGURE_SCRIPTS =
-TEST_SCRIPTS =
-LICENSE = LICENSE
-# There's a problem that the download URL of the Django source tarball does not
-# contain the file name. The browser is being redirected instead. Hard-coding
-# the URL and using a custom target to fit the rest of mGAR.
-http//www.djangoproject.com/download/$(VERSION)/tarball/Django-$(VERSION).tar.gz:
-	@wget $(WGET_OPTS) -T 30 -c -P $(PARTIALDIR) http://www.djangoproject.com/download/$(VERSION)/tarball
-	pwd
-	mv $(DOWNLOADDIR)/partial/tarball $(DOWNLOADDIR)/partial/$(DISTFILES)
-
-CHECKPKG_OVERRIDES_CSWpy-django += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/django/conf/__init__.py
-CHECKPKG_OVERRIDES_CSWpy-django += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/django/conf/__init__.py
-
 include gar/category.mk
-
-post-install-modulated:
-	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
-	@$(MAKECOOKIE)
