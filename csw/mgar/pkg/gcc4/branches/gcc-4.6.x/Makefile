@@ -190,6 +190,28 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += file-collision|$(libdir)/libobjc.so|CS
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += file-collision|$(libdir)/sparcv9/libobjc.so|CSWgcc3objcrt|$(PKG_BASENAME)objc
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/lib-gnu-awt-xlib.so|CSWgcc3javart|$(PKG_BASENAME)core
 
+#Direct binding is disabled to to problem with amd64 libs
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)g++ += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibatomic1 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibffi4 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgij$(JAVA_LIB_VERSION) += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgomp1 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibitm1 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibobjc-gc4 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibobjc3 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibquadmath0 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibssp0 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibstdc++6 += no-direct-binding
+
 # Some static libraries are required to build binaries with gcc, for example
 # libgcc.a and libgcc_eh.a. Otherwise: ld: fatal: library -lgcc: not found
 MERGE_EXCLUDE_LIBTOOL =
