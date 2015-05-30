@@ -1,5 +1,5 @@
 NAME = joe
-VERSION = 3.7
+VERSION = 4.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -30,6 +30,10 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-curses
 
 PRESERVECONF = /etc/opt/csw/joe/.*
-MIGRATE_FILES = jmacsrc joerc jpicorc jstarrc rjoerc
+MIGRATE_FILES = jmacsrc joerc jpico# If configure detects Solaris it adds unconditionally /usr/local - why??
+REINPLACEMENTS += foo
+REINPLACE_MATCH_foo = solaris
+REINPLACE_WITH_foo = goaway
+REINPLACE_FILES_foo += configure
 
-inclu
+include gar/category.mk
