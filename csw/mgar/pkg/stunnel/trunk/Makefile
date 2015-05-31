@@ -7,7 +7,7 @@
 #       Test on Solaris 8 / 9 for comparison
 #
 NAME = stunnel
-VERSION = 4.56
+VERSION = 5.17
 CATEGORIES = net
 GARTYPE = v2
 
@@ -17,37 +17,36 @@ define BLURB
   inside SSL (Secure Sockets Layer) available on both Unix and Windows. Stunnel
   can allow you to secure non-SSL aware daemons and protocols (like POP, IMAP,
   LDAP, etc) by having Stunnel provide the encryption, requiring no changes to
-  the daemon's code. 
-endef
-
-VENDOR_URL   = http://www.stunnel.org
+  the daemon/www.stunnel.org
 MASTER_SITES = ftp://ftp.stunnel.org/stunnel/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
-DISTFILES   += CSWstunnel.cswstunnel
+DISTFILES   += CSWstunnese patch until this is fixed:
+#   https://github.com/dago/stunnel/compare/master...sysconfdir
+PATCHFILES += 0001-Honour-sysconfdir-bindir-and-localstatedir-everywher.patchtunnel.cswstunnel
 
 # Upstream moves versions to an obsolete/ subdir over time, consider it too
 MAJOR_VER = $(firstword $(subst ., ,$(VERSION)))
-MASTER_SITES += ftp://ftp.stunnel.org/stunnel/obsolete/$(MAJOR_VER).x/
+MASTER_SITES += ftp://ftp.stunnel.org/stunnel/obsolete/VENDOR_URL   = http://www.stunnel.org
 
 BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibwrap-dev
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
-RUNTIME_DEP_PKGS += CSWlibssl1-0-0
+PACKAGES += CSWstunnel
+SPKG_DESC_CSWstunnel = Universal SSL Wrapper
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWstunnel += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWstunnel
 RUNTIME_DEP_PKGPKGS += CSWlibz1
 
 # Make stunnel.conf-sample.in honor our $localstatedir. Issue description:
 # cf. http://marc.info/?l=stunnel-users&m=128035848632004&w=2
 # Not merged upstream as ./configure without arguments leads to expansions
-# that the config file doesn't understand, e.g. sysconfdir='${prefix}/etc'
-PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
-
-sysconfdir=/etc/opt/csw
-localstatedir=/var/opt/csw
+# that the config file doesn't understand, e.g. sysconfdir#='${prefix}/etc'
+PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdiir=/var/opt/csw
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
-CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS ##+= --enable-ipv6
 CONFIGURE_ARGS += --enable-dh
 CONFIGURE_ARGS += --localstatedir=$(localstatedir)
 
