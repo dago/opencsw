@@ -9,7 +9,7 @@ if (( CURRENT == 2 )); then
     help:list\ available\ commands
     install:install\ files\ to\ staging\ directory
     makepatch:create\ a\ patch\ for\ outstanding\ changes
-    check-prereqs checksum test
+    check-prereqs checksum test patch
     ${${(M)${(f)"$(_call_program commands ${words[1]} help)"}:#  *}//  (#b)([a-z-]##)[^A-Z]##(?)/$match[1]:${match[2]:l}}
   )
 
