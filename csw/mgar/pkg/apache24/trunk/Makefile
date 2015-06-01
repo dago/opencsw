@@ -106,7 +106,7 @@ BUILD64 = 1
 # else
 # 	MODULE_CONF=$(DESTDIR)$(sysconfdir)/apache2/extra/module.load
 # endif
-MODULE_CONF=$(DESTDIR)$(sysconfdir)/$(MM_LIBDIR)/apache2/extra/module.load
+MODULE_CONF=$(DESTDIR)$(sysconfdir)/$(MM_LIBDIR)/apache2/extra/modules.load
 
 # Build Configuration
 CONFIGURE_ARGS += --with-apr=$(prefix)

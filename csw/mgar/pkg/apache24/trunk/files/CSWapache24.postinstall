@@ -1,1 +1,1 @@
-[ -x /usr/sbin/svccfg ] && /usr/sbin/svccfg -s cswapache24 'setprop config/enable_64bit = :boolean false'
+[ -x /usr/sbin/svccfg ] && /usr/sbin/svccfg -s cswapache24 'setprop general/enable_64bit = boolean: false'
