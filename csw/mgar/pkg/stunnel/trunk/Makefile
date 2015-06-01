@@ -34,7 +34,8 @@ SPKG_DESC_CSWstunnel = Universal SSL Wrapper
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWstunnel += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWstunnel
-RUNTIME_DEP_PKGPCONFIGURE_ARGS += $(DIRPATHS)
+RUNTIME_DEP_PKGP# This is the SMF DTD
+CHECKPKG_OVERRIDES_CSWstunnel += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswstunnel.xmlGPCONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 CONFIGURE_ARGS += --enable-ipv6
 
