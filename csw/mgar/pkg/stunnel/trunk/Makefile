@@ -7,7 +7,8 @@
 #       Test on Solaris 8 / 9 for comparison
 #
 NAME = stunnel
-VERSION = 5.17
+VERSION = 5.18
+BETA = b4
 CATEGORIES = net
 GARTYPE = v2
 
@@ -17,16 +18,13 @@ define BLURB
   inside SSL (Secure Sockets Layer) available on both Unix and Windows. Stunnel
   can allow you to secure non-SSL aware daemons and protocols (like POP, IMAP,
   LDAP, etc) by having Stunnel provide the encryption, requiring no changes to
-  the daemon/www.stunnel.org
-MASTER_SITES = ftp://ftp.stunnel.org/stunnel/
-DISTFILES    = $(NAME)-$(VERSION).tar.gz
-DISTFILES   += CSWstunnese patch until this is fixed:
-#   https://github.com/dago/stunnel/compare/master...sysconfdir
-PATCHFILES += 0001-Honour-sysconfdir-bindir-and-localstatedir-everywher.patchtunnel.cswstunnel
+  the daemon/www.stunnel.+= https://www.stunnel.org/downloads/unnel.cswstunnel
 
 # Upstream moves versions to an obsolete/ subdir over time, consider it too
-MAJOR_VER = $(firstword $(subst ., ,$(VERSION)))
-MASTER_SITES += ftp://ftp.stunnel.org/stunnel/obsolete/VENDOR_URL   = http://www.stunnel.org
+MAJOR_VER = $(firstword $(subst ., ,$(VERSION)))https://www.stunnel.org/downloads/archive/$(MAJOR_VER).x/
+
+MASTER_SITES += https://www.stunnel.org/downloads/beta/
+DISTFILES += $(DISTNAME)$(BETA).tar.gze/VENDOR_URL   = http://www.stunnel.org
 
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibwrap-dev
@@ -36,70 +34,32 @@ SPKG_DESC_CSWstunnel = Universal SSL Wrapper
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWstunnel += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWstunnel
-RUNTIME_DEP_PKGPKGS += CSWlibz1
-
-# Make stunnel.conf-sample.in honor our $localstatedir. Issue description:
-# cf. http://marc.info/?l=stunnel-users&m=128035848632004&w=2
-# Not merged upstream as ./configure without arguments leads to expansions
-# that the config file doesn't understand, e.g. sysconfdir#='${prefix}/etc'
-PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdiir=/var/opt/csw
-
-CONFIGURE_ARGS = $(DIRPATHS)
+RUNTIME_DEP_PKGPCONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
-CONFIGURE_ARGS ##+= --enable-ipv6
-CONFIGURE_ARGS += --enable-dh
-CONFIGURE_ARGS += --localstatedir=$(localstatedir)
+CONFIGURE_ARGS += --enable-ipv6
 
-# No test target available
-TEST_SCRIPTS =
+REINPLACEMENTS += capath
+REINPLACE_MATCH_capath = /etc/ssl/certs
+REINPLACE_WITH_capath = $(sysconfdir)/ssl/certs
+REINPLACE_FILES_capath += tools/stunnel.conf-sample
 
-# tools/Makefile references ssldir, but configure only defines SSLDIR, thus
-# we pass ssldir manually as a workaround (according to --with-ssl above).
-# Should be reported and fixed upstream. Observed with 4.44.
-INSTALL_ARGS = ssldir=$(prefix)
+PRESERVECONF += $(sysconfdir)/stunnel/stunnel.conf
 
-# Expand autoconf vars in our init script and mark it for SMF registration
-EXPANDVARS = CSWstunnel.cswstunnel
-INITSMF = $(sysconfdir)/init.d/cswstunnel
+# stunnel installs several random sample scripts, cgi scripts, and
+# a .spec file with unadjusted paths. Leave them out for now and
+# only include specific files
+EXTRA_MERGE_EXCLUDE_FILES += $(docdir)/stunnel/.*
 
-SAMPLECONF = $(sysconfdir)/stunnel.pem
-MIGRATE_FILES = stunnel # migrate the /opt/csw/etc/stunnel sub directory
+SSLCERT += $(sysconfdir)/stunnel/stunnel
 
-PROTOTYPE_MODIFIERS = restrict
-PROTOTYPE_FILES_restrict = $(localstatedir)/lib/stunnel.*
-PROTOTYPE_USER_restrict  = nobody
-PROTOTYPE_GROUP_restrict = nobody
-
-EXTRA_PAX_ARGS = -s ',ChangeLog$$,changelog,p'
-
-# Contains a historic reference to the default install locations
-CHECKPKG_OVERRIDES += file-with-bad-content|/usr/local|root/opt/csw/share/doc/stunnel/changelog
+PROTOTYPE_MODIFIERS += smf
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-cache.xml
+PROTOTYPE_CLASS_smf = manifest
 
 include gar/category.mk
 
-# 1) Suppress prompts for openssl sample cert generation (-batch)
-# 2) Disable creation of /dev/zero (needs root privs, moved to postinstall)
-pre-build-modulated:
-	perl -pi -e '\
-		s|\$$\(openssl\) req|\$$\(openssl\) req -batch|; \
-		s|^|#| if (m|/dev/zero|);' \
-		$(WORKSRC)/tools/Makefile
+post-install:
+	cd $(DESTDIR)$(sysconfdir)/stunnel && mv stunnel.conf-sample stunnel.conf
+	echo "# create /etc/opt/csw/stunnel/stunnel.(key|crt)" > $(DESTDIR)$(sysconfdir)/stunnel/stunnel
+	ginstall -D -m 0644 $(WORKDIR)/cswstunnel.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswstunnel.xml
 	@$(MAKECOOKIE)
-
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
-post-install-modulated: DOCS=AUTHORS BUGS CREDITS ChangeLog TODO
-post-install-modulated: DOCS+= doc/stunnel.*html
-post-install-modulated:
-	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
-	ginstall -m 755 $(WORKDIR)/CSWstunnel.cswstunnel \
-		$(DESTDIR)$(sysconfdir)/init.d/cswstunnel
-
-	# create pidfile directory
-	ginstall -d $(DESTDIR)$(localstatedir)/run/stunnel
-
-	# stunnel installs several random sample scripts, cgi scripts, and
-	# a .spec file with unadjusted paths. Leave them out for now and
-	# only include specific files
-	rm -rf $(DOCDEST)/*
-	$(foreach D,$(DOCS),cp $(WORKSRC)/$(D) $(DOCDEST);)
-	cp $(FILEDIR)/changelog.CSW $(DOCDEST)

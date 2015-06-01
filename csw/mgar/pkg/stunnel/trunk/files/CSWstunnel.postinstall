@@ -1,9 +1,0 @@
-#!/bin/sh
-#
-# Create required /dev/zero in stunnel chroot directory
-#
-# Taken from stunnel Makefile. mknod can only be run as root and thus needs
-# to be run from postinstall (packaging is done as non-root user).
-#
-/usr/sbin/mknod /var/opt/csw/lib/stunnel/dev/zero c 13 12
-chmod 666 /var/opt/csw/lib/stunnel/dev/zero
