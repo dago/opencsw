@@ -24,7 +24,7 @@ define BLURB
 MAJOR_VER = $(firstword $(subst ., ,$(VERSION)))https://www.stunnel.org/downloads/archive/$(MAJOR_VER).x/
 
 MASTER_SITES += https://www.stunnel.org/downloads/beta/
-DISTFILES += $(DISTNAME)$(BETA).tar.gze/VENDOR_URL   = http://www.stunnel.org
+DISTFILES += $(DISTNAME)$(BETA).tar.gzeDISTFILES += cswstunnel.xmle/VENDOR_URL   = http://www.stunnel.org
 
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibwrap-dev
