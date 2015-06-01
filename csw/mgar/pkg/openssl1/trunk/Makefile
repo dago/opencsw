@@ -24,7 +24,7 @@ define BLURB
   Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) as well
   as a full-strength general-purpose cryptography# This recipe can be used to compile openssl with Sun Studio or GCC
 # Just define the GARCOMPILER to the GNU or SUN
-GARCOMPILER = GCC4
+GARCOMPILER = GNU
 GARCOMPILER_TYPE = $(if $(findstring GCC,$(GARCOMPILER)),GNU,SUN)hy library.
 endef
 
@@ -126,7 +126,9 @@ PATCHFILES += make_issetugid_support_configurableymbols-verPatch taken from Orac
 # from https://hg.openindiana.org/upstream/oracle/userland-gate/
 # This patch solves a bug with thread and fork safety and is also needed so that
 # upstream wanboot patch can be applied out of the box
-PATCHFILES += openssl-1.0.1m-fork_safeymbols-versioning.patch
+ifneq ($(shell /usr/bin/uname -r),5.9)
+PATCHFILES += openssl-1.0.1m-fork_safe.patch
+endif-versioning.patch
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integratee
 ifdef PKCS11
