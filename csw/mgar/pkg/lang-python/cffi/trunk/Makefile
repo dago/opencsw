@@ -16,6 +16,7 @@ LICENSE = LICENSE
 RUNTIME_DEP_PKGS_CSWpy-cffi += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-cffi += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-cffi += CSWlibffi6
+RUNTIME_DEP_PKGS_CSWpy-cffi += CSWpy-pycparser
 
 TEST_SCRIPTS =
 
