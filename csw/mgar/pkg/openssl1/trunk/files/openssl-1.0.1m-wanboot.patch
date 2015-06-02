@@ -2,38 +2,6 @@
 # This patch file makes the changes neccessary to build wanboot-openssl.o
 # binary. This is Solaris-specific: not suitable for upstream.
 #
---- openssl-1.0.0g/Makefile.org    2010-01-27 08:06:58.000000000 -0800
-+++ openssl-1.0.0g-1/Makefile.org    2012-03-26 03:04:08.440194448 -0700
-@@ -138,7 +138,13 @@
-
- BASEADDR=
-
-+# For wanboot, we only need crypto and ssl.
-+# 'apps' are not patched to work in stand-alone environment anyway.
-+ifeq ($(PLATFORM), solaris64-sparcv9-cc-sunw-wanboot)
-+DIRS=   crypto ssl
-+else
- DIRS=   crypto ssl engines apps test tools
-+endif
- ENGDIRS= ccgost
- SHLIBDIRS= crypto ssl
-
---- openssl-1.0.0g/Makefile    2012-01-18 05:42:28.000000000 -0800
-+++ openssl-1.0.0g-1/Makefile    2012-03-26 03:03:59.170540344 -0700
-@@ -137,7 +137,13 @@
-
- BASEADDR=0xFB00000
-
-+# For wanboot, we only need crypto and ssl.
-+# 'apps' are not patched to work in stand-alone environment anyway.
-+ifeq ($(PLATFORM), solaris64-sparcv9-cc-sunw-wanboot)
-+DIRS=   crypto ssl
-+else
- DIRS=   crypto ssl engines apps test tools
-+endif
- ENGDIRS= ccgost
- SHLIBDIRS= crypto ssl
-
 --- openssl-1.0.0e/crypto/cryptlib.c    2011-06-22 08:39:00.000000000 -0700
 +++ openssl-1.0.0e_patched/crypto/cryptlib.c    2011-12-12 06:17:45.422476900 -0800
 @@ -421,11 +421,13 @@
@@ -442,20 +410,6 @@
 +	nop
 +	nop
 +#endif
---- openssl-1.0.1c/crypto/Makefile      Thu Aug  2 12:56:38 2012
-+++ openssl-1.0.1c/crypto/Makefile.new  Thu Aug  2 12:59:43 2012
-@@ -36,9 +36,9 @@
- LIB= $(TOP)/libcrypto.a
- SHARED_LIB= libcrypto$(SHLIB_EXT)
- LIBSRC=	cryptlib.c mem.c mem_clr.c mem_dbg.c cversion.c ex_data.c cpt_err.c \
--	ebcdic.c uid.c o_time.c o_str.c o_dir.c o_fips.c o_init.c fips_ers.c
-+	ebcdic.c uid.c o_time.c o_str.c o_dir.c o_fips.c o_init.c fips_ers.c wanboot-stubs.c
- LIBOBJ= cryptlib.o mem.o mem_dbg.o cversion.o ex_data.o cpt_err.o ebcdic.o \
--	uid.o o_time.o o_str.o o_dir.o o_fips.o o_init.o fips_ers.o $(CPUID_OBJ)
-+	uid.o o_time.o o_str.o o_dir.o o_fips.o o_init.o fips_ers.o wanboot-stubs.o $(CPUID_OBJ)
-
- SRC= $(LIBSRC)
-
 --- openssl-1.0.1f/ssl/s3_clnt.c    Thu Jan 30 02:53:33 2014
 +++ openssl-1.0.1f/ssl/s3_clnt.c.new   Thu Jan 30 02:57:51 2014
 @@ -668,7 +668,11 @@
