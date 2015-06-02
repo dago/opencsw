@@ -454,8 +454,7 @@ ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gnative2ascii gcc_gjava $(bind
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gorbd gcc_gjava $(bindir)/gorbd$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmic gcc_gjava $(bindir)/grmic$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmid gcc_gjava $(bindir)/grmid$(PROGRAM_SUFFIX)
-ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmregistry gcc_gjava $(bindir)/grmregistry$(PROGRAM_SUFFIX)
-ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmregistry gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmiregistry gcc_gjava $(bindir)/grmiregistry$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gserialver gcc_gjava $(bindir)/gserialver$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gtnameserv gcc_gjava $(bindir)/gtnameserv$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/jcf-dump gcc_gjava $(bindir)/jcf-dump$(PROGRAM_SUFFIX)
@@ -527,9 +526,9 @@ PACKAGES += $(PACKAGES_$(GARCH))
 CORE_BINARIES = cpp gcc gcov
 CXX_BINARIES = g\+\+ c\+\+
 FORTRAN_BINARIES = gfortran
-JAVA_BINARIES  = gcj gij aot-compile grmiregistry
+JAVA_BINARIES  = gcj gij aot-compile
 JAVA_BINARIES += gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
-JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmregistry
+JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmiregistry
 JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
 include files/scripts.mk
