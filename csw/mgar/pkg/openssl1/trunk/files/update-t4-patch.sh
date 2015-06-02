@@ -5,7 +5,7 @@
 #           
 
 T4_ENGINE_FILES="sparc_arch.h md5-sparcv9.pl aest4-sparcv9.pl dest4-sparcv9.pl sparcv9_modes.pl vis3-mont.pl sparcv9-gf2m.pl sparct4-mont.pl"
-MAIN_T4_PATCH_FILE="37_openssl_t4_inline.patch"
+MAIN_T4_PATCH_FILE="103-openssl_t4_inline.patch"
 #SOURCE_URL="http://buildfarm.opencsw.org/source/raw/solaris-userland/components/openssl/openssl-1.0.1/"
 SOURCE_URL="https://hg.openindiana.org/upstream/oracle/userland-gate/raw-file/default/components/openssl/openssl-1.0.1/"
 WGET_OPTIONS="--quiet"

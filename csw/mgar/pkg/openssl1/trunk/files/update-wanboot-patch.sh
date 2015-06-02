@@ -23,7 +23,7 @@ echo "Updating wanboot engine patch from ${SOURCE_URL}..."
 (
 	# ar in in /usr/ccs/bin under Solaris 9 and 10 so we change the path
 	# we also remove the makefile part as we will not really compile wanboot
-	wget $WGET_OPTIONS --output-document=- ${SOURCE_URL}/patches/30_wanboot.patch | \
+	wget $WGET_OPTIONS --output-document=- ${SOURCE_URL}/patches/102-wanboot.patch | \
 
 		gsed -e 's/\/usr\/bin\/ar/\/usr\/ccs\/bin\/ar/g'  | \
 		perl -ne 'if (/^--- .*Makefile/) { $makefile=1 } else { $makefile=0 if /^---/; }; print $_ if not $makefile'
