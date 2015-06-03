@@ -68,8 +68,21 @@ CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/l
 REINPLACEMENTS += etc
 REINPLACE_MATCH_etc = /etc/ansible
 REINPLACE_WITH_etc  = $(sysconfdir)/ansible
-REINPLACE_FILES_etc = lib/ansible/constants.py
-REINPLACE_FILES_etc = examples/ansible.cfg
+
+REINPLACE_FILES_etc += bin/ansible-galaxy
+REINPLACE_FILES_etc += lib/ansible/constants.py
+REINPLACE_FILES_etc += lib/ansible/module_utils/urls.py
+REINPLACE_FILES_etc += lib/ansible/modules/core/system/setup.py
+REINPLACE_FILES_etc += lib/ansible/playbook/__init__.py
+REINPLACE_FILES_etc += plugins/inventory/nova.py
+REINPLACE_FILES_etc += plugins/inventory/openstack.py
+REINPLACE_FILES_etc += docs/man/man1/ansible.1.asciidoc.in
+REINPLACE_FILES_etc += docs/man/man1/ansible-galaxy.1
+REINPLACE_FILES_etc += docs/man/man1/ansible-playbook.1.asciidoc.in
+REINPLACE_FILES_etc += docs/man/man1/ansible-playbook.1
+REINPLACE_FILES_etc += docs/man/man1/ansible.1
+REINPLACE_FILES_etc += docs/man/man1/ansible-galaxy.1.asciidoc.in
+REINPLACE_FILES_etc += examples/ansible.cfg
 
 REINPLACE_USRSHARE += lib/ansible/constants.py
 REINPLACE_USRSHARE += examples/ansible.cfg
