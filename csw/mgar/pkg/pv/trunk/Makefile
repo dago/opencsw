@@ -1,5 +1,5 @@
 NAME = pv
-VERSION = 1.5.2
+VERSION = 1.6.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -26,10 +26,4 @@ RUNTIME_DEP_PKGS_CSWpv += CSWlibintl8
 # We require GNU grep
 TEST_ENV_PATH = /opt/csw/gnu:$(PATH)
 
-include gar/category.mkopt/csw/gnu:$(PATH)
-
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
-post-install-modulated:
-	gunzip $(DESTDIR)$(mandir)/man1/pv.1.gz
-	ginstall -d -m 755 $(DOCDEST)
-	cp $(WORKSRC)/doc/NEWS $(FILEDIR)/changelog.CSW $(DOCDES
+include gar/category.mko
