@@ -6,12 +6,15 @@
 #   at all
 # ! Python modules are clearly installed in a wrong plac
 NAME = mailman
-VERSION = 2.1.18
+VERSION = 2.1.20
 
 DESCRIPTION = Mailman mailing list software
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(DISTNAME).tgz
+
+GARCOMPILER = SOS12U4
+
 
 PACKAGES += CSWmailman
 SPKG_DESC_CSWmailman = Mailman mailing list software
@@ -22,15 +25,16 @@ CHECKPKG_OVERRIDES_CSWmailman += surplus-dependency|CSWpython27
 
 # The mailman build system puts files in all sorts of strange places
 prefix=$(BUILD_PREFIX)/$(NAME)
+PRESERVECONF += $(prefix)/Mailman/mm_cfg.py
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --without-permcheck
 CONFIGURE_ARGS += --with-python=/opt/csw/bin/python2.7
 CONFIGURE_ARGS += --with-mailhost=mailhost
 CONFIGURE_ARGS += --with-urlhost=example.com
-CONFIGURE_ARGS += --with-mail-gid=mail
-CONFIGURE_ARGS += --with-cgi-gid=nobody
-CONFIGURE_ARGS += --with-var-prefix=/var/opt/csw/mailman
+# CONFIGURE_ARGS += --with-mail-gid=mail
+CONFIGURE_ARGS += --with-cgi-gid=webservd
+CONFIGURE_ARGS += --with-var-prefix=$(localstatedir)/$(NAME)
 
 # There is no testsuite
 TEST_SCRIPTS =
