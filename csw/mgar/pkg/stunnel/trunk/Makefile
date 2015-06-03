@@ -54,7 +54,7 @@ EXTRA_MERGE_EXCLUDE_FILES += $(docdir)/stunnel/.*
 SSLCERT += $(sysconfdir)/stunnel/stunnel
 
 PROTOTYPE_MODIFIERS += smf
-PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-cache.xml
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswstunnel.xml
 PROTOTYPE_CLASS_smf = manifest
 
 include gar/category.mk
