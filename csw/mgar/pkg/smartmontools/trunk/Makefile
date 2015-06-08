@@ -15,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-GARCOMPILER = GCC4)-$(VERSION).tar.gz
 
 # smartmontools packages built on 5.9 don't work on 5.10:
 # > Error SMART Thresholds Read failed: I/O error
