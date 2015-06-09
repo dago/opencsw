@@ -12,7 +12,7 @@
 #RC_SLEV 3
 #FMRI network
 ENABLE64=$(/usr/bin/svcprop -p general/enable_64bit ${SMF_FMRI})
-[ ${ENABLE64} = "true" ] && MM=/64
+[ ${ENABLE64} = "true" ] && MM=/$(isainfo -n)
 
 APACHE_HOME=@prefix@
 CONF_FILE=@sysconfdir@/apache2/httpd.conf
