@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter2
-VERSION = 2.4.1
+VERSION = 2.4.4
 GARTYPE = v2
 DISTNAME = facter-$(VERSION)
 
@@ -19,7 +19,7 @@ define BLURB
   additional mechanisms for retrieving facts.
 endef
 
-MASTER_SITES   = http://puppetlabs.com/downloads/facter/
+MASTER_SITES   = http://downloads.puppetlabs.com/facter/
 DISTFILES      = facter-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://puppetlabs.com/
 LICENSE        = LICENSE
