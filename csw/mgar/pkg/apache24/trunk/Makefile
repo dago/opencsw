@@ -15,6 +15,7 @@ endef
 MASTER_SITES  = http://www.eu.apache.org/dist/httpd/
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += cswapache24
+DISTFILES += CSWapache24.postinstall
 EXPANDVARS += cswapache24
 
 PATCHFILES += 0002-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
