@@ -1,5 +1,5 @@
 NAME = perl
-VERSION = 5.20.2
+VERSION = 5.22.0
 VERSION_MAJOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
 #CATEGORIES = lang
 GARTYPE = v2
