@@ -46,7 +46,8 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWopenldap
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlighttpd
-EXTRA_MERGE_DIRS_isa-extra += /etc/opt/csw/64/apache2/extra
+
+EXTRA_MERGE_SCRIPTS_isa-default64 += copy-apache-modules
 
 # This is because /opt/csw/sbin/sparcv9 is missing, most certainly an checkpkg issue
 # CHECKPKG_OVERRIDES_CSWapache24 += missing-dependency|CSWbonnie++|or|CSWcollectd|or|CSWleafnode|or|CSWlighttpd|or|CSWlogrotate|or|CSWopenldap|or|CSWproftpd|or|CSWsysstat|or|CSWzabbix-agent|or|CSWzabbix-server
@@ -119,6 +120,7 @@ CONFIGURE_ARGS += --enable-mpms-shared=all
 # CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --enable-layout=OpenCSW
 CONFIGURE_ARGS += --enable-mods-shared=all
+# 389-admin needs the legacy mod_cgi
 CONFIGURE_ARGS += --enable-cgi
 CONFIGURE_ARGS += --enable-privileges
 CONFIGURE_ARGS += --enable-vhost-alias
@@ -164,4 +166,11 @@ post-install:
 	ginstall -D -m 0755 $(WORKDIR)/cswapache24 $(DESTDIR)/etc/opt/csw/init.d/cswapache24
 	gsed -e '/APACHECTL=/s/sbin/sbin\$${MM}/' -i $(DESTDIR)/etc/opt/csw/init.d/cswapache24
 	echo "# create server.(crt|csr)/server.key" > $(DESTDIR)$(sysconfdir)/apache2/server
+	@$(MAKECOOKIE)
+
+merge-copy-apache-modules:
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pcopy \
+ 		-m $(foreach C,$(sysconfdir)/64/apache2/extra/.*,-s ",^\(\.$C\)\$$,\1,p" ) \
+		. $(PKGROOT) \
+	)
 	@$(MAKECOOKIE)
