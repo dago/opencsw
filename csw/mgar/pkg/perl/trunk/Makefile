@@ -26,7 +26,7 @@ SPKG_DESC_CSWperlgcc   = $(DESCRIPTION)
 LICENSE = Copying
 
 # GCC build (Sun Studio build has been fixed)
-GARCOMPILER = GCC
+GARCOMPILER = GCC5
 MAKE_OPT_unstable10s = -j 24
 MAKE_OPT_unstable10x = -j 4
 MAKE_OPT = $(MAKE_OPT_$(shell hostname))
