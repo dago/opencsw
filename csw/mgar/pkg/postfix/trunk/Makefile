@@ -30,7 +30,7 @@
 # $Id$
 # 
 NAME = postfix
-VERSION = 2.9.4
+VERSION = 2.11.5
 CATEGORIES = server
 GARTYPE = v2
 
@@ -49,7 +49,7 @@ VENDOR_URL   = http://www.postfix.org
 MASTER_SITES = ftp://ftp.porcupine.org/mirrors/postfix-release/official/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-LICENSE      = LICENSE TLS_LICENSE
+LICENSE      = LGARCOMPILER = GCC4 LICENSE TLS_LICENSE
 
 # Tag configuration files for handling via cswclassutils
 CONFIG_BASE  := /etc/opt/csw/postfix/
@@ -338,5 +338,4 @@ install-custom:
 #	@gdiff \
 #		<( echo $(IGNORE_FILES) | tr " " "\n" | sort) \
 #		<( echo $(SHIPPED_CFGFILES) | tr " " "\n" | sort )
-#	@echo "OK"
-#	@$(MAKECOOKIE)	
+#	@echo "OK
