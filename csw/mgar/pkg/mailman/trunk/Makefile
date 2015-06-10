@@ -21,6 +21,7 @@ SPKG_DESC_CSWmailman = Mailman mailing list software
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWmailman += CSWpython27
 RUNTIME_DEP_PKGS_CSWmailman += CSWperl
+RUNTIME_DEP_PKGS_CSWmailman += CSWpm_unix_syslog
 CHECKPKG_OVERRIDES_CSWmailman += surplus-dependency|CSWpython27
 
 # The mailman build system puts files in all sorts of strange places
