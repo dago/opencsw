@@ -21,8 +21,9 @@ SPKG_DESC_CSWmailman = Mailman mailing list software
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWmailman += CSWpython27
 RUNTIME_DEP_PKGS_CSWmailman += CSWperl
-RUNTIME_DEP_PKGS_CSWmailman += CSWpm_unix_syslog
+RUNTIME_DEP_PKGS_CSWmailman += CSWpm-unix-syslog
 CHECKPKG_OVERRIDES_CSWmailman += surplus-dependency|CSWpython27
+CHECKPKG_OVERRIDES_CSWmailman += surplus-dependency|CSWpm-unix-syslog
 
 # The mailman build system puts files in all sorts of strange places
 prefix=$(BUILD_PREFIX)/$(NAME)
