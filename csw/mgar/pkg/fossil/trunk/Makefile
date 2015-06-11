@@ -3,7 +3,7 @@
 # Recipe sent in by Freddy DISSAUX freddy.dsx free.fr
 
 NAME = fossil
-VERSION = 1.32
+VERSION = 1.33
 GARTYPE = v2
 
 DESCRIPTION = DSCM with built-in wiki, http interface and server, tickets database
@@ -18,12 +18,14 @@ DISTFILES = $(NAME)-src-$(VERSION).tar.gz
 
 VENDOR_URL = http://www.fossil-scm.org/
 
-BUILD_DEP_PKGS = CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
 
-GARCOMPILER = GNU
+BUILD64 = 1
 
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-openssl=$(includedir)
+WORKSRC = $(WORKDIR)/$(NAME)-src-$(VERSION)
+CONFIGURE_ARGS = $(DIRPATHS) 
+CONFIGURE_ARGS += --with-openssl=auto
+CONFIGURE_ARGS += --disable-fusefs
 
 # Remove exec_prefix from DIRPATHS:
 NODIRPATHS += --exec_prefix
@@ -32,6 +34,5 @@ TEST_SCRIPTS =
 
 RUNTIME_DEP_PKGS_CSWfossil += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWfossil += CSWlibz1
-RUNTIME_DEP_PKGS_CSWfossil += CSWlibreadline6
 
 include gar/category.mk
