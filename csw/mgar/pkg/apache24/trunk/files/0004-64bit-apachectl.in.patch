@@ -1,0 +1,12 @@
+--- a/support/apachectl.in
++++ b/support/apachectl.in
+@@ -76,6 +76,9 @@ if [ "x$ARGV" = "x" ] ; then
+     ARGV="-h"
+ fi
+ 
++OPTS_64="-D 64bit"
++HTTPD="$HTTPD $OPTS_64"
++
+ case $ACMD in
+ start|stop|restart|graceful|graceful-stop)
+     $HTTPD -k $ARGV

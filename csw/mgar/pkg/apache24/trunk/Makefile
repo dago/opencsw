@@ -20,6 +20,8 @@ EXPANDVARS += cswapache24
 
 PATCHFILES += 0002-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
 PATCHFILES += 0003-fix-43561-apxs.patch
+PATCHFILES-64 += 0004-64bit-apachectl.in.patch 
+PATCHFILES += $(PATCHFILES-$(MEMORYMODEL))
 
 #PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
 DISTFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
