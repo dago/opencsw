@@ -34,7 +34,7 @@ RUNTIME_DEP_PKGS_CSWsmartmontools += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWsmartmontools += CSWcurl
 CHECKPKG_OVERRIDES_CSWsmartmontools += surplus-dependency|CSWcurl
 
-CHECKPKG_OVERRIDES_CSWsmartmontools += file-with-bad-contentXFLAGS = -norunpath
+CHECKPKG_OVERRIDES_CSWsmartmontools += file-with-bad-contentXFPRESERVECONF += $(sysconfdir)/smartd.confXFLAGS = -norunpath
 
 include gar/category.mk
 

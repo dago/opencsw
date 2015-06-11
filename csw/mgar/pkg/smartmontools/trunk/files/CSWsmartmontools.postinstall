@@ -1,3 +1,0 @@
-if [ ! -f $BASEDIR/opt/csw/etc/smartd.conf ] ; then
-        cp $BASEDIR/opt/csw/etc/smartd.conf.CSW $BASEDIR/opt/csw/etc/smartd.conf
-fi
