@@ -40,13 +40,6 @@ EXTRA_RUNPATH_ISALIST = $(EXTRA_RUNPATH_DIRS)
 #EXTRA_LIB = $(prefix)/$(libdir)/perl/5.20/CORE
 #EXTRA_RUNPATH_LINKER_FLAGS += $(prefix)/$(libdir)/perl/5.20/CORE/libperl.so
 
-RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
-RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
-CHECKPKG_OVERRIDES_CSWperl += 64-bit-binaries-missing
-CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWperl += bad-rpath-entry
-CHECKPKG_OVERRIDES_CSWpm-cpan-meta-requirements += catalogname-too-long
 
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
 #CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
@@ -92,6 +85,15 @@ MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
 
 BUILD_SCRIPTS = perl
 TEST_SCRIPTS = perl
+
+# Get it built
+RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
+RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
+#CHECKPKG_OVERRIDES_CSWperl += 64-bit-binaries-missing
+CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
+#CHECKPKG_OVERRIDES_CSWperl += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWpm-cpan-meta-requirements += catalogname-too-long
 
 include gar/category.mk
 
