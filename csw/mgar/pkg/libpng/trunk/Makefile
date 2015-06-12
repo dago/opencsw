@@ -37,6 +37,9 @@ RUNTIME_DEP_PKGS_CSWlibpng16-dev += CSWlibpng16-16
 BUILD_DEP_PKGS_CSWlibpng16-dev += CSWlibz-dev
 OBSOLETED_BY_CSWlibpng16-dev += CSWlibpng-dev
 
+# This is a false positive, override for now
+CHECKPKG_OVERRIDES_CSWlibpng16-dev += file-needed-but-no-package-satisfies-it|/opt/csw/lib/pentium_pro/libpng16.so.16.17.0|CSWlibpng16-dev|contains|symlink|/opt/csw/lib/pentium_pro/libpng16.so|which|needs|the|target|file:|/opt/csw/lib/pentium_pro/libpng16.so.16.17.0
+
 PACKAGES += CSWlibpng-utils
 SPKG_DESC_CSWlibpng-utils += $(DESCRIPTION), binary utilities
 RUNTIME_DEP_PKGS_CSWlibpng-utils += CSWlibpng16-16
