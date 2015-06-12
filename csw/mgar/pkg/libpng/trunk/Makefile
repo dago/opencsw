@@ -10,7 +10,7 @@
 #   pentium_pro
 
 NAME = libpng
-VERSION = 1.6.16
+VERSION = 1.6.17
 CATEGORIES = lib
 GARTYPE = v2
 DESCRIPTION = The official library for Portable Network Graphics format (PNG)
