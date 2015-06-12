@@ -8,7 +8,7 @@
 #
 NAME = stunnel
 VERSION = 5.18
-BETA = b4
+# BETA = b4
 CATEGORIES = net
 GARTYPE = v2
 
