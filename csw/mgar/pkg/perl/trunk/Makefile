@@ -21,8 +21,8 @@ VENDOR_URL = http://www.perl.org
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 PACKAGES               = CSWperl
-PKG_DESC_CSWperlgcc    = $(DESCRIPTION)
-SPKG_DESC_CSWperlgcc   = $(DESCRIPTION)
+PKG_DESC_CSWperl    = $(DESCRIPTION)
+SPKG_DESC_CSWperl   = $(DESCRIPTION)
 LICENSE = Copying
 
 # GCC build (Sun Studio build has been fixed)
@@ -43,17 +43,17 @@ EXTRA_RUNPATH_ISALIST = $(EXTRA_RUNPATH_DIRS)
 #EXTRA_RUNPATH_LINKER_FLAGS += $(prefix)/$(libdir)/perl/5.20/CORE/libperl.so
 
 # Depends
-RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibssp0
-RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgdbm4
-CHECKPKG_OVERRIDES_CSWperlgcc += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWperlgcc += 64-bit-binaries-missing
-CHECKPKG_OVERRIDES_CSWperlgcc += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWperlgcc += bad-rpath-entry
+RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
+RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
+CHECKPKG_OVERRIDES_CSWperl += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWperl += 64-bit-binaries-missing
+CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWperl += bad-rpath-entry
 
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
-#CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
-#CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
+#CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
+#CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
