@@ -19,7 +19,7 @@ update() {
   mkdir $TMPDIR
   (
     cd $TMPDIR
-    wget http://mirror.opencsw.org/opencsw/current/$1/5.9/common-1.5,REV=2010.12.11-SunOS5.8-$1-CSW.pkg
+    wget http://mirror.opencsw.org/opencsw/unstable/$1/5.10/common-1.5,REV=2010.12.11-SunOS5.8-$1-CSW.pkg
     cat common-* | pkgtrans /dev/fd/0 $TMPDIR all
   )
 
