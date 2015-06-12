@@ -32,9 +32,6 @@
 /opt/csw/lib/pentium
 /opt/csw/man
 /opt/csw/sbin
-/opt/csw/sbin/amd64
-/opt/csw/sbin/i486
-/opt/csw/sbin/pentium
 /opt/csw/share
 /opt/csw/share/doc
 /opt/csw/share/info

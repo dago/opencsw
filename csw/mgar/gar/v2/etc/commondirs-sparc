@@ -36,11 +36,6 @@
 /opt/csw/lib/sparcv9
 /opt/csw/man
 /opt/csw/sbin
-/opt/csw/sbin/sparc
-/opt/csw/sbin/sparcv8
-/opt/csw/sbin/sparcv8plus
-/opt/csw/sbin/sparcv8plus+vis
-/opt/csw/sbin/sparcv9
 /opt/csw/share
 /opt/csw/share/doc
 /opt/csw/share/info
