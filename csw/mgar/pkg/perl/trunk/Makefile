@@ -1,7 +1,6 @@
 NAME          = perl
 VERSION       = 5.22.0
 VERSION_MAJOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
-CATEGORIES    = lang
 GARTYPE       = v2
 DESCRIPTION   = A high-level, general-purpose programming language
 define BLURB
