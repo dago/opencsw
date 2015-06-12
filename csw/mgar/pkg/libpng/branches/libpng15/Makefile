@@ -10,7 +10,7 @@
 #   pentium_pro
 
 NAME = libpng
-VERSION = 1.5.13
+VERSION = 1.5.22
 CATEGORIES = lib
 GARTYPE = v2
 DESCRIPTION = The official library for Portable Network Graph
