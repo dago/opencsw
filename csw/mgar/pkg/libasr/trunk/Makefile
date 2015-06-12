@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = libasr
-VERSION = 201505061057
+VERSION = 1.0.2
 GARTYPE = v2
 
 DESCRIPTION = A free, simple and portable asynchronous resolver library
