@@ -20,7 +20,7 @@ VENDOR_URL           = http://www.perl.org
 DISTFILES            = $(NAME)-$(VERSION).tar.bz2
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 PACKAGES             = CSWperl
-OBSOLETED_BY_CSWperl = CSWperldoc
+OBSOLETED_BY_CSWperl = CSWperldoc CSWpm-cpan-meta CSWpm-test-use-ok CSWpm-test-tester CSWpm-json-pp CSWpm-parse-cpan-meta CSWpm-cpan-meta-yaml CSWpm-module-metadata CSWpm-experimental CSWpm-cpan-meta-requirements CSWpm-perl-ostype
 PKG_DESC_CSWperl     = $(DESCRIPTION)
 SPKG_DESC_CSWperl    = $(DESCRIPTION)
 LICENSE 	     = Copying
@@ -40,12 +40,9 @@ EXTRA_RUNPATH_ISALIST = $(EXTRA_RUNPATH_DIRS)
 #EXTRA_LIB = $(prefix)/$(libdir)/perl/5.20/CORE
 #EXTRA_RUNPATH_LINKER_FLAGS += $(prefix)/$(libdir)/perl/5.20/CORE/libperl.so
 
-# Depends
 RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
 RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
-
-CHECKPKG_OVERRIDES_CSWperl += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWperl += 64-bit-binaries-missing
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperl += bad-rpath-entry
