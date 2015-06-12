@@ -46,6 +46,7 @@ RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
 CHECKPKG_OVERRIDES_CSWperl += 64-bit-binaries-missing
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperl += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWpm-cpan-meta-requirements += catalogname-too-long
 
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
 #CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
