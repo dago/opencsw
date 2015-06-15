@@ -46,8 +46,6 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWapache24 += CSWopenldap
-RUNTIME_DEP_PKGS_CSWapache24 += CSWlighttpd
 
 EXTRA_MERGE_SCRIPTS_isa-default64 += copy-apache-modules
 
