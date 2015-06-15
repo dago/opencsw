@@ -28,7 +28,7 @@ DISTFILES += openbsd-compat.tgz
 
 PATCHFILES-5.10 += 0001-add-openbsd-compat-getifaddrs.c.patch
 PATCHFILES += 0002-fix-possible-MAX-redefinition.patch
-PATCHFILES += $(PATHFILES-$(GAROSREL))
+PATCHFILES += $(PATCHFILES-$(GAROSREL))
 
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
