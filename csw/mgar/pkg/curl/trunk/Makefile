@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.42.1
+VERSION = 7.43.0
 CATEGORIES = net
 GARTYPE = v2
 
@@ -15,10 +15,6 @@ define BLURB
 endef
 
 MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(VVENDOR_URL = http://curl.haxx.se
-
-# Use patch until this is completely fixed:
-#   http://sourceforge.net/p/curl/bugs/1486/
-PATCHFILES += 0001-Use-KRB5CONFIG.patch
 
 # Because of OpenSSL 1.0 update
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386+ency|CSWlibcurl3
