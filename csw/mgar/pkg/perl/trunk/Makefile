@@ -89,7 +89,6 @@ TEST_SCRIPTS = perl
 RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
 RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
-RUNTIME_DEP_PKGS_CSWperl += CSWisaexec
 #CHECKPKG_OVERRIDES_CSWperl += 64-bit-binaries-missing
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWperl += bad-rpath-entry
