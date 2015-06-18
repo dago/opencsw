@@ -1,5 +1,5 @@
 NAME = cairo
-VERSION = 1.12.16
+VERSION = 1.12.18
 GARTYPE = v2
 GARCOMPILER = SOS12U3 lib
 GARTYPE = v2
@@ -16,6 +16,7 @@ MASTER_SITES = http://www.cairographics.org/releases/
 DISTFILES =xz
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 
 PATCHFILES += 0001-Remove-cairo_private-from-_cairo_unbounded_rectangle.patcheneric-grep.patch
 
@@ -24,7 +25,7 @@ SPKG_DESC_CSWlibcairo2 = The Cairo 2D Graphics Library, libcairo.so.2
 PKGFILES_CSWlibcairo2 = $(call pkgfiles_lib,libcairo.so.2)
 RUNTIME_DEP_PKGS_CSlibxrender
 RUNTIME_DEP_PKGS_CSWlibcairo2 += CSWlibpixman1-0
-RUNTIME_DEP_PKGS_CSWlibcairo2 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibcairo2 += CSWlibpng16-16
 RUNTIME_DEP_PKGS_CSWlibcairo2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibcairo2 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibcairo2 += CSWlibfontconfig1= CSWlibpixman1-0
@@ -65,19 +66,18 @@ PKGFILES_CSWlibcairo-doc += $(sharedstatedir)/gtk-doc.*
 ARCHALL_CSWlibcairo-doc = 1
 OBSOLETED_BY_CSWlibcairo-doc = CSWlibcairodoc
 CATALOGNAME_CSWlibcairodoc = liBUILD_DEP_PKGS  = CSWgtk-doc
-BUILD_DEP_PKGS += CSWpangodevel
+BUILD_DEP_PKGS += CSWlibpango-dev
 BUILD_DEP_PKGS += CSWlibspectre-dev
 BUILD_DEP_PKGS += CSWpkgconfig
-BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibpng16-dev
 BUILD_DEP_PKGS += CSWfontconfig-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 BUILD_DEP_PKGS += CSWpoppler-dev
-BUILD_DEP_PKGS += CSWghostscript-dev 
-BUILD_DEP_PKGS += CSWghostscript
+#BUILD_DEP_PKGS += CSWghostscript-dev 
+#BUILD_DEP_PKGS += CSWghostscript
 BUILD_DEP_PKGS += CSWlibrsvg-dev
 BUILD_DEP_PKGS += CSWlibxext
 BUILD_DEP_PKGS += CSWlibxrender
-BUILD_DEP_PKGS += CSWlibxrenderdevel
 BUILD_DEP_PKGS += CSWsunx11devel
 liBUILD64_LIBS_ONLY = 1
 EXTRA_CFLAGS  =  -xc99=all
