@@ -58,14 +58,14 @@ RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlRUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWl
 # This is important or pkgconfig on cairo will fail
 RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibpixman-dev
 OBSOLETED_BY_CSWlibcairo-dev = CSWlibcairodevel
-CATALOGNAME_CSWlibcairodevel = libcairo_devel_stub
+CATALOGNAME_CSWlibcairodevel = libc#PACKAGES += CSWlibcairo-doc
+#SPKG_DESC_CSWlibcairo-doc = $(DESCRIPTION) documentation
+#PKGFILES_CSWlibcairo-doc += $(sharedstatedir)/gtk-doc.*
+#ARCHALL_CSWlibcairo-doc = 1
+#OBSOLETED_BY_CSWlibcairo-doc = CSWlibcairodoc
+#CATALOGNAME_CSWlibcairodoc = libcairo_doc_stub
 
-PACKAGES += CSWlibcairo-doc
-SPKG_DESC_CSWlibcairo-doc = $(DESCRIPTION) documentation
-PKGFILES_CSWlibcairo-doc += $(sharedstatedir)/gtk-doc.*
-ARCHALL_CSWlibcairo-doc = 1
-OBSOLETED_BY_CSWlibcairo-doc = CSWlibcairodoc
-CATALOGNAME_CSWlibcairodoc = liBUILD_DEP_PKGS  = CSWgtk-doc
+#BUILD_DEP_PKGS  = CSWgtk2doc
 BUILD_DEP_PKGS += CSWlibpango-dev
 BUILD_DEP_PKGS += CSWlibspectre-dev
 BUILD_DEP_PKGS += CSWpkgconfig
@@ -100,7 +100,7 @@ CONFIGURE_ARGS += --enable-png=yes
 CONFIGURE_ARGS += --enable-ps=yes
 CONFIGURE_ARGS += --enable-pdf=yes
 CONFIGURE_ARGS += --enable-svg=yes
-CONFIGURE_ARGS += --enable-xcb=no
+CONFIGURE_ARGS +=# --enable-xcb=no
 CONFIGURE_ARGS += --enable-gtk-doc
 CONFIGURE_ARGS += --enable-tesPWD:=$(shell pwd)
 
