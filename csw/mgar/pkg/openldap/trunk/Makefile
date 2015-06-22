@@ -74,10 +74,7 @@ RUNTIME_DEP_PKGS_CSWopenRUNTIME_DEP_PKGS_CSWopenldap += CSWlibuuid1
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc55
 #OBSOLETED_BY_CSWopenldap += CSWoldap
 #penldap += CSWoldap
-CATALOGNAME_CSWoldap = openldap_stub
-
-# Evaluate later
-CHECKPKG_OVERRIDES_CSWopenldap += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/slapd.8
+CATALOGNAME_CSWoldre/man/man8/slapd.8
 
 # This is most certainly a false positive
 CHECKPKG_OVERRIDES_CSWopenldap += missing-dependency|CSWopenldap-back-bdb
@@ -152,10 +149,7 @@ PKGFILES_CSWlibldap2-4-2 += $(call pkgfiles_lib,libldap-2.4.so.2)
 PKGFILES_CSWlibldap2-4-2 += $(sysconfdir)/ldap.conf
 PKGFILES_CSWlibldap2-4-2 += $(mandir)/man5/ldap.conf.5
 RUNTIME_DEP_PKGS_CSWlibldap2-4-2# += CSWliblber2-4-2
-OBSOLETED_BY_CSWlibldap2-4-2 += CSWoldaprt
-
-# Evaluate later
-CHECKPKG_OVERRIDES_CSWlibldap2-4-2 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/ldap.conf.5
+OBSOLETED_BY_CSWlibldap2an/man5/ldap.conf.5
 
 PACKAGES += CSWlibldap-r2-4-2
 SPKG_DESC_CSWlibldap-r2-4-2 = OpenLDAP reentrant LDAP library, libldap_r-2.4.so.2
@@ -227,7 +221,8 @@ CONFIGURE_ARGS_64 += --enable-perl=no
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
-# The testsuite take# s a couple of hours
+# The testsuite take# s a couple of hosbin dir missing in Common PKG?
+CHECKPKG_OVERRIDES_CSWopenldap += missing-dependency|CSWapache24|or|CSWbonnie++|or|CSWleafnode|or|CSWlighttpd|or|CSWlogrotate|or|CSWproftpd|or|CSWsysstat|or|CSWzabbix-agent|or|CSWzabbix-server hours
 SKIPTEST ?= 1
 
 # Perl backend is built, although it has been told not+= -s ,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
