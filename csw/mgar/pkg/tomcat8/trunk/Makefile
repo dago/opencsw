@@ -23,16 +23,18 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = tomcat
 
-INITSMF = /etc/opt/csw/init.d/csw$(NAME)
-USERGROUP = /etc/opt/csw/pkg/$(NAME)/cswusergroup
-PRESERVECONF = /etc/opt/csw/$(NAME)/conf/.*
+INITSMF = /etc/opt/csw/init.d/cswtomcat8
+USERGROUP = /etc/opt/csw/pkg/CSWtomcat8/cswusergroup
+PRESERVECONF = /etc/opt/csw/tomcat8/conf/.*
 
-PROTOTYPE_MODIFIERS     = varuser etcperm
-PROTOTYPE_FILES_varuser = /var/opt/csw/$(NAME)/.*
+PROTOTYPE_MODIFIERS += varuser
+PROTOTYPE_FILES_varuser = /var/opt/csw/tomcat8/.*
 PROTOTYPE_USER_varuser  = tomcat
 PROTOTYPE_GROUP_varuser = tomcat
 PROTOTYPE_CLASS_varuser = ugfiles
-PROTOTYPE_FILES_etcperm = /etc/opt/csw/$(NAME)/conf/.*\.CSW
+
+PROTOTYPE_MODIFIERS += etcperm
+PROTOTYPE_FILES_etcperm = /etc/opt/csw/tomcat8/conf/.*\.CSW
 PROTOTYPE_PERMS_etcperm = 0640
 PROTOTYPE_USER_etcperm  = tomcat
 PROTOTYPE_GROUP_etcperm = tomcat
