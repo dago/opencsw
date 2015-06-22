@@ -1,0 +1,96 @@
+.\" -*- coding: us-ascii -*-
+.if \n(.g .ds T< \\FC
+.if \n(.g .ds T> \\F[\n[.fam]]
+.if \n(.g .mso www.tmac
+.TH JSVC 1 "June 2011" "Jsvc version 1.0.6" "Apache Commons Daemon project"
+.SH NAME
+jsvc \- application to launch java daemon
+.SH SYNOPSIS
+'nh
+.fi
+.ad l
+\fBjsvc\fR \kx
+.if (\nx>(\n(.l/2)) .nr x (\n(.l/5)
+'in \n(.iu+\nxu
+[-jvm \fIJVM name\fR] [-client \fIclient JVM\fR] [-server \fIserver JVM\fR] [-classpath \fIpath\fR] [-cp \fIpath\fR] [-java-home \fIdirectory\fR] [-version] [-help] [-?] [-nodetach] [-debug] [-check] [-user \fIuser\fR] [-wait \fIwaittime\fR] [-umask \fImask\fR] [-stop] [-verbose\fI:class|gc|jni\fR] [-outfile \fI/full/path/to/file\fR] [-errfile \fI/full/path/to/file\fR] [-pidfile \fI/full/path/to/file\fR] [-Dproperty=\fIvalue\fR] [-X\fIoption\fR]
+'in \n(.iu-\nxu
+.ad b
+'hy
+.SH DESCRIPTION
+\fBjsvc\fR executes \fIclassfile\fR
+that implements a Daemon interface.
+.SH OPTIONS
+.TP 
+\*(T<\fB\-jvm\fR\*(T> JVM name
+use a specific Java Virtual Machine.
+.TP 
+\*(T<\fB\-client\fR\*(T> client JVM
+use a client Java Virtual Machine.
+.TP 
+\*(T<\fB\-server\fR\*(T> server JVM
+use a server Java Virtual Machine.
+.TP 
+\*(T<\fB\-cp/ \-classpath\fR\*(T> directory and zip/jar files
+set search path for service classes and resouces
+.TP 
+\*(T<\fB\-java\-home\fR\*(T> directory
+set the path of your JDK or JRE installation (or set
+the JAVA_HOME environment variable)
+.TP 
+\*(T<\fB\-version\fR\*(T>
+show the current Java environment version (to check
+correctness of -home and -jvm. Implies -nodetach)
+.TP 
+\*(T<\fB\-help\fR\*(T>
+show this help page (implies -nodetach)
+.TP 
+\*(T<\fB\-nodetach\fR\*(T>
+don't detach from parent process and become a daemon
+.TP 
+\*(T<\fB\-debug\fR\*(T>
+verbosely print debugging information
+.TP 
+\*(T<\fB\-check\fR\*(T>
+only check service (implies -nodetach)
+.TP 
+\*(T<\fB\-stop\fR\*(T>
+stop the service using the file given in the -pidfile option
+.TP 
+\*(T<\fB\-wait\fR\*(T> waittime
+wait up to waittime seconds for the service to start
+waittime should multiple of 10 (min=10)
+.TP 
+\*(T<\fB\-umask\fR\*(T> mask
+sets the file mode creation mask
+.TP 
+\*(T<\fB\-user\fR\*(T> user
+user used to run the daemon (defaults to current user)
+.TP 
+\*(T<\fB\-verbose[:class|gc|jni]\fR\*(T>
+enable verbose output
+.TP 
+\*(T<\fB\-outfile\fR\*(T> /full/path/to/file
+Location for output from stdout (defaults to
+/dev/null). Use the value '&2' to simulate
+\&'1>&2', or 'SYSLOG' to send output to the system
+log.
+.TP 
+\*(T<\fB\-errfile\fR\*(T> /full/path/to/file
+Location for output from stderr (defaults to
+/dev/null). Use the value '&1' to simulate
+\&'2>&1', or 'SYSLOG' to send output to the system
+log.
+.TP 
+\*(T<\fB\-pidfile\fR\*(T> /full/path/to/file
+Location for output from the file containing the pid of jsvc
+(defaults to /var/run/jsvc.pid)
+.TP 
+\*(T<\fB\-D\fR\*(T><name>=<value>
+set a Java system property
+.TP 
+\*(T<\fB\-X\fR\*(T><option>
+set Virtual Machine specific option
+.SH AUTHOR
+JSVC is part of the Apache Commons Daemon project. Authors are
+Jean-Frederic Clere, Remy Maucherat, Yoav Shapira, Bill Barker, Mladen Turk. JSVC is
+released under the Apache License Version 2.0.
