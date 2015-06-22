@@ -1,6 +1,6 @@
 NAME = jre8
-SPKG_VERSION = 1.8.0_40
-VERSION = 8u40
+SPKG_VERSION = 1.8.0_45
+VERSION = 8u45
 GARTYPE = v2
 
 DESCRIPTION = Java Development Kit 8 Development Kit 6
