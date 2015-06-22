@@ -33,6 +33,7 @@
 #SLAPD_URL_LIST=ldap:///
 
 # -l facility.  Selects the syslog(8) facility.
+# You need to configure syslog as it logs to *.debug
 #SLAPD_SYSLOG_FACILITY=LOCAL4
 
 # -n service-name.  Defaults to "slapd".
@@ -42,7 +43,10 @@
 #SLAPD_DIRECTORY=directory
 
 # -s syslog-level.  Enter only the number below.
-#SLAPD_SYSLOG_LEVEL=0
+# Define here the openldap debug level to log to syslog.
+# 256 = stats log connections/operations/results
+# If you don't want any logging change it to 0
+SLAPD_SYSLOG_LEVEL=256
 
 # -t. slapd will read the configuration file and check its syntax only.
 #SLAPD_SYNTAX_CHECK=true
@@ -73,3 +77,6 @@
 
 # -n service-name.  Defaults to "slurpd".
 #SLURPD_SERVICE_NAME=slurpd
+
+#Max Files desscriptos:
+#SLAPD_MAXFDS=1024
