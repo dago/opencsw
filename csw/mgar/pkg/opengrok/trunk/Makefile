@@ -2,7 +2,7 @@
 # TODO: Repository under /var/opt/csw/repos
 
 NAME = opengrok
-VERSION = 0.11.1
+VERSION = 0.12.1
 CATEGORIES = devel
 
 DESCRIPTION = A wicked fast source browser
@@ -17,41 +17,46 @@ define BLURB
 endef
 
 MASjava.net/projects/opengrok/downloads/download/
-DISTFILES = $(NAME)-$(VERSION).tar.gz
-
-RUNTIME_DEP_PKGS = CSWectags CSWjavasvn CSWtomcat6 CSWmercurial
+DISTFILES += $(DISTNAME).tar.gz
 
 VENDOR_URL = http://opengrok.github.io/OpenGrok/
+
+PACKAGES += CSWopengrok
+SPKG_DESC_CSWopengrok = A wicked fast source browser
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWopengrok += CSWectags
+RUNTIME_DEP_PKGS_CSWopengrok += CSWtomcat8
+
+# The binaries are used from within scripts
+CHECKPKG_OVERRIDES_CSWopengrok += surplus-dependency|CSWectags
+CHECKPKG_OVERRIDES_CSWopengrok += surplus-dependency|CSWtomcat8
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
-
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
-LL_SCRIPTS = custom
+
 install-custom:
 	@echo " ==> Installing files"
-	@rm -rf $(DESTDIR)$(prefix)/share/tomcat5/webapps/source
-	@ginstall -d $(DESTDIR)$(prefix)/share/tomcat5/webapps/source
-	@(cat $(WORKSRC)/source.war | \
-		(cd $(DESTDIR)$(prefix)/share/tomcat5/webapps/source; \
+	rm -rf $(DESTDIR)$(prefix)/share/tomcat8/webapps/source
+	ginstall -d $(DESTDIR)$(prefix)/share/tomcat8/webapps/source
+	(cat $(WORKSRC)/lib/source.war | \
+		(cd $(DESTDIR)$(prefix)/share/tomcat8efix)/share/tomcat5/webapps/source; \
 		jar xf /dev/fd/0) \
 	)
 	@# For Indexing. Structure of opengrok is opengrok in application root
 	@# directory and all libs in lib/. We use only WEB-INF whose rectory structure \
-	@# is slightly different.
-	@gln -s $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/lib/. \
-		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/lib/lib
+	@# is sl#gln -s $(DESTDIR)$(prefix)/share/tomcat8/webapps/source/WEB-INF/lib/. \
+	#	$(DESTDIR)$(prefix)/share/tomcat8/webapps/source/WEB-INF/lib/lib
 
-	@ginstall -d $(DESTDIR)$(prefix)/share/doc/opengrok
-	@ginstall $(WORKSRC)/*.txt \
-		$(DESTDIR)$(prefix)/share/doc/opengrok/
-	@mv $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml \
-		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml.CSW
+	ginstall -d $(DESTDIR)$(prefix)/share/doc/opengrok
+	mv $(DESTDIR)$(prefix)/share/tomcat8/webapps/source/WEB-INF/web.xml \
+		$(DESTDIR)$(prefix)/share/tomcat8/webapps/source/WEB-INF/web.xml.CSW
 	@# TODO: Apply XML-Starlet to web.xml
-	@rm -rf $(DESTDIR)$(prefix)/share/doc/opengrok
-	@ginstall -d $(DESTDIR)$(prefix)/share/doc/opengrok
-	@ginstall $(WORKSRC)/*.txt \
-		$(DESTDIR)$(prefix)/share/doc/opengrok/
+	rm -rf $(DESTDIR)$(prefix)/share/doc/opengrok
+	ginstall -d $(DESTDIR)$(prefix)/share/doc/opengrok
+	@$(MAKECOOKIE)
+	
+
