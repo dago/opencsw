@@ -24,6 +24,7 @@ VENDOR_URL = http://opengrok.github.io/OpenGrok/
 PACKAGES += CSWopengrok
 SPKG_DESC_CSWopengrok = A wicked fast source browser
 # PKGFILES is catchall
+ARCHALL_CSWopengrok = 1
 RUNTIME_DEP_PKGS_CSWopengrok += CSWectags
 RUNTIME_DEP_PKGS_CSWopengrok += CSWtomcat8
 
