@@ -21,6 +21,8 @@ DISTFILES += README.CSW openldaprc
 DISTFILES += cswop# This is the 32/64 exec wrapper
 DISTFILES += slapd
 
+GARCOMPILER += SOS12U3
+
 EXPANDVARS += CSWoldap.postinstall
 EXPANDVARS += cswopenldap
 EXPANDVARS += slapd
@@ -69,8 +71,9 @@ RUNTIME_DEP_PKGS_CSWopenldap += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWopenRUNTIME_DEP_PKGS_CSWopenldap += CSWlibuuid1
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc5enldap += CSWlibwrap1
-OBSOLETED_BY_CSWopenldap += CSWoldap
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc55
+#OBSOLETED_BY_CSWopenldap += CSWoldap
+#penldap += CSWoldap
 CATALOGNAME_CSWoldap = openldap_stub
 
 # Evaluate later
@@ -85,8 +88,8 @@ PKGFILES_CSWopenldap-client += $(bindir)/.*
 PKGFILES_CSWopenldap-client += $(mandir)/man1/.*
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibsasl2-2
-OBSOLETED_BY_CSWopenldap-client += CSWoldapclient
+RUNTIME_DEP_PKGS_CSWopenldap-clie#OBSOLETED_BY_CSWopenldap-client += CSWoldapclient
+#t += CSWoldapclient
 CATALOGNAME_CSWoldapclient = openldap_client_stub
 
 PACKAGES += CSWopenldap-dev
@@ -95,8 +98,8 @@ PKGFILES_CSWopenldap-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWopenldap-dev += $(mandir)/man3/.*
 RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap2-4-2
-OBSOLETED_BY_CSWopenldap-dev += CSWoldapdevel
+RUNTIME_DEP_PKGS_CSWopenldap-dev#OBSOLETED_BY_CSWopenldap-dev += CSWoldapdevel
+#ev += CSWoldapdevel
 CATALOGNAME_CSWoldapdevel = openldap_devel_stub
 
 PACKAGES += CSWopenldap-back-perl
@@ -139,8 +142,8 @@ PACKAGES += CSWliblber2-4-2
 SPKG_DESC_CSWliblber2-4-2 = OpenLDAP ASN.1 BER library, liblber-2.4.so.2
 PKGFILES_CSWliblber2-4-2 += $(call pkgfiles_lib,liblber-2.4.so.2)
 RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibssl1-0-0
-OBSOLETED_BY_CSWliblber2-4-2 += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWlibldap2-4-#OBSOLETED_BY_CSWliblber2-4-2 += CSWoldaprt
+#2-4-2 += CSWoldaprt
 CATALOGNAME_CSWoldaprt = openldap_rt_stub
 
 PACKAGES += CSWlibldap2-4-2
@@ -148,7 +151,7 @@ SPKG_DESC_CSWlibldap2-4-2 = OpenLDAP LDAP library, libldap-2.4.so.2
 PKGFILES_CSWlibldap2-4-2 += $(call pkgfiles_lib,libldap-2.4.so.2)
 PKGFILES_CSWlibldap2-4-2 += $(sysconfdir)/ldap.conf
 PKGFILES_CSWlibldap2-4-2 += $(mandir)/man5/ldap.conf.5
-RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlibldap2-4-2# += CSWliblber2-4-2
 OBSOLETED_BY_CSWlibldap2-4-2 += CSWoldaprt
 
 # Evaluate later
@@ -159,7 +162,7 @@ SPKG_DESC_CSWlibldap-r2-4-2 = OpenLDAP reentrant LDAP library, libldap_r-2.4.so.
 PKGFILES_CSWlibldap-r2-4-2 += $(call pkgfiles_lib,libldap_r-2.4.so.2)
 RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-#2 += CSWlibssl1-0-0
 OBSOLETED_BY_CSWlibldap-r2-4-2 += CSWoldaprt
 
 EXTRE.CSW $(PATCHFILES) openldaprc

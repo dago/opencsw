@@ -35,6 +35,8 @@ bindir="@bindir@"
 sbindir="@sbindir@"
 libexecdir="@libexecdir@"
 
+[ -r /etc/opt/csw/openldaprc ] && . /etc/opt/csw/openldaprc
+
 ### START OPENCSW ARCHITECTURE SELECTION
 # Source the configuration
 # This is used to define the binary architeture to run
@@ -109,7 +111,7 @@ start_it() {
        if [ -n "$SLAPD_SYSLOG_FACILITY" ] ; then START="$START -l $SLAPD_SYSLOG_FACILITY"; fi
        if [ -n "$SLAPD_SERVICE_NAME" ] ; then START="$START -n $SLAPD_SERVICE_NAME"; fi
        if [ -n "$SLAPD_DIRECTORY" ] ; then START="$START -r $SLAPD_DIRECTORY"; fi
-       if [ -n "$SLAPD_SYSLOG_LEVEL" ] ; then START="$START -s $SLAPD_SYSLOG_LEVEL"; fi
+       if [ -n "$SLAPD_SYSLOG_LEVEL" ] ; then START="$START -s $SLAPD_SYSLOG_LEVEL"; else START="$START -s 256"; fi
        if [ -n "$SLAPD_SYNTAX_CHECK" ] ; then START="$START -t"; fi
        if [ -n "$SLAPD_USER" ] ; then START="$START -u $SLAPD_USER"; fi
        if [ -n "$SLAPD_EXTRA" ] ; then START="$START $SLAPD_EXTRA"; fi
