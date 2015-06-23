@@ -71,7 +71,8 @@ RUNTIME_DEP_PKGS_CSWopenldap += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWopenRUNTIME_DEP_PKGS_CSWopenldap += CSWlibuuid1
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc55
+RUNTIME_DEP_PKGS_CSWopenldap_sparc += CSWlibicuuc55
+RUNTIME_DEP_PKGS_CSWopenldap += $(RUNTIME_DEP_PKGS_CSWopenldap_$(GARCH))
 #OBSOLETED_BY_CSWopenldap += CSWoldap
 #penldap += CSWoldap
 CATALOGNAME_CSWoldre/man/man8/slapd.8
