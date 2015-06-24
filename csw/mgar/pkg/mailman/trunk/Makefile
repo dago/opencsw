@@ -32,6 +32,7 @@ CHECKPKG_OVERRIDES_CSWmailman += surplus-dependency|CSWpm-unix-syslog
 # The mailman build system puts files in all sorts of strange places
 prefix=$(BUILD_PREFIX)/$(NAME)
 PRESERVECONF += $(prefix)/Mailman/mm_cfg.py
+PRESERVECONF += $(localstatedir)/mailman/data/sitelist.cfg
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --without-permcheck
