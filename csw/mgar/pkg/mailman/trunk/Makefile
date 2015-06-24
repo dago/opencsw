@@ -16,6 +16,9 @@ DISTFILES  += cswusergroup
 
 GARCOMPILER = SOS12U4
 
+INITSMF = /opt/csw/mailman/scripts/mailman
+
+BUILD_DEP_PKGS += CSWpy-dnspython
 
 PACKAGES += CSWmailman
 SPKG_DESC_CSWmailman = Mailman mailing list software
@@ -35,9 +38,9 @@ CONFIGURE_ARGS += --without-permcheck
 CONFIGURE_ARGS += --with-python=/opt/csw/bin/python2.7
 CONFIGURE_ARGS += --with-mailhost=mailhost
 CONFIGURE_ARGS += --with-urlhost=example.com
-# CONFIGURE_ARGS += --with-mail-gid=mail
+CONFIGURE_ARGS += --with-mail-gid=mailman
 CONFIGURE_ARGS += --with-cgi-gid=webservd
-CONFIGURE_ARGS += --with-var-prefix=$(localstatedir)/$(NAME)
+CONFIGURE_ARGS += --with-var-prefix=$(localstatedir)
 
 # There is no testsuite
 TEST_SCRIPTS =
