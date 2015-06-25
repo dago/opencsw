@@ -10,7 +10,8 @@ VERSION = 2.1.20
 
 DESCRIPTION = Mailman mailing list software
 
-MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES += $(GNU_MIRROR)
+MASTER_SITES += https://launchpad.net/$(NAME)/$(basename $(VERSION))/$(VERSION)/+download/
 DISTFILES  = $(DISTNAME).tgz
 DISTFILES  += cswusergroup
 
