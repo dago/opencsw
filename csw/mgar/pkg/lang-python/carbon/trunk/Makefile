@@ -9,7 +9,9 @@ DESCRIPTION = Backend data caching and persistence daemon for Graphite
 
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += cswcarbon-aggregator.xml
 DISTFILES += cswcarbon-cache.xml
+DISTFILES += cswcarbon-relay.xml
 
 PACKAGES += CSWpy-carbon
 SPKG_DESC_CSWpy-carbon = Backend data caching and persistence daemon for Graphite
@@ -102,4 +104,6 @@ post-install:
 	mv $(DESTDIR)$(CONFDIR)/storage/* $(DESTDIR)$(STORAGEDIR)
 	rmdir $(DESTDIR)$(CONFDIR)/storage
 	ginstall -D -m 0644 $(WORKDIR)/cswcarbon-cache.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswcarbon-cache.xml
+	@# Fix binary names not to include .py
+	cd $(DESTDIR)$(bindir); $(foreach F,carbon-aggregator carbon-cache carbon-client carbon-relay validate-storage-schemas,mv $F.py $F;)
 	@$(MAKECOOKIE)
