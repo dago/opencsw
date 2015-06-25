@@ -3,7 +3,7 @@
 
 <service_bundle type='manifest' name='export'>
   
-  <service name='network/csw/carbon-cache' type='service' version='0'>
+  <service name='network/csw/carbon-relay' type='service' version='0'>
     
     <dependency name='fs' grouping='require_all' restart_on='none' type='service'>
       <service_fmri value='svc:/system/filesystem/local'/>
@@ -13,13 +13,13 @@
       <service_fmri value='svc:/milestone/network:default'/>
     </dependency>
     
-    <exec_method name='start' type='method' exec='/opt/csw/bin/carbon-cache --config=%{carboncache/config} start' timeout_seconds='60'/>
-    <exec_method name='stop' type='method' exec='/opt/csw/bin/carbon-cache --config=%{carboncache/config} stop' timeout_seconds='60'/>
+    <exec_method name='start' type='method' exec='/opt/csw/bin/carbon-relay --config=%{carbonrelay/config} start' timeout_seconds='60'/>
+    <exec_method name='stop' type='method' exec='/opt/csw/bin/carbon-relay --config=%{carbonrelay/config} stop' timeout_seconds='60'/>
     
     <instance name='default' enabled='false'>
-        <property_group name='carboncache' type='application'>
+        <property_group name='carbonrelay' type='application'>
             <propval name='value_authorization' type='astring' value='solaris.smf.value.graphite'/>
-            <propval name='config' type='astring' value='/etc/opt/csw/graphite/carbon.conf' />
+            <propval name='config' type='astring' value='/etc/opt/csw/graphite/relay-rules.conf' />
         </property_group>
         <property_group name='startd' type='framework'>
           <propval name='ignore_error' type='astring' value='core,signal'/>
