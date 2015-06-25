@@ -26,6 +26,14 @@ cp /etc/opt/csw/named.conf $ROOTDIR/etc/opt/csw
 # Timezone info
 cp -p /etc/TIMEZONE $ROOTDIR/etc
 
+# Copy libgost
+mkdir -p $ROOTDIR/opt/csw/lib/openssl-1.0.0/engines
+cp -p /opt/csw/lib/openssl-1.0.0/engines/libgost.so $ROOTDIR/opt/csw/lib/openssl-1.0.0/engines/
+
+# Copy libbind9
+mkdir -p $ROOTDIR/opt/csw/lib
+cp -p /opt/csw/lib/libbind9.so.90 $ROOTDIR/opt/csw/lib/
+
 # change owner on all files/dirs under /var/opt/csw/named/chroot
 chown -R named:named $ROOTDIR
 
