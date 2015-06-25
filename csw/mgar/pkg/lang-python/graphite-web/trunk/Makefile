@@ -48,6 +48,9 @@ CHECKPKG_OVERRIDES_CSWgraphite-web += file-with-bad-content|/usr/share|root/opt/
 CHECKPKG_OVERRIDES_CSWgraphite-web += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWgraphite-web += catalogname-does-not-start-with-py_
 
+# This is provided as *.CSW by cswpreserveconf
+CHECKPKG_OVERRIDES_CSWgraphite-web += file-needed-but-no-package-satisfies-it|/etc/opt/csw/graphite/local_settings.py|CSWgraphite-web|contains|symlink|/opt/csw/lib/python2.7/site-packages/graphite/local_settings.py|which|needs|the|target|file:|/etc/opt/csw/graphite/local_settings.py
+
 # requires = Django => 1.1.4
 #            django-tagging
 #            carbon
@@ -108,8 +111,7 @@ TEST_SCRIPTS =
 PRESERVECONF += $(prefix)/apache2/etc/extra/httpd-graphite-vhost.conf
 
 # TBD: This needs customization of pathes
-PRESERVECONF += /opt/csw/lib/python2.7/site-packages/graphite/local_settings.py
-PRESERVECONF += $(foreach C,$(CONFIG_FILES),$(CONFDIR)/$C)
+PRESERVECONF += $(foreach C,$(CONFIG_FILES) local_settings.py,$(CONFDIR)/$C)
 
 include gar/category.mk
 
@@ -121,7 +123,9 @@ post-install:
 	ginstall -D -m 0644 $(WORKDIR)/httpd-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-graphite-vhost.conf.CSW
 	rm -f $(DESTDIR)$(CONFDIR)/examples/example-graphite-vhost.conf	
 	mv $(DESTDIR)/opt/csw/lib/python2.7/site-packages/graphite/local_settings.py.example \
-	   $(DESTDIR)/opt/csw/lib/python2.7/site-packages/graphite/local_settings.py.CSW
+           $(DESTDIR)$(CONFDIR)/local_settings.py
+	ln -s $(CONFDIR)/local_settings.py \
+	      $(DESTDIR)/opt/csw/lib/python2.7/site-packages/graphite/local_settings.py
 	cd $(DESTDIR)$(CONFDIR)/conf; $(foreach F,$(CONFIG_FILES),mv $F.example $(DESTDIR)$(CONFDIR)/$F.CSW;)
 	rmdir $(DESTDIR)$(CONFDIR)/conf
 	ginstall -d -m 0755 $(DESTDIR)$(WEBAPPDIR)
@@ -130,6 +134,7 @@ post-install:
 	ginstall -d -m 0755 $(DESTDIR)$(STORAGEDIR)
 	mv $(DESTDIR)$(CONFDIR)/storage/* $(DESTDIR)$(STORAGEDIR)
 	rmdir $(DESTDIR)$(CONFDIR)/storage
+	chmod 0755 $(DESTDIR)/opt/csw/lib/python2.7/site-packages/graphite/manage.py
 	ln -s ../lib/python2.7/site-packages/graphite/manage.py $(DESTDIR)$(bindir)/graphite-manage
 	cd $(DESTDIR)$(bindir) && mv build-index.sh graphite-build-index
 	cd $(DESTDIR)$(bindir) && mv run-graphite-devel-server.py graphite-run-devel-server
