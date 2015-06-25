@@ -61,9 +61,6 @@ CHECKPKG_OVERRIDES_CSWgraphite-web += catalogname-does-not-start-with-py_
 
 CONFDIR = $(sysconfdir)/graphite
 STORAGEDIR = $(localstatedir)/graphite
-
-CONFDIR = $(sysconfdir)/graphite
-STORAGEDIR = $(localstatedir)/graphite
 WEBAPPDIR = $(sharedstatedir)/graphite
 
 # Taken from local_settings.py.example
@@ -88,6 +85,16 @@ REINPLACEMENTS += localsettings_content
 REINPLACE_MATCH_localsettings_content = \#CONTENT_DIR.*
 REINPLACE_WITH_localsettings_content = CONTENT_DIR = "$(WEBAPPDIR)/webapp/content"
 REINPLACE_FILES_localsettings_content += webapp/graphite/local_settings.py.example
+
+REINPLACEMENTS += buildindex
+REINPLACE_MATCH_buildindex = GRAPHITE_STORAGE_DIR\s*=.*
+REINPLACE_WITH_buildindex = GRAPHITE_STORAGE_DIR="$(STORAGEDIR)"
+REINPLACE_FILES_buildindex += bin/build-index.sh
+
+REINPLACEMENTS += python27
+REINPLACE_MATCH_python27 = \#!.*
+REINPLACE_WITH_python27 = \#!$(bindir)/python2.7
+REINPLACE_FILES_python27 += webapp/graphite/manage.py
 
 EXTRA_INSTALL_ARGS += --install-data=$(CONFDIR)
 
