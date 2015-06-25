@@ -88,7 +88,9 @@ REINPLACE_WITH_stor = "$(STORAGEDIR)"
 REINPLACE_FILES_stor += lib/carbon/conf.py
 
 PROTOTYPE_MODIFIERS += smf
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-aggregator.xml
 PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-cache.xml
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-relay.xml
 PROTOTYPE_CLASS_smf = manifest
 
 include gar/category.mk
