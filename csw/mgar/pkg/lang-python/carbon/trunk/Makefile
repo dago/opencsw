@@ -9,9 +9,10 @@ DESCRIPTION = Backend data caching and persistence daemon for Graphite
 
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
-DISTFILES += cswcarbon-aggregator.xml
-DISTFILES += cswcarbon-cache.xml
-DISTFILES += cswcarbon-relay.xml
+MANIFESTS += cswcarbon-aggregator.xml
+MANIFESTS += cswcarbon-cache.xml
+MANIFESTS += cswcarbon-relay.xml
+DISTFILES += $(MANIFESTS)
 
 PACKAGES += CSWpy-carbon
 SPKG_DESC_CSWpy-carbon = Backend data caching and persistence daemon for Graphite
@@ -27,7 +28,9 @@ CHECKPKG_OVERRIDES_CSWpy-carbon += surplus-dependency|CSWpy-twisted
 CHECKPKG_OVERRIDES_CSWpy-carbon += surplus-dependency|CSWpy-txamqp
 
 # This is for the SMF DTD
+CHECKPKG_OVERRIDES_CSWpy-carbon += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswcarbon-aggregator.xml
 CHECKPKG_OVERRIDES_CSWpy-carbon += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswcarbon-cache.xml
+CHECKPKG_OVERRIDES_CSWpy-carbon += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswcarbon-relay.xml
 
 CONFDIR = $(sysconfdir)/graphite
 STORAGEDIR = $(localstatedir)/graphite
@@ -88,9 +91,7 @@ REINPLACE_WITH_stor = "$(STORAGEDIR)"
 REINPLACE_FILES_stor += lib/carbon/conf.py
 
 PROTOTYPE_MODIFIERS += smf
-PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-aggregator.xml
-PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-cache.xml
-PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswcarbon-relay.xml
+PROTOTYPE_FILES_smf += $(foreach F,$(MANIFESTS),/var/opt/csw/svc/manifest/$F)
 PROTOTYPE_CLASS_smf = manifest
 
 include gar/category.mk
@@ -105,7 +106,7 @@ post-install:
 	ginstall -d -m 0755 $(DESTDIR)$(STORAGEDIR)
 	mv $(DESTDIR)$(CONFDIR)/storage/* $(DESTDIR)$(STORAGEDIR)
 	rmdir $(DESTDIR)$(CONFDIR)/storage
-	ginstall -D -m 0644 $(WORKDIR)/cswcarbon-cache.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswcarbon-cache.xml
+	$(foreach F,$(MANIFESTS),ginstall -D -m 0644 $(WORKDIR)/$F $(DESTDIR)/var/opt/csw/svc/manifest/$F;)
 	@# Fix binary names not to include .py
 	cd $(DESTDIR)$(bindir); $(foreach F,carbon-aggregator carbon-cache carbon-client carbon-relay validate-storage-schemas,mv $F.py $F;)
 	@$(MAKECOOKIE)
