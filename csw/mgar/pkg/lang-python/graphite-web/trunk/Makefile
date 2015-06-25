@@ -8,7 +8,11 @@ CATEGORIES = python
 DESCRIPTION = Enterprise scalable realtime graphing
 
 MASTER_SITES = $(PYPI_MIRROR)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += httpd-graphite-vhost.conf
+
+# This is a new package, don't bother building for 2.6
+MODULATIONS_PYTHON_VERSION = 2_7
 
 PACKAGES += CSWgraphite-web
 SPKG_DESC_CSWgraphite-web = Enterprise scalable realtime graphing
@@ -34,8 +38,10 @@ CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWap2modwsgi
 CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-cairo
 CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-simplejson
 
+# This is a new package, don't bother building for 2.6
+CHECKPKG_OVERRIDES_CSWgraphite-web += python-package-missing-py26-files
+
 # This is /usr/share/lib/zoneinfo
-CHECKPKG_OVERRIDES_CSWgraphite-web += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/graphite/thirdparty/pytz/__init__.py
 CHECKPKG_OVERRIDES_CSWgraphite-web += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/graphite/thirdparty/pytz/__init__.py
 
 # Use upstream naming for main package
@@ -59,37 +65,6 @@ STORAGEDIR = $(localstatedir)/graphite
 CONFDIR = $(sysconfdir)/graphite
 STORAGEDIR = $(localstatedir)/graphite
 WEBAPPDIR = $(sharedstatedir)/graphite
-
-REINPLACEMENTS += conf
-REINPLACE_MATCH_conf = /opt/graphite/conf
-REINPLACE_WITH_conf = $(CONFDIR)
-REINPLACE_FILES_conf += examples/example-graphite-vhost.conf
-
-REINPLACEMENTS += storage
-REINPLACE_MATCH_storage = /opt/graphite/storage
-REINPLACE_WITH_storage = $(STORAGEDIR)
-REINPLACE_FILES_storage += examples/example-graphite-vhost.conf
-        
-REINPLACEMENTS += webapp
-REINPLACE_MATCH_webapp = /opt/graphite/webapp
-REINPLACE_WITH_webapp = $(WEBAPPDIR)/webapp
-REINPLACE_FILES_webapp += conf/graphite.wsgi.example
-REINPLACE_FILES_webapp += examples/example-graphite-vhost.conf
-
-REINPLACEMENTS += webperms
-REINPLACE_MATCH_webperms = </Directory>
-REINPLACE_WITH_webperms = </Directory>\n        <Directory /opt/csw/share/graphite/webapp>\n                Order deny,allow\n                Allow from all\n        </Directory>
-REINPLACE_FILES_webperms += examples/example-graphite-vhost.conf
-
-REINPLACEMENTS += wsgi
-REINPLACE_MATCH_wsgi = modules/mod_wsgi.so
-REINPLACE_WITH_wsgi = libexec/mod_wsgi-2.7.so
-REINPLACE_FILES_wsgi += examples/example-graphite-vhost.conf
-
-REINPLACEMENTS += noprefix
-REINPLACE_MATCH_noprefix = ^WSGISocketPrefix
-REINPLACE_WITH_noprefix = \#WSGISocketPrefix
-REINPLACE_FILES_noprefix += examples/example-graphite-vhost.conf
 
 # Taken from local_settings.py.example
 # Most installs done outside of a separate tree such as /opt/graphite will only
@@ -126,7 +101,6 @@ TEST_SCRIPTS =
 PRESERVECONF += $(prefix)/apache2/etc/extra/httpd-graphite-vhost.conf
 
 # TBD: This needs customization of pathes
-PRESERVECONF += /opt/csw/lib/python2.6/site-packages/graphite/local_settings.py
 PRESERVECONF += /opt/csw/lib/python2.7/site-packages/graphite/local_settings.py
 PRESERVECONF += $(foreach C,$(CONFIG_FILES),$(CONFDIR)/$C)
 
@@ -136,14 +110,11 @@ post-extract:
 	-cd $(WORKSRC) && mv setup.cfg setup.cfg.orig
 	@$(MAKECOOKIE)
 
-V2_6 = 2.6
-V2_7 = 2.7
-
 post-install:
-	ginstall -D -m 0644 $(DESTDIR)$(CONFDIR)/examples/example-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-graphite-vhost.conf.CSW
+	ginstall -D -m 0644 $(WORKDIR)/httpd-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-graphite-vhost.conf.CSW
 	rm -f $(DESTDIR)$(CONFDIR)/examples/example-graphite-vhost.conf	
-	mv $(DESTDIR)/opt/csw/lib/python$(V$(PYTHON_VERSION))/site-packages/graphite/local_settings.py.example \
-	   $(DESTDIR)/opt/csw/lib/python$(V$(PYTHON_VERSION))/site-packages/graphite/local_settings.py.CSW
+	mv $(DESTDIR)/opt/csw/lib/python2.7/site-packages/graphite/local_settings.py.example \
+	   $(DESTDIR)/opt/csw/lib/python2.7/site-packages/graphite/local_settings.py.CSW
 	cd $(DESTDIR)$(CONFDIR)/conf; $(foreach F,$(CONFIG_FILES),mv $F.example $(DESTDIR)$(CONFDIR)/$F.CSW;)
 	rmdir $(DESTDIR)$(CONFDIR)/conf
 	ginstall -d -m 0755 $(DESTDIR)$(WEBAPPDIR)
@@ -152,4 +123,7 @@ post-install:
 	ginstall -d -m 0755 $(DESTDIR)$(STORAGEDIR)
 	mv $(DESTDIR)$(CONFDIR)/storage/* $(DESTDIR)$(STORAGEDIR)
 	rmdir $(DESTDIR)$(CONFDIR)/storage
+	ln -s ../lib/python2.7/site-packages/graphite/manage.py $(DESTDIR)$(bindir)/graphite-manage
+	cd $(DESTDIR)$(bindir) && mv build-index.sh graphite-build-index
+	cd $(DESTDIR)$(bindir) && mv run-graphite-devel-server.py graphite-run-devel-server
 	@$(MAKECOOKIE)
