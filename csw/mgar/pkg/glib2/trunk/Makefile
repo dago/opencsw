@@ -11,7 +11,10 @@ NAME = glib
 VERSION = 2.41.0
 GARTYPE = v2
 # for memory synchronisation primitives like __sync_synchronize we need gcc
-GARCOMPILER = GNUOMPILER = SOS12U3
+GARCOMPILER = GNUOM#where can we build?
+#PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+OMPILER = SOS12U3
 
 DESCRIPTION = The GLib library of C routines.
 define BLURB
@@ -141,7 +144,7 @@ RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibffi5
+RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibffi6
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += $(RUNTIME_DEP_PKGS_CSWgio-fam-backend_$(GAROSREL)_$(GARCH))end += CSWlibffi4
 
 PACKAGES += CSWlibgio2-0-0
@@ -154,7 +157,7 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CRUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgcc-s1CRUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibffi5
+RUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibffi6
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgio2-0-0_$(GAROSREL)_$(GARCH))C-0 += CSWlibffi4
 # Those are ok: hardcoded search paths which have added /opt/csw
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib4100.0
@@ -200,7 +203,7 @@ PKGFILES_CSWlibgobject2-0-0 += $(call pkgfiles_lib,libgobject-2.0.so.0)
 SPKG_DESC_CSWlibgobject2-0-0 += $(DESCRIPTION), libgobject-2.0.so.0
 RUNTIME_DEP_PKGS_CSWlibgobjeglib2-0-0-0 += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWlibgobjegcc-s1
-RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibffi5
+RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibffi6
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_5.10_sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_5.10_sparc += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_5.10_sparc += CSWlibiconv2
