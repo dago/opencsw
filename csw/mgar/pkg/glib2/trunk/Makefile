@@ -139,11 +139,7 @@ PKGFILES_CSWgio-fam-backend = .*/libgiofam.so
 RUNTIME_DEP_PKGS_CSWgio-fam-backend = CSWlibfam0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgio-fam-bobject2-0-0eRUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgcc-s1eRUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWgio-fam-bobject2-0-0eRUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgcc-s1eRUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibffi6
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += $(RUNTIME_DEP_PKGS_CSWgio-fam-backend_$(GAROSREL)_$(GARCH))end += CSWlibffi4
 
@@ -155,9 +151,7 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CRUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgcc-s1CRUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibffi6
+RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CRUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgcc-s1CRUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibffi6
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgio2-0-0_$(GAROSREL)_$(GARCH))C-0 += CSWlibffi4
 # Those are ok: hardcoded search paths which have added /opt/csw
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib4100.0
@@ -186,8 +180,6 @@ PACKAGES += CSWlibgmodule2-0-0
 PKGFILES_CSWlibgmodule2-0-0 += $(call pkgfiles_lib,libgmodule-2.0.so.0)
 SPKG_DESC_CSWlibgmodule2-0-0 += $(DESCRIPTION), libgmodule-2.0.so.0
 RUNTIME_DEP_PKGS_CSWlibgmoduglib2-0-00RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += CSWlibgcc-s10RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_5.10_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_5.10_sparc += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_5.10_sparc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_$(GAROSREL)_$(GARCH))0-0 += CSWlibffi4
 # Those are ok: hardcoded search paths which have added /opt/csw
 CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/4100.0
@@ -205,16 +197,12 @@ RUNTIME_DEP_PKGS_CSWlibgobjeglib2-0-0-0 += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWlibgobjegcc-s1
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibffi6
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_5.10_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_5.10_sparc += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_5.10_sparc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_$(GAROSREL)_$(GARCH))0-0 += CSWlibffi4
 
 PACKAGES += CSWlibgthread2-0-0
 SPKG_DESC_CSWlibgthread2-0-0 += $(DESCRIPTION), libgthread-2.0.so.0
 PKGFILES_CSWlibgthread2-0-0 += $(call pkgfiles_lib,libgthread-2.0.so.0)
 RUNTIME_DEP_PKGS_CSWlibgthreglib2-0-0-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibgcc-s1-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0_5.10_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0_5.10_sparc += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0_5.10_sparc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgthread2-0-0_$(GAROSREL)_$(GARCH))-0 += CSWlibpcre1
 
 PACKAGES += CSWlibglib2-dev
