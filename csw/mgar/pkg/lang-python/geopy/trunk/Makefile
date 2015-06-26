@@ -24,5 +24,7 @@ LICENSE = LICENSE
 MODULATIONS_PYTHON_VERSION = 2_7
 CHECKPKG_OVERRIDES_CSWpy-geopy += python-package-missing-py26-files
 
+ARCHALL = 1
+
 include gar/category.mk
 
