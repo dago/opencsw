@@ -19,13 +19,13 @@ s://wiki.gnome.org/LibRsvg
 
 LICENSE = COPYING.LIB
 
-GARCOMPILER = GCC4NSE = COPYING.LIB
+GARCOMPILER = GCC4NSPKG_CONFIG_PATH=/opt/csw/lib/pkgconfigNSE = COPYING.LIB
 
 # We need the new glib only available on Solaris 10
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # TBD: There are more missing
-BUILD_DEP_PKGS += CSWlibxml2-dev
+BUILD_DEP_PKGS +BUILD_DEP_PKGS += CSWlibpng16KGS += CSWlibxml2-dev
 
 PACKAGES += CSWlibrsvg2-2
 SPKG_DESC_CSWlibrsvg2-2 = Scalable Vector Graphics library, librsvg-2.so.2
@@ -76,7 +76,7 @@ RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibgmodule2-0-0
 ifeq ($(shell /usr/bin/uname -p),sparc)
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibpango1-0-0
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibpangoft2-1-0-0
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibpng16-16
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibcroco
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibcairo2
@@ -87,14 +87,14 @@ RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibpangocairo1-0-0
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibpango1-0-0
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibpng16-16
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibcroco
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibpangocairo1-0-0
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibpng16-16
 endif
 ###+= CSWlibgio2-0-0
 
