@@ -25,6 +25,9 @@ RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-whisper
 RUNTIME_DEP_PKGS_CSWgraphite-web += CSWap2modwsgi
 RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-cairo
 RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-simplejson
+# This is needed to get graphs from specific timeranges as reported in
+#   https://github.com/graphite-project/graphite-web/issues/1019
+RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-tz
 # python-hashlib is included in Python 2.5+
 
 # That is because the vhost setting we ship is for Apache 2
@@ -37,6 +40,7 @@ CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-whisper
 CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWap2modwsgi
 CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-cairo
 CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-simplejson
+CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-tz
 
 # This is a new package, don't bother building for 2.6
 CHECKPKG_OVERRIDES_CSWgraphite-web += python-package-missing-py26-files
