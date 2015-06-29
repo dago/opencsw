@@ -2,7 +2,7 @@
 # rm /home/src/memconf*
 
 NAME = memconf
-VERSION = 3.06
+VERSION = 3.08
 GARTYPE = v2
 
 DESCRIPTION = Perl script that displays memory modules installed
