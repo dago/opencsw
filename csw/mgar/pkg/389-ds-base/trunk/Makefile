@@ -68,6 +68,7 @@ PATCHFILES += $(PATCHFILES_$(LDAPAPI))
 PATCHFILES += 0024-strndup.patch
 # PATCHFILES += 0025-posix-winsync.rawentry.patch
 # PATCHFILES += 0030-reconstruct-memberuid-generation-task.patch
+PATCHFILES += 0031-net-snmp-config.patch
 PATCHFILES += $(PATCHFILES_$(GARCOMPILER))
 
 BUILD_DEP_PKGS += CSWautoconf
@@ -104,8 +105,8 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnssdbm3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-netaddr-ip
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n54
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc54
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n55
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc55
 RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWlibldap2-4-2
@@ -170,6 +171,7 @@ CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss
 CONFIGURE_ARGS += --with-nspr-lib=$(libdir)
 CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr
 CONFIGURE_ARGS_DBG += --enable-debug
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 include gar/category.mk
 

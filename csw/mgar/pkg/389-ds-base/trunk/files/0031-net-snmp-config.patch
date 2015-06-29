@@ -1,0 +1,11 @@
+--- a/m4/netsnmp.m4
++++ b/m4/netsnmp.m4
+@@ -99,7 +99,7 @@ if test -n "$netsnmp_inc"; then
+   fi
+ 
+   if test -n "$NETSNMP_CONFIG"; then
+-    netsnmp_link=`$NETSNMP_CONFIG --agent-libs`
++    netsnmp_link=`$NETSNMP_CONFIG --agent-libs | sed -e 's/-march=[[a-z0-9]]* //'`" \${LD_OPTIONS}"
+   else
+     AC_MSG_ERROR([net-snmp-config not found, specify with --with-netsnmp.])
+   fi
