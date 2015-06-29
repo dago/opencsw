@@ -120,10 +120,12 @@ RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibstdc++6
+
+RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibintl8
+
 RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(GARCH))
 RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(GARCH)_$(GARCOMPILER))
 RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(LDAPAPI))
-
 
 # it is only a comment
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
