@@ -128,7 +128,6 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(GARCH)_$(
 RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(LDAPAPI))
 
 # it is only a comment
-CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpython
