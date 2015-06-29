@@ -1,7 +1,7 @@
 # $Id$
 
 NAME      = gcc
-VERSION   = 4.9.2
+VERSION   = 4.9.3
 GARTYPE = v2
 BASE_VERSION = $(shell echo $(VERSION) | gsed -e 's/^\([0-9]\+\.[0-9]\+\)\(.*\)/\1/')
 PKG_VERSION_TOKEN = gcc4
@@ -44,7 +44,6 @@ LICENSE = COPYING3
 
 BUILD_DEP_PKGS += CSWbinutils
 BUILD_DEP_PKGS += CSWcloog-dev
-BUILD_DEP_PKGS += CSWgnulinks
 BUILD_DEP_PKGS += CSWlibgmp-dev
 BUILD_DEP_PKGS += CSWlibmpc-dev
 BUILD_DEP_PKGS += CSWlibmpfr-dev
