@@ -1,0 +1,41 @@
+From 9c393161ed8256970b56aac6487bc73d13433565 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 1 Jul 2015 14:10:08 +0200
+Subject: [PATCH] Use substitute for strndup
+
+---
+ src/liblognorm.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/src/liblognorm.c b/src/liblognorm.c
+index a530b99..ea73f63 100644
+--- a/src/liblognorm.c
++++ b/src/liblognorm.c
+@@ -42,6 +42,24 @@
+ 	}
+ 
+ char *
++strndup (const char *s, size_t n)
++{
++  char *result;
++  size_t len = strlen (s);
++
++  if (n < len)
++    len = n;
++
++  result = (char *) malloc (len + 1);
++  if (!result)
++    return 0;
++
++  result[len] = '\0';
++  return (char *) memcpy (result, s, len);
++}
++
++
++char *
+ ln_version(void)
+ {
+ 	return VERSION;
+-- 
+2.4.0
+
