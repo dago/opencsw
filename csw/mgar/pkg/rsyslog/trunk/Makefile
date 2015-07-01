@@ -1,5 +1,5 @@
 NAME = rsyslog
-VERSION = 5.8.13
+VERSION = 8.11.0
 CATEGORIES = server
 GARTYPE = v2
 
@@ -8,30 +8,91 @@ define BLURB
   Enhanced multi-threaded syslogd with a focus on security and reliability
 endef
 
-MASTER_SITES = http://rsyslog.com/files/download/rsyslog/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES  += rsyslog.init
-DISTFILES  += rsyslog.default
-DISTFILES  += rsyslog.conf
+MAwww.rsyslog.com/files/download/rsyslog/
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += rsyslog.init
+DISTFILES += rsyslog.default
+DISTFILES += rsyslog.conf
+
+BUILD_DEP_PKGS += CSWlibestr-dev
+BUILD_DEP_PKGS += CSWlibjson-c-dev
+BUILD_DEP_PKGS += CSWlibrelp-dev
+BUILD_DEP_PKGS += CSWliblogging-dev
 
 RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibz1
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWliblogging-stdlog0
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibuuid1
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibestr0
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibgcrypt20
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibjson-c3
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWliblognorm2
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibdbi1
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibnet1
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWliblogging-rfc3195-0
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibrelp0
 
 GARCOMPILER = GNU
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+# We need libnet. See for details
+#   http://wiki.opencsw.org/project-libnet
+EXTRA_LDFLAGS = -L$(libdir)/libnet-new
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-imsolaris
-EXTRA_CPPFLAGS+= -D_PATH_LOGCONF=\\\"$(sysconfdir)/rsyslog.conf\\\"
 
-CHECKPKG_OVERRIDES_CSWrsyslog += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/rsyslogd.8
+# Currently broken as reported here:
+#   https://github.com/rsyslog/rsyslog/issues/417
+#CONFIGURE_ARGS += --enable-imfile
 
-INITSMF = /etc/opt/csw/init.d/cswrsyslog
+CONFIGURE_ARGS += --enable-impstats
 
-post-install-modulated:
-	/opt/csw/gnu/install -D -m 644 $(WORKDIR)/rsyslog.conf $(DESTDIR)/etc/opt/csw/rsyslog.conf
-	/opt/csw/gnu/install -D -m 644 $(WORKDIR)/rsyslog.default $(DESTDIR)/etc/opt/csw/default/rsyslog
-	/opt/csw/gnu/install -D -m 755 $(WORKDIR)/rsyslog.init $(DESTDIR)/etc/opt/csw/init.d/cswrsyslog
+# imptcp requires epoll which Solaris does not have
+# CONFIGURE_ARGS += --enable-imptcp
+
+CONFIGURE_ARGS += --enable-libdbi
+CONFIGURE_ARGS += --enable-elasticsearch
+CONFIGURE_ARGS += --enable-mail
+CONFIGURE_ARGS += --enable-mmnormalize
+CONFIGURE_ARGS += --enable-mmjsonparse
+CONFIGURE_ARGS += --enable-mmaudit
+CONFIGURE_ARGS += --enable-mmanon
+CONFIGURE_ARGS += --enable-mmutf8fix
+CONFIGURE_ARGS += --enable-mmcount
+CONFIGURE_ARGS += --enable-mmsequence
+CONFIGURE_ARGS += --enable-mmfields
+CONFIGURE_ARGS += --enable-mmpstrucdata
+CONFIGURE_ARGS += --enable-mmrfc5424addhmac
+
+CONFIGURE_ARGS += --enable-relp
+CONFIGURE_ARGS += --enable-rfc3195
+CONFIGURE_ARGS += --enable-omprog
+CONFIGURE_ARGS += --enable-omudpspoof
+CONFIGURE_ARGS += --enable-omstdout
+
+# This is SystemD Journal, we don't have that on Solaris
+# CONFIGURE_ARGS += --enable-omjournal
+
+CONFIGURE_ARGS += --enable-pmlastmsg
+CONFIGURE_ARGS += --enable-pmcisconames
+CONFIGURE_ARGS += --enable-pmciscoios
+CONFIGURE_ARGS += --enable-pmsnare
+CONFIGURE_ARGS += --enable-omruleset
+CONFIGURE_ARGS += --enable-omuxsock
+CONFIGURE_ARGS += --enable-mmsnmptrapd
+
+EXTRA_CPPFLAGS += -D_PATH_LOGCONF=\\\"$(sysconfdir)/rsyslog.conf\\\"
+
+PRESERVECONF += $(sysconfdir)/rsyslog.conf
+
+INITSMF += /etc/opt/csw/init.d/cswrsyslog
 
 include gar/category.mk
+
+post-install-modulated:
+	gated:
+	/opt/csw/gnu/install -D -m 644 $(WORKDIR)/rsyslog.conf $(DESTDIR)/etc/opginstall -D -m 644 $(WORKDIR)/rsyslog.default $(DESTDIR)/etc/opt/csw/default/rsyslog
+	gyslog
+	/opt/csw/gnu/install -D -m 755 $(WORKDIR)/rsyslog.init $(DESTDIR)/etc/opt/cs	@$(MAKECOOKIE)
