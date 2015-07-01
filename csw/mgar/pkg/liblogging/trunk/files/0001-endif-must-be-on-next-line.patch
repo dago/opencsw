@@ -1,0 +1,25 @@
+From 7b1bbae3411325a8b59434ee2e858b096975602e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 1 Jul 2015 15:52:43 +0200
+Subject: [PATCH] endif must be on next line
+
+---
+ rfc3195/src/oscallsUnix.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/rfc3195/src/oscallsUnix.c b/rfc3195/src/oscallsUnix.c
+index 4d3864d..d22dd57 100644
+--- a/rfc3195/src/oscallsUnix.c
++++ b/rfc3195/src/oscallsUnix.c
+@@ -77,6 +77,7 @@ srRetVal getCurrTime(int* year, int* month, int* day, int *hour, int* minute, in
+      */
+     lBias = -(daylight ? altzone : timezone);
+ #else
+-	lBias = tm->tm_gmtoff;#endif
++	lBias = tm->tm_gmtoff;
++#endif
+ 	if(lBias < 0)	{		*pcOffsetMode = '-';		lBias *= -1;	}	else		*pcOffsetMode = '+';	*pOffsetHour = lBias / 3600;	*pOffsetMinute = lBias % 3600;
+ 	return SR_RET_OK;}
+-- 
+2.4.0
+
