@@ -1,0 +1,25 @@
+From 854066039fcaf9a1e8867468f59600386ba241d3 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 2 Jul 2015 14:31:32 +0200
+Subject: [PATCH] Fix for #351
+
+---
+ lib/carbon/service.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/carbon/service.py b/lib/carbon/service.py
+index be00876..7124450 100644
+--- a/lib/carbon/service.py
++++ b/lib/carbon/service.py
+@@ -24,7 +24,7 @@ from carbon import state, util, events
+ from carbon.log import carbonLogObserver
+ from carbon.exceptions import CarbonConfigException
+ 
+-state.events = state
++state.events = events
+ 
+ 
+ class CarbonRootService(MultiService):
+-- 
+2.4.0
+

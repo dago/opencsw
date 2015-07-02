@@ -14,6 +14,12 @@ MANIFESTS += cswcarbon-cache.xml
 MANIFESTS += cswcarbon-relay.xml
 DISTFILES += $(MANIFESTS)
 
+# Apply patch until this is fixed:
+#   https://github.com/graphite-project/carbon/issues/364
+# Patch taken from
+#   https://github.com/graphite-project/carbon/commit/2cc77752383288c27c4623a659cd0a76ef95b5a9
+PATCHFILES += 0001-Fix-for-351.patch
+
 PACKAGES += CSWpy-carbon
 SPKG_DESC_CSWpy-carbon = Backend data caching and persistence daemon for Graphite
 # PKGFILES is catchall
