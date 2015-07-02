@@ -10,9 +10,14 @@ endef
 
 MAwww.rsyslog.com/files/download/rsyslog/
 DISTFILES += $(DISTNAME).tar.gz
-DISTFILES += rsyslog.init
-DISTFILES += rsyslog.default
+DISTFILES += cswrsyslogd.xml
 DISTFILES += rsyslog.conf
+
+# Use patch from
+#   0001-Forward-port-patch-from-pkgsrc.patch
+# until this is fixed:
+#   https://github.com/rsyslog/rsyslog/issues/417
+PATCHFILES += 0001-Forward-port-patch-from-pkgsrc.patch
 
 BUILD_DEP_PKGS += CSWlibestr-dev
 BUILD_DEP_PKGS += CSWlibjson-c-dev
@@ -33,6 +38,10 @@ RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibnet1
 RUNTIME_DEP_PKGS_CSWrsyslog += CSWliblogging-rfc3195-0
 RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibrelp0
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibgnutls28
+
+# This is the SMF DTD
+CHECKPKG_OVERRIDES_CSWrsyslog += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswrsyslogd.xml
 
 GARCOMPILER = GNU
 
@@ -43,10 +52,7 @@ EXTRA_LDFLAGS = -L$(libdir)/libnet-new
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-imsolaris
 
-# Currently broken as reported here:
-#   https://github.com/rsyslog/rsyslog/issues/417
-#CONFIGURE_ARGS += --enable-imfile
-
+CONFIGURE_ARGS += --enable-imfile
 CONFIGURE_ARGS += --enable-impstats
 
 # imptcp requires epoll which Solaris does not have
@@ -54,6 +60,7 @@ CONFIGURE_ARGS += --enable-impstats
 
 CONFIGURE_ARGS += --enable-libdbi
 CONFIGURE_ARGS += --enable-elasticsearch
+CONFIGURE_ARGS += --enable-gnutls
 CONFIGURE_ARGS += --enable-mail
 CONFIGURE_ARGS += --enable-mmnormalize
 CONFIGURE_ARGS += --enable-mmjsonparse
@@ -83,16 +90,29 @@ CONFIGURE_ARGS += --enable-omruleset
 CONFIGURE_ARGS += --enable-omuxsock
 CONFIGURE_ARGS += --enable-mmsnmptrapd
 
+# CONFIGURE_ARGS += --enable-omhdfs
+# CONFIGURE_ARGS += --enable-omkafka
+# CONFIGURE_ARGS += --enable-ommongodb
+# CONFIGURE_ARGS += --enable-imzmq3
+# CONFIGURE_ARGS += --enable-imczmq
+# CONFIGURE_ARGS += --enable-omzmq3
+# CONFIGURE_ARGS += --enable-omczmq
+# CONFIGURE_ARGS += --enable-omrabbitmq
+# CONFIGURE_ARGS += --enable-omhiredis
+# CONFIGURE_ARGS += --enable-omhttpfs
+CONFIGURE_ARGS += --enable-generate-man-pages
+
 EXTRA_CPPFLAGS += -D_PATH_LOGCONF=\\\"$(sysconfdir)/rsyslog.conf\\\"
 
 PRESERVECONF += $(sysconfdir)/rsyslog.conf
 
-INITSMF += /etc/opt/csw/init.d/cswrsyslog
+PROTOTYPE_MODIFIERS += smf
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswrsyslogd.xml
+PROTOTYPE_CLASS_smf = manifest
 
 include gar/category.mk
 
 post-install-modulated:
 	gated:
-	/opt/csw/gnu/install -D -m 644 $(WORKDIR)/rsyslog.conf $(DESTDIR)/etc/opginstall -D -m 644 $(WORKDIR)/rsyslog.default $(DESTDIR)/etc/opt/csw/default/rsyslog
-	gyslog
-	/opt/csw/gnu/install -D -m 755 $(WORKDIR)/rsyslog.init $(DESTDIR)/etc/opt/cs	@$(MAKECOOKIE)
+	/opt/csw/gnu/install -D -m 644 $(WORKDIR)/rsyslog.conf $(DESTDIR)/etc/opginstall -D -m 0644 $(WORKDIR)/cswrsyslogd.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswrsyslogd.xml
+	@$(MAKECOOKIE)

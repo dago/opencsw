@@ -1,0 +1,46 @@
+From 6658fe23e1e199cb1c0cead031c97fe2995c53e8 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 1 Jul 2015 22:47:56 +0200
+Subject: [PATCH] Forward-port patch from pkgsrc
+
+---
+ plugins/imfile/imfile.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/plugins/imfile/imfile.c b/plugins/imfile/imfile.c
+index 3d6e8ef..bc3d73b 100644
+--- a/plugins/imfile/imfile.c
++++ b/plugins/imfile/imfile.c
+@@ -1763,10 +1763,14 @@ BEGINrunInput
+ CODESTARTrunInput
+ 	DBGPRINTF("imfile: working in %s mode\n", 
+ 		 (runModConf->opMode == OPMODE_POLLING) ? "polling" : "inotify");
++#if HAVE_INOTIFY_INIT
+ 	if(runModConf->opMode == OPMODE_POLLING)
+ 		iRet = doPolling();
+ 	else
+ 		iRet = do_inotify();
++#else
++	iRet = doPolling();
++#endif
+ 
+ 	DBGPRINTF("imfile: terminating upon request of rsyslog core\n");
+ ENDrunInput
+@@ -1869,12 +1873,14 @@ CODESTARTmodExit
+ 	objRelease(errmsg, CORE_COMPONENT);
+ 	objRelease(prop, CORE_COMPONENT);
+ 	objRelease(ruleset, CORE_COMPONENT);
++#if HAVE_INOTIFY_INIT
+ 	if(dirs != NULL) {
+ 		free(dirs->active.listeners);
+ 		free(dirs->configured.listeners);
+ 		free(dirs);
+ 	}
+ 	free(wdmap);
++#endif /* #if HAVE_INOTIFY_INIT */
+ ENDmodExit
+ 
+ 
+-- 
+2.4.0
+
