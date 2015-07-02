@@ -19,7 +19,7 @@
     <instance name='default' enabled='false'>
         <property_group name='carbonaggregator' type='application'>
             <propval name='value_authorization' type='astring' value='solaris.smf.value.graphite'/>
-            <propval name='config' type='astring' value='/etc/opt/csw/graphite/storage-aggregation.conf' />
+            <propval name='config' type='astring' value='/etc/opt/csw/graphite/carbon.conf' />
         </property_group>
         <property_group name='startd' type='framework'>
           <propval name='ignore_error' type='astring' value='core,signal'/>
