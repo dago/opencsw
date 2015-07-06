@@ -14,11 +14,11 @@ DISTFILES += $(DISTNAME).tar.gz
 MODULATIONS_PYTHON_VERSION = 2_7
 
 PACKAGES += CSWpy-carbonate
-SPKG_DESC_CSWpy-carbon = Tools for managing federated carbon clusters
+SPKG_DESC_CSWpy-carbonate = Tools for managing federated carbon clusters
 # PKGFILES is catchall
-ARCHALL_CSWpy-carbon = 1
+ARCHALL_CSWpy-carbonate = 1
 # The binaries like carbon-cache.py need this
-RUNTIME_DEP_PKGS_CSWpy-carbon += CSWpython27
+RUNTIME_DEP_PKGS_CSWpy-carbonate += CSWpython27
 
 # This is intended
 CHECKPKG_OVERRIDES_CSWpy-carbonate += python-package-missing-py26-files
