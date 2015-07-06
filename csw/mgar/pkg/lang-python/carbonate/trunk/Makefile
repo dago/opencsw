@@ -9,6 +9,7 @@ DESCRIPTION = Tools for managing federated carbon clusters
 
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += carbonate.conf
 
 # This is a new package, don't bother building for 2.6
 MODULATIONS_PYTHON_VERSION = 2_7
@@ -19,6 +20,8 @@ SPKG_DESC_CSWpy-carbonate = Tools for managing federated carbon clusters
 ARCHALL_CSWpy-carbonate = 1
 # The binaries like carbon-cache.py need this
 RUNTIME_DEP_PKGS_CSWpy-carbonate += CSWpython27
+# Checkpkg can't detect this
+CHECKPKG_OVERRIDES_CSWpy-carbonate += surplus-dependency|CSWpython27
 
 # This is intended
 CHECKPKG_OVERRIDES_CSWpy-carbonate += python-package-missing-py26-files
@@ -28,4 +31,10 @@ REINPLACE_MATCH_conf = /opt/graphite/conf/carbonate.conf
 REINPLACE_WITH_conf = $(sysconfdir)/graphite/carbonate.conf
 REINPLACE_FILES_conf += carbonate/util.py
 
+PRESERVECONF = $(sysconfdir)/graphite/carbonate.conf
+
 include gar/category.mk
+
+post-install:
+	ginstall -D -m 0644 $(WORKDIR)/carbonate.conf $(DESTDIR)$(sysconfdir)/graphite/carbonate.conf
+	@$(MAKECOOKIE)
