@@ -7,23 +7,23 @@ VERSION = 9.9.7
 GARTYPE = v2
 
 # Enable these for Px-releases
-#RELEASE = P2
-#DISTVERSION = $(VERSION)-$(RELEASE)
-#SPKG_VERSION = $(VERSION)$(RELEASE)
-#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P1
+DISTVERSION = $(VERSION)-$(RELEASE)
+SPKG_VERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
 endef
 
 # Enable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-#DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -121,7 +121,7 @@ CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=C
 
 # Will not split out all these libs
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.90.0.13|soname=libbind9.so.90|pkgname=CSWlibbind|expected=CSWlibbind9-90
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.106.1.0|soname=libdns.so.106|pkgname=CSWlibbind|expected=CSWlibdns106
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.106.1.1|soname=libdns.so.106|pkgname=CSWlibbind|expected=CSWlibdns106
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.104.0.2|soname=libisc.so.104|pkgname=CSWlibbind|expected=CSWlibisc104
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.90.2.4|soname=libisccfg.so.90|pkgname=CSWlibbind|expected=CSWlibisccfg90
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.91.0.2|soname=liblwres.so.91|pkgname=CSWlibbind|expected=CSWliblwres91
