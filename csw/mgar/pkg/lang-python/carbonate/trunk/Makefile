@@ -14,17 +14,21 @@ DISTFILES += carbonate.conf
 # This is a new package, don't bother building for 2.6
 MODULATIONS_PYTHON_VERSION = 2_7
 
-PACKAGES += CSWpy-carbonate
-SPKG_DESC_CSWpy-carbonate = Tools for managing federated carbon clusters
+PACKAGES += CSWcarbonate
+SPKG_DESC_CSWcarbonate = Tools for managing federated carbon clusters
 # PKGFILES is catchall
-ARCHALL_CSWpy-carbonate = 1
+ARCHALL_CSWcarbonate = 1
 # The binaries like carbon-cache.py need this
-RUNTIME_DEP_PKGS_CSWpy-carbonate += CSWpython27
+RUNTIME_DEP_PKGS_CSWcarbonate += CSWpython27
 # Checkpkg can't detect this
-CHECKPKG_OVERRIDES_CSWpy-carbonate += surplus-dependency|CSWpython27
+CHECKPKG_OVERRIDES_CSWcarbonate += surplus-dependency|CSWpython27
 
 # This is intended
-CHECKPKG_OVERRIDES_CSWpy-carbonate += python-package-missing-py26-files
+CHECKPKG_OVERRIDES_CSWcarbonate += python-package-missing-py26-files
+
+# This is more of a tool than python-related
+CHECKPKG_OVERRIDES_CSWcarbonate += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWcarbonate += catalogname-does-not-start-with-py_
 
 REINPLACEMENTS += conf
 REINPLACE_MATCH_conf = /opt/graphite/conf/carbonate.conf
