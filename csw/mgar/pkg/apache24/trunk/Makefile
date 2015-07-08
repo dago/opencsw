@@ -62,6 +62,7 @@ CHECKPKG_OVERRIDES_CSWapache24-manual += file-with-bad-content
 PACKAGES += CSWapache24-dev
 SPKG_DESC_CSWapache24-dev = The Apache 2.4 Development Files
 PKGFILES_CSWapache24-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWapache24-dev += CSWapache24-manual
 
 # This is a fallback
 CHECKPKG_OVERRIDES_CSWapache24-dev += file-with-bad-content|/usr/local|root/opt/csw/include/apache2/httpd.h
