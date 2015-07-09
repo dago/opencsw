@@ -48,7 +48,7 @@ INSTALL_SCRIPTS = custom
 
 # No test suite# STRIP_DIRS = $(DESTDIR)$(prefix)/apache2/libexec
 
-RUNTIME_DEP_PKGS_CSWap2modnss += CSWapache24nss += CSWapache2
+# RUNTIME_DEP_PKGS_CSWap2modnss += CSWapache24nss += CSWapache2
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWap2mc4s += CSWlibsmime3
