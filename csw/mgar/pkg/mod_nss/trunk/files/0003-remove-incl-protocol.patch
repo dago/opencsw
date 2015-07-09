@@ -1,0 +1,12 @@
+--- a/mod_nss.h
++++ b/mod_nss.h
+@@ -24,7 +24,9 @@
+ #include "http_main.h"
+ #include "http_connection.h"
+ #include "http_request.h"
++/*
+ #include "http_protocol.h"
++*/
+ #include "mod_ssl.h"
+ #include "util_script.h"
+ #include "util_filter.h"

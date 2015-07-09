@@ -1,0 +1,38 @@
+--- a/test_cipher.c
++++ b/test_cipher.c
+@@ -19,21 +19,22 @@
+ #include <sslproto.h>
+ 
+ /* Fake a few Apache and NSPR data types and definitions */
+-typedef char server_rec;
+ typedef int PRBool;
+ typedef int PRInt32;
+ 
+ #define PR_FALSE 0
+ #define PR_TRUE 1
+ 
+-#include <nss_engine_cipher.h>
++#include <apache2/http_core.h>
++#include <apache2/http_log.h>
+ 
++#include <nss_engine_cipher.h>
+ extern cipher_properties ciphers_def[];
+ 
+ /* An Apache-like error logger */
+-int ap_log_error_(const char *fn, int line, int module_index,
++void ap_log_error_(const char *fn, int line, int module_index,
+                  int level, int status,
+-                 const server_rec *s, char *fmt, ...)
++                 const server_rec *s, const char *fmt, ...)
+ {
+     char out[1024];
+     va_list args;
+@@ -42,8 +43,6 @@ int ap_log_error_(const char *fn, int line, int module_index,
+     vsprintf(out, fmt, args);
+     fprintf(stderr,"%s:%d, %s", fn, line, out);
+     va_end(args);
+-
+-    return 0;
+ }
+ 
+ #define ap_log_error_ ap_log_error
