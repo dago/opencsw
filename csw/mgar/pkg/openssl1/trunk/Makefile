@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.1m
+VERSION = 1.0.1p
 CATEGORIES = # Since version 1.0.0, soname is fixed and does not follow the minor releases
 SONAME=1.0.0 | tr -d '[a-z]')
 
@@ -97,7 +97,8 @@ e_targets.patch
 # instead of /opt/csw/lib/engines to avoid clashes with 0.9.8
 # and futur new release of ssl libraries
 PATCHFILES += 0003-make-engines-directory-soname-depestream uses an obsolete GCC flag
-PATCHFILES += 0004-remove-obsolete-mv8-soname-dependant.patch
+# not the case anymore
+#PATCHFILES += 0004-remove-obsolete-mv8-soname-dependant.patch
 
 # Update openssl.cnf path in man page to follow opencsw standard
 PATCHFILES += ope
@@ -155,7 +156,8 @@ e# Building openssl with "-j" option doesn't work properly because of dependenci
 # This patch fixes this problem, it's taken from gentoo and adapted so that it works
 # with sh shell.
 # (see http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/dev-libs/openssl/files/)
-PATCHFILES += openssl-1.0.1-parallel-build.patch
+# does not apply anymore
+#PATCHFILES += openssl-1.0.1-parallel-build.patch
 e-25
 endif
 endif
