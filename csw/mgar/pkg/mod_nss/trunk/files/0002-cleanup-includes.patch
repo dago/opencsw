@@ -1,0 +1,10 @@
+--- a/mod_nss.h
++++ b/mod_nss.h
+@@ -18,7 +18,6 @@
+ 
+ /* Apache headers */
+ #include "httpd.h"
+-#include "http_config.h"
+ #include "http_core.h"
+ #include "http_log.h"
+ #include "http_main.h"

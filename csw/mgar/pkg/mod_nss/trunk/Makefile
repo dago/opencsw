@@ -18,9 +18,11 @@ MAs://fedorahosted.org/released/$(NAME)/rt389.org/sources
 # MASTER_SITES = http://directory.fedoraproject.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWap2modnss.postinstall
-DISTFILES += CSWap2mnss.preremove
+DISTFILES += CSWap2mPATCHFILES += 0001-fix-ap_log_error-parameter-missmatch.patch
+PATCHFILES += 0002-cleanup-includes.patch
+PATCHFILES += 0003-remove-incl-protocol.patch
 
-# BUILD64_LIBS_ONLY = 1
+BUILD64BUILD64_LIBS_ONLY = 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS +
 # GARCOMPILER = GCC4
