@@ -1,5 +1,5 @@
 NAME = doxygen
-VERSION = 1.8.9
+VERSION = 1.8.10
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -28,48 +28,33 @@ PKGFILES_CSWdoxygen-doc = $(PKGFILES_DOC)
 ARCHALL_CSWdoxygen-doc = 1
 # There are some Python examples in there, but pulling in Python unconditionally
 # for these tiny examples seems overkill.
-CHECKPKG_OVERRIDES_CSWdoxygen-doc = missing-dependency|CSWpython
-OBSOLETED_BY_CSWdoxygen-doc = CSWdoxygendoc
-CATALOGNAME_CSWdoxygendoc /html/install.html
+CHECKPKG_OVERRIDES_CSWdoxygen-doc = missing-de
+# I have no idea ow to pass '-norunpath' during linkage to CMake
+CHECKPKG_OVERRIDES_CSWdoxygen += bad-rpath-entry|/opt/solarisstudio12.3/lib|opt/csw/bin/doxygen
+CHECKPKG_OVERRIDES_CSWdoxygen += bad-rpath-entry|/opt/solarisstudio12.3/lib/sparc|opt/csw/bin/doxygen
 
-REINPLACEMENTS += cflags
-REINPLACE_MATCH_cflags = (TMAKE_CFLAGS_RELEASE\s*=\s*).*
-REINPLACE_WITH_cflags = \1$(CFLAGS)
-REINPLACE_FILES_cflags += tmake/lib/solaris-cc/tmake.conf
+# Sun Studio 12 is too old and actually does not work any more
+GARCOMPILER = SOS12U3
 
-REINPLACEMENTS += cxxflags
-REINPLACE_MATCH_cxxflags = (TMAKE_CXXFLAGS_RELEASE\s*=\s*).*
-REINPLACE_WITH_cxxflags = \1$(CXXFLAGS)
-REINPLACE_FILES_cxxflags += tmake/lib/solaris-cc/tmake.conf
+CONFIGURE_SCRIPTS = cmake
+BUILD_SCRIPTS = $(WORKSRC)/solaris/Makefile
+BUILD_ARGS += docs
 
-REINPLACEMENTS += ldflags
-REINPLACE_MATCH_ldflags = (TMAKE_LFLAGS_RELEASE\s*=).*
-REINPLACE_WITH_ldflags = \1 $(LDFLAGS)
-REINPLACE_FILES_ldflags += tmake/lib/sola# Sun Studio 12 is too old and actually does not work any more
-GARCOMPILER = SOS12U3laris-cc/tmake.conf
+TEST_SCRIPTS = $(WORKSRC)/solaris/Makefile
+TEST_TARGET = tests
 
-EXTRA_CXXFLAGS += -features=tmplrefstatic
-EXTRA_CXXFLAGS += -features=extensions -D__FUNCTION__=__func__
-EXTRA_LINKER_FLAGS = -norunpath
-
-CONFIGURE_ARGS = --prefix $(prefix)
-CONFIGURE_ARGS += --release
-CONFIGURE_ARGS += --docdir $(docdir)/doxygen
-CONFIGURE_ARGS += --dot /opt/csw/bin/dot
-CONFIGURE_ARGS += --platform solaris-cc
-
-# There is no testsuite
-TEST_SCRIPTS =
-
-INSTALL_ARGS = install_docs
+INSTALL_SCRIPTS = $(WORKSRC)/solaris/Makefile
 
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/man,.$(mandir),'
-
-# These are from 'dot', pretty ugly, don't package at least for now
-EXTRA_MERGE_EXCLUDE_FILES = .*/core
+EXTRA_PAX_ARGS += -s ',^\.$(docdir)/packages/,.$(docdir)/,'UDE_FILES = .*/core
 
 # Use CSW Perl instead of #!/usr/local/bin/perl in
 #   /opt/csw/share/doc/doxygen/examples/Makefile
 # some time...
 
 inclu
+configure-cmake:
+	mkdir $(WORKSRC)/solaris
+	@# The -DMAKE= is needed because docs generation uses $(MAKE) -C which the default /usr/ccs/bin/make does not understand
+	cd $(WORKSRC)/solaris && cmake -DMAKE=/opt/csw/bin/gmake -Dbuild_doc=YES -DCMAKE_INSTALL_PREFIX:PATH=$(prefix) -G 'Unix Makefiles' $(abspath $(WORKSRC))
+	@$(MAKECOOKIE)
