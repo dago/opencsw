@@ -1,0 +1,13 @@
+--- a/glib/gmain.c	Sun Jun 28 16:08:35 2015
++++ b/glib/gmain.c	Sun Jun 28 16:10:22 2015
+@@ -100,6 +100,10 @@
+ #include "glib-init.h"
+ #include "glib-private.h"
+ 
++#ifndef CLOCK_MONOTONIC
++#define CLOCK_MONOTONIC CLOCK_REALTIME
++#endif
++
+ /**
+  * SECTION:main
+  * @title: The Main Event Loop
