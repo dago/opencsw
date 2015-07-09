@@ -18,7 +18,9 @@ MAs://fedorahosted.org/released/$(NAME)/rt389.org/sources
 # MASTER_SITES = http://directory.fedoraproject.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWap2modnss.postinstall
-DISTFILES += CSWap2mPATCHFILES += 0001-fix-ap_log_error-parameter-missmatch.patch
+DISTFILES += CSWap2mREINPLACE_MATCH = /usr/bin/certutil
+REINPLACE_WITH = /opt/csw/bin/certutil
+REINPLACE_FILES += gencert.in2mPATCHFILES += 0001-fix-ap_log_error-parameter-missmatch.patch
 PATCHFILES += 0002-cleanup-includes.patch
 PATCHFILES += 0003-remove-incl-protocol.patch
 
