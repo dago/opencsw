@@ -14,6 +14,7 @@ GARTYPE = v2
 GARCOMPILER = GNUOM#where can we build?
 #PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 OMPILER = SOS12U3
 
 DESCRIPTION = The GLib library of C routines.
@@ -30,8 +31,14 @@ DISTFILES DISTFILES += set-ulimit-for-build-test +  .*/gtk-doc.*
 
 
 BUILD_DEP_PKGS = CSWggettext-dev CSWlibiconv-dev CSWlibffi-dev
-BUILD_DEP_PKGS += CSWlibdbus-dev CSWdbus CSWlibgamin-dev CSWgamin
-BUILD_DEP_PKGS += CSWpy-gobject CSWpkgconf
+BUILD_DEP_PKGS += CSWlib
+
+#disable gamin, since gamin depends on glib2
+#BUILD_DEP_PKGS += CSWlibgamin-dev CSWgamin
+
+BUILD_DEP_PKGS += CSWpkgconfig CSWlibpcre-dev
+#disable, since py-gobject depends on glib
+#BUILD_DEP_PKGS += CSWpy-gobject 
 # To make the tests working
 BUILD_DEP_PKGS += CSWCSWpython CSWdbuspython CSWsharedmimeinfo
 # This is used to adjust paths in documentation
@@ -42,10 +49,14 @@ BUILD_DEP_PKGS += CSWggettextP_P
 PATCHFILES += 0001-Fix-POSIX-and-XOPEN-defines.patch
 PATCHFILES += 0002-Include-sys-filio.h-to-provide-FIONREAD.patchris environment
 #
-PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-Solaris-CSW_5.10 += 0003-Make-glib-work-with-zoneinfo-version-1.patch
-PATCHFILES_5.11 += 0020-Adjust-path-to-zoneinfo-databaseoneinfo-version-1.patch
+PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-S#PATCHFILES_5.10 += 0003-Make-glib-work-with-zoneinfo-version-1.patch
+#PATCHFILES_5.11 += 0020-Adjust-path-to-zoneinfo-databaseoneinfo-version-1.patch
 PATCHFILES += 0022-Change-shell-to-bash-in-test-shePATCHFILES += 0029-Don-t-undefine-_XOPEN_SOURCE.patch
 PATCHFILES += 0001-Fix-configure-pthread-detection.patch
+
+PATCHFILES_5.9 += 0040-clock-monotonic.patch
+PATCHFILES_5.9 += sol9-condwait.patch
+
 
 #
 # Until someone invests some real resources into checking all test patches,
@@ -102,9 +113,7 @@ PATCHFILES_isa-sparcv9 += 0021-Disable-buffered-input-stream-set-buffer# Needs t
 #PATCHFILES += 0037-Remove-failing-tests-linking-is-broken.patch
 #PATCHFILES_5.11 += 0038-Disable-appinfo-launch-test-fails-on-s11x86.patch
 
-# PATCHFILES += $(PATCHFILES_$(GAROSREL))el# Solaris 11 specific package for FEN support
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS += solaris11-sparc solaris110-sparc solaris10-i386
+PATCHFILES += $(PATCHFILES_$(GAROSREL))rc solaris10-i386
 
 
 PACKAGES += CSWglib2
