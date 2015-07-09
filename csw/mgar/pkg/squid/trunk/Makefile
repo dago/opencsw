@@ -2,7 +2,7 @@
 # $Id$
 #
 NAME = squid
-VERSION = 3.5.59]\).*\.[0-9]*/\1/')
+VERSION = 3.5.69]\).*\.[0-9]*/\1/')
 GARTYPE = v2
 
 DESCRIPTION = High performance Web proxy cache
