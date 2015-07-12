@@ -7,7 +7,7 @@
 #       Test on Solaris 8 / 9 for comparison
 #
 NAME = stunnel
-VERSION = 5.19
+VERSION = 5.20
 # BETA = b4
 CATEGORIES = net
 GARTYPE = v2
@@ -38,6 +38,10 @@ RUNTIME_DEP_PKGP# This is the SMF DTD
 CHECKPKG_OVERRIDES_CSWstunnel += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswstunnel.xmlGPCONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 CONFIGURE_ARGS += --enable-ipv6
+
+# The test just tries to build Windows binaries, skip until this is fixed:
+#   http://www.stunnel.org/pipermail/stunnel-users/2015-July/005153.html
+SKIPTEST ?= 1
 
 REINPLACEMENTS += capath
 REINPLACE_MATCH_capath = /etc/ssl/certs
