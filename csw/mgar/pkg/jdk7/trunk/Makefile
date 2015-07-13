@@ -1,6 +1,6 @@
 NAME = jdk7
-SPKG_VERSION = 1.7.0_75
-VERSION = 7u75
+SPKG_VERSION = 1.7.0_80
+VERSION = 7u80
 GARTYPE = v2
 
 DESCRIPTION = Java Development Kit 7 Development Kit 6
