@@ -148,9 +148,9 @@ PKGFILES_CSWgio-fam-backend = .*/libgiofam.so
 RUNTIME_DEP_PKGS_CSWgio-fam-backend = CSWlibfam0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgio-fam-bobject2-0-0eRUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgcc-s1eRUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibffi6
-RUNTIME_DEP_PKGS_CSWgio-fam-backend += $(RUNTIME_DEP_PKGS_CSWgio-fam-backend_$(GAROSREL)_$(GARCH))end += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWgio-fam-bobject2-0-0eRUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgcc-s1eRUNTIME_DEP_PKGS_CSWgio-fam-backend_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWgio-fam-backend_sparc += CSWlibffi6
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += $(RUNTIME_DEP_PKGS_CSWgio-fam-backend_$(GAROSREL)_$(GARCH))eRUNTIME_DEP_PKGS_CSWgio-fam-backend += $(RUNTIME_DEP_PKGS_CSWgio-fam-backend_$(GARCH))end += CSWlibffi4
 
 PACKAGES += CSWlibgio2-0-0
 SPKG_DESC_CSWlibgio2-0-0 += $(DESCRIPTION), libgio-2.0.so.0
@@ -160,8 +160,8 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CRUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgcc-s1CRUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibffi6
-RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgio2-0-0_$(GAROSREL)_$(GARCH))C-0 += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CRUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgcc-s1CRUNTIME_DEP_PKGS_CSWlibgio2-0-0_sparc += CSWlibffi6
+RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgio2-0-0_$(GAROSREL)_$(GARCH))CRUNTIME_DEP_PKGS_CSWlibgio2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgio2-0-0_$(GARCH))0-0 += CSWlibffi4
 # Those are ok: hardcoded search paths which have added /opt/csw
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib4101.0
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.4101.0.*/gdb .*/gdb/.*
@@ -188,8 +188,8 @@ CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/
 PACKAGES += CSWlibgmodule2-0-0
 PKGFILES_CSWlibgmodule2-0-0 += $(call pkgfiles_lib,libgmodule-2.0.so.0)
 SPKG_DESC_CSWlibgmodule2-0-0 += $(DESCRIPTION), libgmodule-2.0.so.0
-RUNTIME_DEP_PKGS_CSWlibgmoduglib2-0-00RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += CSWlibgcc-s10RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_5.10_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_$(GAROSREL)_$(GARCH))0-0 += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWlibgmoduglib2-0-00RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += CSWlibgcc-s10RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_$(GARCH))0-0 += CSWlibffi4
 # Those are ok: hardcoded search paths which have added /opt/csw
 CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/4101.0
 CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.4101.0
@@ -205,14 +205,14 @@ SPKG_DESC_CSWlibgobject2-0-0 += $(DESCRIPTION), libgobject-2.0.so.0
 RUNTIME_DEP_PKGS_CSWlibgobjeglib2-0-0-0 += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWlibgobjegcc-s1
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibffi6
-RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_5.10_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_$(GAROSREL)_$(GARCH))0-0 += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgobject2-0-0_$(GARCH))0-0 += CSWlibffi4
 
 PACKAGES += CSWlibgthread2-0-0
 SPKG_DESC_CSWlibgthread2-0-0 += $(DESCRIPTION), libgthread-2.0.so.0
 PKGFILES_CSWlibgthread2-0-0 += $(call pkgfiles_lib,libgthread-2.0.so.0)
-RUNTIME_DEP_PKGS_CSWlibgthreglib2-0-0-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibgcc-s1-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0_5.10_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgthread2-0-0_$(GAROSREL)_$(GARCH))-0 += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWlibgthreglib2-0-0-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibgcc-s1-RUNTIME_DEP_PKGS_CSWlibgthread2-0-0_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgthread2-0-0_$(GARCH))-0 += CSWlibpcre1
 
 PACKAGES += CSWlibglib2-dev
 SPKG_DESC_CSWlibglib2-dev = Development files for libglib-2.0.so.0 and assorted libglib, libgmodule, libgobject and libgthread
