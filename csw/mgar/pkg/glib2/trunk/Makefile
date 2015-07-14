@@ -149,7 +149,7 @@ RUNTIME_DEP_PKGS_CSWgio-fam-backend = CSWlibfam0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-bobject2-0-0eRUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgcc-s1eRUNTIME_DEP_PKGS_CSWgio-fam-backend_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgio-fam-backend_sparc += CSWlibffi6
+RUNTIME_DEP_PKGS_CSWgio-fam-backend_5.10_sparc += CSWlibffi6
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += $(RUNTIME_DEP_PKGS_CSWgio-fam-backend_$(GAROSREL)_$(GARCH))eRUNTIME_DEP_PKGS_CSWgio-fam-backend += $(RUNTIME_DEP_PKGS_CSWgio-fam-backend_$(GARCH))end += CSWlibffi4
 
 PACKAGES += CSWlibgio2-0-0
