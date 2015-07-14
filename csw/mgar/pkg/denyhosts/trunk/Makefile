@@ -83,7 +83,7 @@ post-install:
 
 	gsed -i \
 		-e 's,denyhosts.cfg,$(sysconfdir)/denyhosts.cfg,' \
-		$(DESTDIR)/opt/csw/lib/python/site-packages/DenyHosts/constants.py
+		$(DESTDIR)/opt/csw/lib/python*/site-packages/DenyHosts/constants.py
 
 	#Adjust daemon-control-dist wrapper script to match our package paths
 	gsed -i \
