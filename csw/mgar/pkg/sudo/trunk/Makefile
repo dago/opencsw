@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.13
+VERSION = 1.8.14p3
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -20,9 +20,7 @@ endef
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES += $(DISTNAME).tar.gz 
 DISTFILES += sudo.conf.CSW
-DIST# Use patch until this is fixed:
-#   http://bugzilla.sudo.ws/show_bug.cgi?id=690
-PATCHFILES += bug690.patchSTFILES += map.sudo
+DISTFILES += map.sudo
 
 LICENSE = doc/LICENSE
 
